@@ -1,5 +1,5 @@
 import React from "react";
-import { Form } from "react-final-form";
+import { Form, Field } from "react-final-form";
 import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
 import { DadosEmpresa } from "./components/DadosEmpresa";
 import { FieldArray } from "react-final-form-arrays";
@@ -11,11 +11,12 @@ import {
   BUTTON_STYLE,
   BUTTON_TYPE,
 } from "components/Botao/constants";
+import "./style.scss";
 
 export const CadastroFornecedor = () => {
   const onSubmit = async (values) => {};
   return (
-    <div>
+    <div className="cadastro-fornecedor">
       <PaginaComCabecalhoRodape>
         <div className="row">
           <div className="offset-md-2 col-md-8 col-12">
@@ -26,7 +27,7 @@ export const CadastroFornecedor = () => {
                 ...arrayMutators,
               }}
               initialValues={{
-                lojas: [{ nome_fantasia: "" }],
+                lojas: [{ nome_fantasia: "", telefone: "" }],
               }}
               render={({ handleSubmit, submitting, pristine, values }) => (
                 <form onSubmit={handleSubmit}>
@@ -63,6 +64,66 @@ export const CadastroFornecedor = () => {
                       </div>
                     )}
                   </FieldArray>
+                  <div className="form-group pt-3">
+                    <div className="form-check">
+                      <Field
+                        component={"input"}
+                        name="declaracao"
+                        className="form-check-input"
+                        required
+                        type="checkbox"
+                      />
+                      <label title="" className="form-check-label">
+                        Declaro que as informações acima prestadas são
+                        verdadeiras.
+                      </label>
+                    </div>
+                  </div>
+                  <div className="form-group">
+                    <div className="form-check">
+                      <Field
+                        component={"input"}
+                        name="condicoes"
+                        className="form-check-input"
+                        required
+                        type="checkbox"
+                      />
+                      <label title="" className="form-check-label">
+                        Li e concordo com os termos e condições apresentados no
+                        <a
+                          className="links-intrucoes"
+                          href={"/"}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                        ></a>
+                      </label>
+                    </div>
+                  </div>
+
+                  <div className="form-group">
+                    <div className="form-check">
+                      <Field
+                        component={"input"}
+                        name="declaracao2"
+                        className="form-check-input"
+                        required
+                        type="checkbox"
+                      />
+                      <label title="" className="form-check-label">
+                        Declaro que fornecerei os itens pelos valores máximos
+                        indicados acima
+                      </label>
+                    </div>
+                  </div>
+                  <div className="row mb-3">
+                    <div className="col-12 text-right">
+                      <Botao
+                        style={BUTTON_STYLE.BLUE}
+                        texto="Enviar"
+                        type={BUTTON_TYPE.SUBMIT}
+                      />
+                    </div>
+                  </div>
                 </form>
               )}
             />

@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { OnChange } from "react-final-form-listeners";
@@ -8,7 +8,6 @@ import {
   composeValidators,
   required,
   validaCEP,
-  validaRangeCEP,
   validaTelefoneOuCelular,
   validaEmail,
   somenteAlfanumericos,
@@ -18,8 +17,6 @@ import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 
 export const DadosEmpresa = ({ values }) => {
-  const [apiCEPfora, setApiCEPfora] = useState(false);
-
   return (
     <div>
       <h2>Dados da Empresa</h2>
@@ -64,33 +61,29 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             parse={formatString("12345-678")}
             label="CEP"
-            name="cep_moradia"
+            name="cep"
             required
-            validate={composeValidators(required, validaCEP, validaRangeCEP)}
+            validate={composeValidators(required, validaCEP)}
             placeholder="Digite o CEP"
           />
-          <OnChange name="cep_moradia">
+          <OnChange name="cep">
             {async (value, previous) => {
               if (value.length === 9) {
                 const response = await getEnderecoPorCEP(value);
                 if (response.status === HTTP_STATUS.OK) {
                   if (response.data.resultado === "0") {
                     toastError("CEP não encontrado");
-                    values.endereco_moradia = "";
-                  } else if (
-                    response.data.uf !== "SP" ||
-                    response.data.cidade !== "São Paulo"
-                  ) {
-                    toastError("CEP não é do município de São Paulo");
-                    values.endereco_moradia = "";
+                    values.endereco = "";
+                    values.uf = "";
+                    values.cidade = "";
                   } else {
-                    values.endereco_moradia =
+                    values.endereco =
                       response.data.tipo_logradouro +
                       " " +
                       response.data.logradouro;
+                    values.uf = response.data.uf;
+                    values.cidade = response.data.cidade;
                   }
-                } else {
-                  setApiCEPfora(true);
                 }
               }
             }}
@@ -100,10 +93,9 @@ export const DadosEmpresa = ({ values }) => {
           <Field
             component={InputText}
             label="Endereço"
-            name="endereco_moradia"
+            name="endereco"
             required
             validate={required}
-            disabled={!apiCEPfora}
           />
         </div>
       </div>
@@ -113,7 +105,7 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             maxlength={255}
             label="Número"
-            name="numero_moradia"
+            name="numero"
             required
             validate={composeValidators(required, somenteAlfanumericos)}
             toUppercaseActive
@@ -124,7 +116,30 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             maxlength={20}
             label="Complemento"
-            name="complemento_moradia"
+            name="complemento"
+            validate={somenteAlfanumericos}
+            toUppercaseActive
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-4 col-12">
+          <Field
+            component={InputText}
+            maxlength={255}
+            label="UF"
+            name="uf"
+            required
+            validate={composeValidators(required, somenteAlfanumericos)}
+            toUppercaseActive
+          />
+        </div>
+        <div className="col-sm-8 col-12">
+          <Field
+            component={InputText}
+            maxlength={20}
+            label="Cidade"
+            name="cidade"
             validate={somenteAlfanumericos}
             toUppercaseActive
           />
@@ -133,12 +148,12 @@ export const DadosEmpresa = ({ values }) => {
       <div className="row">
         <div className="col-12">
           <Field
-            label="Nome completo do responsável"
-            name="nome_responsavel"
+            label="Nome completo"
+            name="nome"
             component={InputText}
             maxlength={255}
             type="text"
-            placeholder="Nome completo do responsável"
+            placeholder="Nome completo"
             required
             validate={composeValidators(required, somenteCaracteresEEspacos)}
             toUppercaseActive
@@ -149,15 +164,14 @@ export const DadosEmpresa = ({ values }) => {
         <div className="col-12">
           <Field
             component={InputText}
-            placeholder={"Telefone do responsável"}
-            label="Telefone do responsável"
+            placeholder={"Telefone"}
+            label="Telefone"
             parse={
-              values.telefone_responsavel &&
-              values.telefone_responsavel.length + 1 <= 14
+              values.telefone && values.telefone.length + 1 <= 14
                 ? formatString("(99) 9999-9999")
                 : formatString("(99) 99999-9999")
             }
-            name="telefone_responsavel"
+            name="telefone"
             required
             type="text"
             validate={composeValidators(required, validaTelefoneOuCelular)}
@@ -168,9 +182,9 @@ export const DadosEmpresa = ({ values }) => {
         <div className="col-12">
           <Field
             component={InputText}
-            placeholder={"E-mail do responsável"}
-            label="E-mail do responsável"
-            name="email_responsavel"
+            placeholder={"E-mail"}
+            label="E-mail"
+            name="email"
             type="text"
             validate={composeValidators(validaEmail)}
           />

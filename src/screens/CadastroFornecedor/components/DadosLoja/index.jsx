@@ -14,11 +14,13 @@ import {
   validaCEP,
   validaRangeCEP,
   somenteAlfanumericos,
+  validaTelefoneOuCelular,
 } from "helpers/validators";
 import formatStringByPattern from "format-string-by-pattern";
 import { OnChange } from "react-final-form-listeners";
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
+import formatString from "format-string-by-pattern";
 
 export const Loja = ({ loja, fields, index }) => {
   const [apiCEPfora, setApiCEPfora] = useState(false);
@@ -102,7 +104,7 @@ export const Loja = ({ loja, fields, index }) => {
             toUppercaseActive
           />
         </div>
-        <div className="col-sm-8 col-12">
+        <div className="col-sm-4 col-12">
           <Field
             component={InputText}
             maxlength={20}
@@ -112,8 +114,6 @@ export const Loja = ({ loja, fields, index }) => {
             toUppercaseActive
           />
         </div>
-      </div>
-      <div className="row">
         <div className="col-sm-4 col-12">
           <Field
             component={InputText}
@@ -126,6 +126,8 @@ export const Loja = ({ loja, fields, index }) => {
             disabled
           />
         </div>
+      </div>
+      <div className="row">
         <div className="col-sm-4 col-12">
           <Field
             component={InputText}
@@ -135,6 +137,23 @@ export const Loja = ({ loja, fields, index }) => {
             validate={somenteAlfanumericos}
             toUppercaseActive
             disabled
+          />
+        </div>
+        <div className="col-sm-4 col-12">
+          <Field
+            component={InputText}
+            placeholder={"Telefone do responsável"}
+            label="Telefone do responsável"
+            parse={
+              fields.value[index].telefone &&
+              fields.value[index].telefone.length + 1 <= 14
+                ? formatString("(99) 9999-9999")
+                : formatString("(99) 99999-9999")
+            }
+            name={`${loja}.telefone`}
+            required
+            type="text"
+            validate={composeValidators(required, validaTelefoneOuCelular)}
           />
         </div>
         <div className="col-sm-4 col-12 mt-auto mb-1">
