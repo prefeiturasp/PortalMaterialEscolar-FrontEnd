@@ -1,10 +1,10 @@
-import { LandingPage } from "screens/LandingPage";
+import { MegaPortal } from "screens/MegaPortal";
 import { CadastroFornecedor } from "../screens/CadastroFornecedor";
 
 export const routes = [
   {
     path: "/",
-    component: LandingPage,
+    component: MegaPortal,
     exact: true,
   },
   {
