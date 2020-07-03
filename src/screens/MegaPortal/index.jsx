@@ -10,17 +10,17 @@ export const MegaPortal = () => {
   return (
     <div className="mega-portal">
       <PaginaComCabecalhoRodape>
-        <div className="w-100 uniforme-escolar position-relative">
+        <div className="w-100 material-escolar position-relative">
           <div className="container">
             <div className="conteudo">
               <div className="div-banner col-lg-8 col-sm-12 col-xl-6">
                 <h1>
-                  O uniforme escolar mudou para um modelo com padrão de
-                  qualidade superior, respeitando aspectos como conforto,
-                  durabilidade e resistência.
+                  Para atendermos as preferências dos estudantes e famílias,
+                  agora os kits de materiais escolares estarão disponíveis em
+                  lojas credenciadas, oferecendo mais qualidade e agilidade.
                 </h1>
                 <p>
-                  Em 2020, os kits de uniforme continuarão com a mesma
+                  Em 2020, os kits de material escolar continuarão com a mesma
                   composição, mas, com inovações na forma de fornecimento.
                 </p>
               </div>
@@ -54,7 +54,7 @@ export const MegaPortal = () => {
                   Área de estudantes/famílias
                 </h2>
                 <div className="justify-content-lg-end justify-content-center">
-                  Obtenha informações sobre o kit de uniforme escolar para as
+                  Obtenha informações sobre o kit de material escolar para as
                   crianças e estudantes da cidade de São Paulo
                 </div>
               </div>
@@ -73,7 +73,7 @@ export const MegaPortal = () => {
               <img
                 src={imgLoja}
                 width="100%"
-                alt="Loja de uniformes"
+                alt="Loja de material escolar"
                 className="img-fluid rounded"
               />
               <div className="pt-5">
@@ -81,7 +81,7 @@ export const MegaPortal = () => {
                   Área de fabricantes/fornecedores
                 </h2>
                 <div className="justify-content-lg-end justify-content-center">
-                  Venha contribuir com o fornecimento dos uniformes escolares
+                  Venha contribuir com o fornecimento dos materiais escolares
                   para as crianças e estudantes da cidade de São Paulo
                 </div>
               </div>
