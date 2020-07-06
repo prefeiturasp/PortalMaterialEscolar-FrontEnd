@@ -70,7 +70,9 @@ export const Cadastro = ({ values }) => {
               href={"/"}
               target="_blank"
               rel="noopener noreferrer"
-            ></a>
+            >
+              <b> Edital</b>
+            </a>
           </label>
         </div>
       </div>
@@ -94,8 +96,8 @@ export const Cadastro = ({ values }) => {
         <div className="col-12 text-right">
           <Botao
             style={BUTTON_STYLE.BLUE}
-            texto="Enviar"
             type={BUTTON_TYPE.SUBMIT}
+            texto="Enviar"
           />
         </div>
       </div>

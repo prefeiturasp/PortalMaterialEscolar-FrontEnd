@@ -13,7 +13,6 @@ import {
   required,
   validaCEP,
   validaRangeCEP,
-  somenteAlfanumericos,
   validaTelefoneOuCelular,
 } from "helpers/validators";
 import formatStringByPattern from "format-string-by-pattern";
@@ -60,6 +59,7 @@ export const Loja = ({ loja, fields, index }) => {
                     fields.value[index].endereco = "";
                     fields.value[index].cidade = "";
                     fields.value[index].uf = "";
+                    fields.value[index].bairro = "";
                   } else if (
                     response.data.uf !== "SP" ||
                     response.data.cidade !== "São Paulo"
@@ -73,6 +73,7 @@ export const Loja = ({ loja, fields, index }) => {
                       response.data.logradouro;
                     fields.value[index].cidade = response.data.cidade;
                     fields.value[index].uf = response.data.uf;
+                    fields.value[index].bairro = response.data.bairro;
                   }
                 } else {
                   setApiCEPfora(true);
@@ -109,8 +110,7 @@ export const Loja = ({ loja, fields, index }) => {
             label="Número"
             name={`${loja}.numero`}
             required
-            validate={composeValidators(required, somenteAlfanumericos)}
-            toUppercaseActive
+            validate={composeValidators(required)}
           />
         </div>
         <div className="col-sm-4 col-12">
@@ -119,8 +119,6 @@ export const Loja = ({ loja, fields, index }) => {
             maxlength={20}
             label="Complemento"
             name={`${loja}.complemento`}
-            validate={somenteAlfanumericos}
-            toUppercaseActive
           />
         </div>
       </div>
@@ -131,8 +129,6 @@ export const Loja = ({ loja, fields, index }) => {
             maxlength={20}
             label="Cidade"
             name={`${loja}.cidade`}
-            validate={somenteAlfanumericos}
-            toUppercaseActive
             disabled
           />
         </div>
@@ -143,8 +139,7 @@ export const Loja = ({ loja, fields, index }) => {
             label="UF"
             name={`${loja}.uf`}
             required
-            validate={composeValidators(required, somenteAlfanumericos)}
-            toUppercaseActive
+            validate={composeValidators(required)}
             disabled
           />
         </div>

@@ -15,7 +15,7 @@ export const Tabs = ({ tab, setTab, uuid }) => {
         </div>
         <div
           onClick={() => setTab("tabela-precos")}
-          className={`tab col-4 ${
+          className={`tab col-4 ml-1 ${
             tab === "tabela-precos" ? "active" : uuid ? "enabled" : "inactive"
           }`}
         >
@@ -23,7 +23,7 @@ export const Tabs = ({ tab, setTab, uuid }) => {
         </div>
         <div
           onClick={() => setTab("arquivos")}
-          className={`tab col-4 ${
+          className={`tab col-4 ml-1 ${
             tab === "arquivos" ? "active" : uuid ? "enabled" : "inactive"
           }`}
         >
