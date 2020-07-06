@@ -21,7 +21,7 @@ export const DadosEmpresa = ({ values }) => {
     <div>
       <h2>Dados da Empresa</h2>
       <div className="row">
-        <div className="col-12">
+        <div className="col-6">
           <Field
             component={InputText}
             parse={formatString("99.999.999/9999-99")}
@@ -30,6 +30,16 @@ export const DadosEmpresa = ({ values }) => {
             required
             validate={composeValidators(required)}
             placeholder="Digite o CNPJ da Empresa"
+          />
+        </div>
+        <div className="col-6">
+          <Field
+            component={InputText}
+            label="Razão Social"
+            name="razao_social"
+            required
+            validate={composeValidators(required)}
+            placeholder="Digite a Razão Social da Empresa"
           />
         </div>
       </div>
@@ -44,19 +54,7 @@ export const DadosEmpresa = ({ values }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-12">
-          <Field
-            component={InputText}
-            label="Razão Social"
-            name="razao_social"
-            required
-            validate={composeValidators(required)}
-            placeholder="Digite a Razão Social da Empresa"
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-4 col-12">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             parse={formatString("12345-678")}
@@ -76,6 +74,7 @@ export const DadosEmpresa = ({ values }) => {
                     values.endereco = "";
                     values.uf = "";
                     values.cidade = "";
+                    values.bairro = "";
                   } else {
                     values.endereco =
                       response.data.tipo_logradouro +
@@ -83,13 +82,25 @@ export const DadosEmpresa = ({ values }) => {
                       response.data.logradouro;
                     values.uf = response.data.uf;
                     values.cidade = response.data.cidade;
+                    values.bairro = response.data.bairro;
                   }
                 }
               }
             }}
           </OnChange>
         </div>
-        <div className="col-sm-8 col-12">
+        <div className="col-sm-6 col-12">
+          <Field
+            component={InputText}
+            label="Bairro"
+            name="bairro"
+            required
+            validate={required}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             label="Endereço"
@@ -98,9 +109,17 @@ export const DadosEmpresa = ({ values }) => {
             validate={required}
           />
         </div>
-      </div>
-      <div className="row">
         <div className="col-sm-4 col-12">
+          <Field
+            component={InputText}
+            maxlength={20}
+            label="Complemento"
+            name="complemento"
+            validate={somenteAlfanumericos}
+            toUppercaseActive
+          />
+        </div>
+        <div className="col-sm-2 col-12">
           <Field
             component={InputText}
             maxlength={255}
@@ -111,19 +130,20 @@ export const DadosEmpresa = ({ values }) => {
             toUppercaseActive
           />
         </div>
-        <div className="col-sm-8 col-12">
+      </div>
+      <div className="row">
+        <div className="col-sm-10 col-12">
           <Field
             component={InputText}
             maxlength={20}
-            label="Complemento"
-            name="complemento"
+            label="Cidade"
+            name="cidade"
             validate={somenteAlfanumericos}
             toUppercaseActive
+            required
           />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-4 col-12">
+        <div className="col-sm-2 col-12">
           <Field
             component={InputText}
             maxlength={255}
@@ -131,16 +151,6 @@ export const DadosEmpresa = ({ values }) => {
             name="uf"
             required
             validate={composeValidators(required, somenteAlfanumericos)}
-            toUppercaseActive
-          />
-        </div>
-        <div className="col-sm-8 col-12">
-          <Field
-            component={InputText}
-            maxlength={20}
-            label="Cidade"
-            name="cidade"
-            validate={somenteAlfanumericos}
             toUppercaseActive
           />
         </div>
@@ -161,7 +171,7 @@ export const DadosEmpresa = ({ values }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-12">
+        <div className="col-6">
           <Field
             component={InputText}
             placeholder={"Telefone"}
@@ -177,9 +187,7 @@ export const DadosEmpresa = ({ values }) => {
             validate={composeValidators(required, validaTelefoneOuCelular)}
           />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-12">
+        <div className="col-6">
           <Field
             component={InputText}
             placeholder={"E-mail"}

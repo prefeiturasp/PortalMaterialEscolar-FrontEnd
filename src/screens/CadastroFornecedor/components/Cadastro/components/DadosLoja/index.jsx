@@ -40,7 +40,7 @@ export const Loja = ({ loja, fields, index }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-sm-4 col-12">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             parse={formatStringByPattern("12345-678")}
@@ -81,7 +81,18 @@ export const Loja = ({ loja, fields, index }) => {
             }}
           </OnChange>
         </div>
-        <div className="col-sm-8 col-12">
+        <div className="col-sm-6 col-12">
+          <Field
+            component={InputText}
+            label="Bairro"
+            name={`${loja}.bairro`}
+            required
+            validate={required}
+          />
+        </div>
+      </div>
+      <div className="row">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             label="Endereço"
@@ -91,9 +102,7 @@ export const Loja = ({ loja, fields, index }) => {
             disabled={!apiCEPfora}
           />
         </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-4 col-12">
+        <div className="col-sm-2 col-12">
           <Field
             component={InputText}
             maxlength={255}
@@ -114,7 +123,20 @@ export const Loja = ({ loja, fields, index }) => {
             toUppercaseActive
           />
         </div>
-        <div className="col-sm-4 col-12">
+      </div>
+      <div className="row">
+        <div className="col-sm-6 col-12">
+          <Field
+            component={InputText}
+            maxlength={20}
+            label="Cidade"
+            name={`${loja}.cidade`}
+            validate={somenteAlfanumericos}
+            toUppercaseActive
+            disabled
+          />
+        </div>
+        <div className="col-sm-2 col-12">
           <Field
             component={InputText}
             maxlength={255}
@@ -122,19 +144,6 @@ export const Loja = ({ loja, fields, index }) => {
             name={`${loja}.uf`}
             required
             validate={composeValidators(required, somenteAlfanumericos)}
-            toUppercaseActive
-            disabled
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-sm-4 col-12">
-          <Field
-            component={InputText}
-            maxlength={20}
-            label="Cidade"
-            name={`${loja}.cidade`}
-            validate={somenteAlfanumericos}
             toUppercaseActive
             disabled
           />
@@ -156,11 +165,12 @@ export const Loja = ({ loja, fields, index }) => {
             validate={composeValidators(required, validaTelefoneOuCelular)}
           />
         </div>
-        <div className="col-sm-4 col-12 mt-auto mb-1">
+      </div>
+      <div className="row mt-2">
+        <div className="col-12 text-right">
           <Botao
             style={BUTTON_STYLE.BLUE_OUTLINE}
             texto="Remover"
-            className="col-12"
             type={BUTTON_TYPE.BUTTON}
             icon={BUTTON_ICON.TRASH}
             onClick={() => fields.remove(index)}
