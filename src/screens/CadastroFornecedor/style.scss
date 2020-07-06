@@ -1,7 +1,11 @@
+@import "styles/variaveis.scss";
+
 div.cadastro-fornecedor {
   h1 {
+    color: $blue;
     font-size: 24px;
     font-weight: bold;
+    margin-bottom: 1em;
   }
   h2 {
     font-size: 16px;

@@ -1,0 +1,26 @@
+@import "styles/variaveis";
+
+div.tabs {
+  font-weight: bold;
+  text-align: center;
+  font-size: 20px;
+  cursor: pointer;
+  margin-left: 2em;
+  margin-right: 1em;
+  .tab {
+    padding-bottom: 5px;
+    margin-left: -8px;
+    &.active {
+      color: $blue;
+      border-bottom: 3px solid $blue;
+    }
+    &.inactive {
+      color: $grayDisabled;
+      border-bottom: 3px solid $grayDisabled;
+    }
+    &.enabled {
+      color: $blueEnabled;
+      border-bottom: 3px solid $blueEnabled;
+    }
+  }
+}
