@@ -5,6 +5,7 @@ import arrayMutators from "final-form-arrays";
 import { Tabs } from "./components/Tabs";
 import { Cadastro } from "./components/Cadastro";
 import { Arquivos } from "./components/Arquivos";
+import { TabelaPrecos } from "./components/TabelaPrecos";
 import "./style.scss";
 
 export const CadastroFornecedor = () => {
@@ -44,6 +45,7 @@ export const CadastroFornecedor = () => {
           render={({ handleSubmit, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
               {tab === "cadastro" && <Cadastro values={values} />}
+              {tab === "tabela-precos" && <TabelaPrecos />}
               {tab === "arquivos" && <Arquivos empresa={empresa} />}
             </form>
           )}
