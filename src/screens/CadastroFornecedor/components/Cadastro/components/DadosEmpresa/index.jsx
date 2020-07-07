@@ -21,7 +21,7 @@ export const DadosEmpresa = ({ values }) => {
     <div>
       <h2>Dados da Empresa</h2>
       <div className="row">
-        <div className="col-6">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             parse={formatString("99.999.999/9999-99")}
@@ -32,7 +32,7 @@ export const DadosEmpresa = ({ values }) => {
             placeholder="Digite o CNPJ da Empresa"
           />
         </div>
-        <div className="col-6">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             label="Razão Social"
@@ -171,7 +171,7 @@ export const DadosEmpresa = ({ values }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-6">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             placeholder={"Telefone"}
@@ -187,7 +187,7 @@ export const DadosEmpresa = ({ values }) => {
             validate={composeValidators(required, validaTelefoneOuCelular)}
           />
         </div>
-        <div className="col-6">
+        <div className="col-sm-6 col-12">
           <Field
             component={InputText}
             placeholder={"E-mail"}

@@ -10,7 +10,7 @@ import "./style.scss";
 
 export const CadastroFornecedor = () => {
   const [empresa, setEmpresa] = useState(null);
-  const [tab, setTab] = useState("cadastro");
+  const [tab, setTab] = useState("tabela-precos");
   const [uuid, setUuid] = useState(null);
 
   useEffect(() => {
@@ -40,12 +40,13 @@ export const CadastroFornecedor = () => {
             ...arrayMutators,
           }}
           initialValues={{
+            apontador_check: false,
             lojas: [{ nome_fantasia: "", telefone: "" }],
           }}
           render={({ handleSubmit, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
               {tab === "cadastro" && <Cadastro values={values} />}
-              {tab === "tabela-precos" && <TabelaPrecos />}
+              {tab === "tabela-precos" && <TabelaPrecos values={values} />}
               {tab === "arquivos" && <Arquivos empresa={empresa} />}
             </form>
           )}
