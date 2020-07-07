@@ -1,9 +1,10 @@
-import React, { useState, useEffect } from "react";
+import React, { useState } from "react";
 import { Field } from "react-final-form";
-import { ProdutoPreco } from "./ProdutoPreco";
+import { ProdutoPreco } from "./components/ProdutoPreco";
 import "./style.scss";
+import { MateriaisPorTipoEscola } from "./components/MateriaisPorTipoEscola";
 
-export const TabelaPrecos = ({ values }) => {
+export const TabelaPrecos = ({ form, values }) => {
   const [marcarTodosFlag, setMarcarTodosFlag] = useState(false);
 
   const marcarTodos = () => {
@@ -33,6 +34,9 @@ export const TabelaPrecos = ({ values }) => {
     values.tesoura_check = !marcarTodosFlag;
     values.tinta_guache_06_cores_check = !marcarTodosFlag;
     values.transferidor_180_check = !marcarTodosFlag;
+    if (marcarTodosFlag) {
+      form.reset();
+    }
   };
 
   return (
@@ -245,6 +249,11 @@ export const TabelaPrecos = ({ values }) => {
           </div>
         </div>
       </div>
+      <MateriaisPorTipoEscola tipoEscola="educacao_infantil" values={values} />
+      <MateriaisPorTipoEscola
+        tipoEscola="ensino_fundamental_alfabetizacao"
+        values={values}
+      />
     </div>
   );
 };

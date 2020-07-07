@@ -6,7 +6,14 @@ export const ProdutoPreco = ({ values, name, label }) => {
   return (
     <div className="row produto-preco">
       <label className="produto col-sm-6 col-12 my-auto">
-        <Field name={`${name}_check`} component="input" type="checkbox" />{" "}
+        <Field
+          onClick={() =>
+            (values[name] = values[`${name}_check`] ? "" : values[name])
+          }
+          name={`${name}_check`}
+          component="input"
+          type="checkbox"
+        />{" "}
         {label}
       </label>
       <label className="preco col-sm-6 col-12 my-auto">
@@ -14,9 +21,9 @@ export const ProdutoPreco = ({ values, name, label }) => {
         <Field
           name={name}
           component="input"
-          type="text"
+          type="number"
           disabled={!values[`${name}_check`]}
-        />{" "}
+        />
       </label>
     </div>
   );

@@ -43,10 +43,12 @@ export const CadastroFornecedor = () => {
             apontador_check: false,
             lojas: [{ nome_fantasia: "", telefone: "" }],
           }}
-          render={({ handleSubmit, submitting, pristine, values }) => (
+          render={({ handleSubmit, form, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
               {tab === "cadastro" && <Cadastro values={values} />}
-              {tab === "tabela-precos" && <TabelaPrecos values={values} />}
+              {tab === "tabela-precos" && (
+                <TabelaPrecos form={form} values={values} />
+              )}
               {tab === "arquivos" && <Arquivos empresa={empresa} />}
             </form>
           )}
