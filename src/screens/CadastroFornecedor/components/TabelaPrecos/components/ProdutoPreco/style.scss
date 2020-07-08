@@ -1,0 +1,22 @@
+@import "styles/variaveis.scss";
+
+div.produto-preco {
+  color: $blackInput;
+  label.produto {
+    font-size: 14px;
+    input {
+      margin-right: 0.5em;
+    }
+  }
+  label.preco {
+    font-weight: bold;
+    @media only screen and (max-width: 576px) {
+      margin-left: 0em;
+    }
+    input {
+      margin-left: 1em;
+      color: $blackInput;
+      font-size: 16px;
+    }
+  }
+}
