@@ -1,5 +1,6 @@
 import React from "react";
 import logoEducacaoSP from "assets/img/educacao_sp.png";
+import { Link } from "react-router-dom";
 import "./style.scss";
 
 export const MenuPrincipal = () => {
@@ -20,7 +21,65 @@ export const MenuPrincipal = () => {
         <div
           id="menu-principal"
           className="col-lg-9 col-sm-12 links-menu d-flex flex-wrap  align-items-end justify-content-lg-end justify-content-start pr-lg-0 mb-xs-4"
-        ></div>
+        >
+          {window.location.pathname === "/" && (
+            <ul className="nav nav-tabs border-0">
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/familia"
+                >
+                  Área de estudantes/famílias
+                </Link>
+              </li>
+
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/fornecedor"
+                >
+                  Área de fabricantes/fornecedores
+                </Link>
+              </li>
+            </ul>
+          )}
+          {["/fornecedor", "/fornecedor/cadastro"].includes(
+            window.location.pathname
+          ) && (
+            <ul className="nav nav-tabs border-0">
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/fornecedor"
+                >
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/fornecedor/cadastro"
+                >
+                  Cadastre sua Loja
+                </Link>
+              </li>
+            </ul>
+          )}
+          {["/familia", "/mapa-de-fornecedores"].includes(
+            window.location.pathname
+          ) && (
+            <ul className="nav nav-tabs border-0">
+              <li className="nav-item">
+                <a
+                  className="nav-link text-secondary mb-1 pb-0"
+                  href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616"
+                >
+                  Avise sobre Problemas
+                </a>
+              </li>
+            </ul>
+          )}
+        </div>
       </div>
     </div>
   );
