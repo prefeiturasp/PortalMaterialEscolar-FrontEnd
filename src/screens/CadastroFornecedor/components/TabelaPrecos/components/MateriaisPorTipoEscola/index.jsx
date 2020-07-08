@@ -3,11 +3,11 @@ import "./style.scss";
 import { TIPO_ESCOLA_MATERIAIS } from "./constants";
 import { getTotal } from "./helpers";
 
-export const MateriaisPorTipoEscola = ({ tipoEscola, values }) => {
+export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
   const [ativo, setAtivo] = useState(false);
 
   return (
-    <div className="materiais-por-tipo-escola">
+    <div className={`materiais-por-tipo-escola ${className || undefined}`}>
       <div className="acordiao">
         <div className="row">
           <div className="col-6">{TIPO_ESCOLA_MATERIAIS[tipoEscola].label}</div>
