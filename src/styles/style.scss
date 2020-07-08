@@ -1,0 +1,38 @@
+.fonte-maior {
+  font-size: 20px !important;
+  div,
+  ul,
+  p,
+  table {
+    font-size: 20px !important;
+  }
+  h1 {
+    font-size: 50px;
+  }
+  h2 {
+    font-size: 40px;
+  }
+}
+
+.alto-contraste {
+  background-color: #fefefe;
+  filter: invert(100%);
+  * {
+    background-color: inherit;
+  }
+
+  img:not([src*=".svg"]),
+  video {
+    filter: invert(100%);
+  }
+}
+
+// Fontes
+@import url("https://fonts.googleapis.com/css?family=Roboto:300,400,700");
+@mixin roboto-sans {
+  font-family: "Roboto", sans-serif !important;
+}
+
+body {
+  @include roboto-sans;
+}
