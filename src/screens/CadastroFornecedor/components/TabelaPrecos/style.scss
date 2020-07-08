@@ -1,0 +1,15 @@
+@import "styles/variaveis.scss";
+
+div.tabela-precos {
+  h3 {
+    font-size: 14px;
+    font-weight: bold;
+  }
+  label.marcar-todos {
+    color: $blackInput;
+    font-size: 14px;
+    input {
+      margin-right: 0.8em;
+    }
+  }
+}
