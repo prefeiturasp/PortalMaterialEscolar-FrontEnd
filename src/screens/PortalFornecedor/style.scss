@@ -1,0 +1,114 @@
+@import "styles/variaveis.scss";
+
+div.portal-fornecedor {
+  h2 {
+    font-size: 35px;
+    font-weight: bold !important;
+    line-height: 40px;
+
+    &.cor-azul {
+      color: $blue;
+    }
+  }
+  .oferta-materiais {
+    background: url("../../assets/img/landing-fornecedor-wide.svg"), #caf0f9;
+    color: $blackInput;
+    height: 490px;
+    background-repeat: no-repeat;
+    background-size: auto;
+    background-position: top right;
+    .conteudo {
+      margin: 0 auto;
+      z-index: 1;
+      position: absolute;
+      top: 50%;
+      transform: translateY(-50%);
+      h1 {
+        font-size: 40px;
+        font-weight: bold;
+      }
+      p {
+        font-size: 22px;
+        line-height: 26px;
+        font-style: normal;
+        font-weight: bold;
+      }
+    }
+    @media screen and (min-width: 992px) {
+      img.desenho-fornecedor {
+        display: none !important;
+      }
+    }
+    @media screen and (max-width: 991px) {
+      background: linear-gradient(
+        179.86deg,
+        #c5e178 60.58%,
+        rgba(26, 110, 184, 0) 99.93%
+      ) !important;
+      h1 {
+        position: relative;
+        font-size: 28px !important;
+      }
+      img.desenho-criancas {
+        padding-right: 15px;
+      }
+      .saiba-mais {
+        display: block;
+        text-align: center;
+        margin-top: 2em;
+      }
+    }
+  }
+  .lista-home {
+    list-style-position: inside;
+
+    li {
+      list-style-type: none;
+    }
+
+    li:before {
+      content: "•";
+      color: $blue;
+      font-size: 35px;
+      margin-right: 10px;
+      vertical-align: middle;
+      line-height: 1.18em;
+    }
+  }
+  .faq {
+    background: #5c6f78;
+    .container {
+      padding: 4em 0;
+    }
+    h3 {
+      font-weight: bold;
+    }
+    .btn {
+      margin-top: 0;
+      border: 1px solid #fff;
+      font-size: 18px;
+      &:hover {
+        background-color: #ffffff;
+        color: $blue;
+      }
+    }
+  }
+  .sociedade-governo {
+    background: $blue;
+    .container {
+      padding: 4em 0;
+    }
+    h3 {
+      font-weight: bold;
+    }
+    .btn {
+      margin-top: 0;
+      border: 1px solid #fff;
+      font-size: 18px;
+      &:hover {
+        background-color: #ffffff;
+        color: $blue;
+      }
+    }
+  }
+}

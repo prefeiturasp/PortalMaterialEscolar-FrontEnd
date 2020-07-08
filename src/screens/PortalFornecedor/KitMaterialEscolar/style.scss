@@ -1,0 +1,33 @@
+@import "styles/variaveis.scss";
+
+div.kit-material-escolar {
+  div.acordiao {
+    font-size: 14px;
+    border: 1px solid $grayDisabled;
+    border-left: 6px solid $blue;
+    box-shadow: 0px 1px 4px rgba(8, 35, 48, 0.1);
+    border-radius: 4px;
+    padding: 1em;
+    margin-top: 2em;
+    div.valor-total {
+      font-weight: bold;
+      i {
+        cursor: pointer;
+      }
+    }
+  }
+  div.parte-expandida {
+    font-size: 14px;
+    border: 1px solid $grayDisabled;
+    border-top: none;
+    padding: 1em;
+    div.title {
+      font-weight: bold;
+      color: $blackInput;
+      margin-top: 1em;
+      hr {
+        border-top: 1px solid $blackInput;
+      }
+    }
+  }
+}

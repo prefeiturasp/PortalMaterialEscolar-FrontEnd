@@ -32,27 +32,29 @@ export const CadastroFornecedor = () => {
   return (
     <div className="cadastro-fornecedor">
       <PaginaComCabecalhoRodape>
-        <h1>Cadastro de Fornecedor</h1>
-        <Tabs uuid={uuid} tab={tab} setTab={setTab} />
-        <Form
-          onSubmit={onSubmit}
-          mutators={{
-            ...arrayMutators,
-          }}
-          initialValues={{
-            apontador_check: false,
-            lojas: [{ nome_fantasia: "", telefone: "" }],
-          }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit}>
-              {tab === "cadastro" && <Cadastro values={values} />}
-              {tab === "tabela-precos" && (
-                <TabelaPrecos form={form} values={values} />
-              )}
-              {tab === "arquivos" && <Arquivos empresa={empresa} />}
-            </form>
-          )}
-        />
+        <div className="container">
+          <h1>Cadastro de Fornecedor</h1>
+          <Tabs uuid={uuid} tab={tab} setTab={setTab} />
+          <Form
+            onSubmit={onSubmit}
+            mutators={{
+              ...arrayMutators,
+            }}
+            initialValues={{
+              apontador_check: false,
+              lojas: [{ nome_fantasia: "", telefone: "" }],
+            }}
+            render={({ handleSubmit, form, submitting, pristine, values }) => (
+              <form onSubmit={handleSubmit}>
+                {tab === "cadastro" && <Cadastro values={values} />}
+                {tab === "tabela-precos" && (
+                  <TabelaPrecos form={form} values={values} />
+                )}
+                {tab === "arquivos" && <Arquivos empresa={empresa} />}
+              </form>
+            )}
+          />
+        </div>
       </PaginaComCabecalhoRodape>
     </div>
   );

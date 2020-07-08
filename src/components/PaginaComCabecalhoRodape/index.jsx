@@ -29,7 +29,7 @@ export const PaginaComCabecalhoRodape = ({ children }) => {
         handleConstraste={handleConstraste}
       />
       <MenuPrincipal />
-      <div className="container">{children}</div>
+      {children}
       <Rodape versao={`${version} (API: ${apiVersion})`} />
     </section>
   );

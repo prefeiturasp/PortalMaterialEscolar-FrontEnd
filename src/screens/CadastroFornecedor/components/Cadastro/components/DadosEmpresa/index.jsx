@@ -44,16 +44,6 @@ export const DadosEmpresa = ({ values }) => {
         </div>
       </div>
       <div className="row">
-        <div className="col-12">
-          <Field
-            component={InputText}
-            label="Código da atividade econômica principal"
-            name="cod_ativ_ec_princ"
-            placeholder="Digite o código da atividade econômica principal da empresa"
-          />
-        </div>
-      </div>
-      <div className="row">
         <div className="col-sm-6 col-12">
           <Field
             component={InputText}
