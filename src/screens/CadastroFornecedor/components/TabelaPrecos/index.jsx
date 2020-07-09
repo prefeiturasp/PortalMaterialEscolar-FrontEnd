@@ -43,14 +43,14 @@ export const TabelaPrecos = ({ form, values }) => {
 
   return (
     <div className="tabela-precos">
-      <div className="row mb-5">
+      {/*<div className="row mb-5">
         <div className="col-6">
           <Botao texto="Limpar" style={BUTTON_STYLE.BLUE_OUTLINE} />
         </div>
         <div className="col-6 text-right">
           <Botao texto="Salvar e enviar" style={BUTTON_STYLE.BLUE} />
         </div>
-      </div>
+      </div>*/}
       <div className="card">
         <div className="card-body">
           <h2>Preços (fornecimento)</h2>
