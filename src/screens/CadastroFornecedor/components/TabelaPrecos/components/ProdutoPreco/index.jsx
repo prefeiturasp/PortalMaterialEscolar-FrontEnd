@@ -1,6 +1,8 @@
 import React from "react";
 import { Field } from "react-final-form";
 import "./style.scss";
+import { naoPodeMaiorQue10 } from "helpers/validators";
+import { InputText } from "components/Input/InputText";
 
 export const ProdutoPreco = ({ values, name, label }) => {
   return (
@@ -20,8 +22,10 @@ export const ProdutoPreco = ({ values, name, label }) => {
         R$
         <Field
           name={name}
-          component="input"
+          component={InputText}
           type="number"
+          className="col-10"
+          validate={naoPodeMaiorQue10}
           disabled={!values[`${name}_check`]}
         />
       </label>

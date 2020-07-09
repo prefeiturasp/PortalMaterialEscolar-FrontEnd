@@ -86,7 +86,7 @@ export const CadastroFornecedor = () => {
         criado_em: "2020-07-06T12:21:29.662995-03:00",
         alterado_em: "2020-07-06T12:32:13.629081-03:00",
         uuid: "2386c724-e230-4428-957f-e131964df0c9",
-        nome_fantasia: "dsasd",
+        nome_fantasia: "25 de Márcio",
         cep: "08111-055",
         endereco: "Rua Pires",
         bairro: "Vila Itaim",
@@ -119,6 +119,7 @@ export const CadastroFornecedor = () => {
   const [uuid, setUuid] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const carregaEmpresa = async () => {
       const urlParams = new URLSearchParams(window.location.search);
       const uuid = urlParams.get("uuid");
@@ -146,7 +147,6 @@ export const CadastroFornecedor = () => {
               ...arrayMutators,
             }}
             initialValues={{
-              apontador_check: false,
               lojas: [{ nome_fantasia: "", telefone: "" }],
             }}
             render={({ handleSubmit, form, submitting, pristine, values }) => (

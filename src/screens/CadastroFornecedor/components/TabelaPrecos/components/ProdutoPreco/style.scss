@@ -9,6 +9,7 @@ div.produto-preco {
     }
   }
   label.preco {
+    display: inline-flex;
     font-weight: bold;
     @media only screen and (max-width: 576px) {
       margin-left: 0em;
@@ -17,6 +18,9 @@ div.produto-preco {
       margin-left: 1em;
       color: $blackInput;
       font-size: 16px;
+    }
+    .error-or-warning-message {
+      margin-left: 1.5em;
     }
   }
 }

@@ -188,14 +188,9 @@ export const PortalFornecedor = () => {
               <h3 className="text-white mb-4">
                 Ainda com dúvidas? Acesse o nosso FAQ
               </h3>
-              <a
-                className="pb-0"
-                href="https://educacao.sme.prefeitura.sp.gov.br/perguntas-frequentes-dos-interessados-em-se-cadastrar-para-vender-uniforme-escolar-as-familias/"
-              >
-                <button size="lg" className="btn btn-light pl-4 pr-4">
-                  <strong>FAQ</strong>
-                </button>
-              </a>
+              <button size="lg" className="btn btn-light pl-4 pr-4">
+                <strong>FAQ</strong>
+              </button>
             </div>
           </div>
         </div>

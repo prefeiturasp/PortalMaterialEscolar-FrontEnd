@@ -33,9 +33,9 @@ export const validaCEP = (value) => {
 
 export const validaRangeCEP = (value) => {
   let numero = value.replace("-", "").replace(/_/g, "");
-  return (between(numero, 1000000, 5999999)||between(numero, 8000000, 8499999))
-  ? undefined
-  : "Necessário CEP da cidade de São Paulo!";
+  return between(numero, 1000000, 5999999) || between(numero, 8000000, 8499999)
+    ? undefined
+    : "Necessário CEP da cidade de São Paulo!";
 };
 
 export const validaEmail = (value) =>
@@ -57,3 +57,7 @@ export const somenteAlfanumericos = (value) =>
     ? "Somente caracteres alfanuméricos"
     : undefined;
 
+export const naoPodeMaiorQue10 = (value) =>
+  value && parseFloat(value.replace(",", ".")) > 10.0
+    ? `Valor máximo: R$ 10,00`
+    : undefined;
