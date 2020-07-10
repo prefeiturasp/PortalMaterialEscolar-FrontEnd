@@ -1,8 +1,8 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
-import imgDesenhoFornecedor from "assets/img/landing-fornecedor-wide.svg";
-import imgFachadaLoja from "assets/img/landing-loja-fundo-branco.svg";
+import imgDesenhoFornecedor from "assets/img/landing-fornecedor-wide.jpg";
+import imgFachadaLoja from "assets/img/landing-loja-fundo-branco.jpg";
 import imgMateriais from "assets/img/materiais.svg";
 import "./style.scss";
 import Botao from "components/Botao";

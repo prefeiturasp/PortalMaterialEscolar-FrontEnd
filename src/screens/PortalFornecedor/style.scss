@@ -11,7 +11,7 @@ div.portal-fornecedor {
     }
   }
   .oferta-materiais {
-    background: url("../../assets/img/landing-fornecedor-wide.svg"), #caf0f9;
+    background: url("../../assets/img/landing-fornecedor-wide.jpg"), #caf0f9;
     color: $blackInput;
     height: 490px;
     background-repeat: no-repeat;
@@ -42,7 +42,7 @@ div.portal-fornecedor {
     @media screen and (max-width: 991px) {
       background: linear-gradient(
         179.86deg,
-        #c5e178 60.58%,
+        #caf0f9 60.58%,
         rgba(26, 110, 184, 0) 99.93%
       ) !important;
       h1 {
