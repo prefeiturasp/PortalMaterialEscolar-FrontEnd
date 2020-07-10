@@ -78,7 +78,7 @@ export const MegaPortal = () => {
               />
               <div className="pt-5">
                 <h2 className="cor-azul mb-4 fs-29">
-                  Área de fabricantes/fornecedores
+                  Área de Fornecedores
                 </h2>
                 <div className="justify-content-lg-end justify-content-center">
                   Venha contribuir com o fornecimento dos materiais escolares
@@ -91,7 +91,7 @@ export const MegaPortal = () => {
                     size="lg"
                     className="btn btn-primary col-12 pl-4 pr-4"
                   >
-                    <strong>Fabricantes/fornecedores</strong>
+                    <strong>Fornecedores</strong>
                   </button>
                 </Link>
               </div>

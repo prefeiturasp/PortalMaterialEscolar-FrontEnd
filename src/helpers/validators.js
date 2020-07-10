@@ -1,3 +1,4 @@
+import { validate } from "cnpj";
 import { between } from "./helpers";
 
 export const composeValidators = (...validators) => (value) =>
@@ -61,3 +62,6 @@ export const naoPodeMaiorQue10 = (value) =>
   value && parseFloat(value.replace(",", ".")) > 10.0
     ? `Valor máximo: R$ 10,00`
     : undefined;
+
+export const validaCNPJ = (value) =>
+  validate(value) ? undefined : "CNPJ inválido";

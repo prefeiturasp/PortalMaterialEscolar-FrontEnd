@@ -7,6 +7,8 @@ import { Cadastro } from "./components/Cadastro";
 import { Arquivos } from "./components/Arquivos";
 import { TabelaPrecos } from "./components/TabelaPrecos";
 import "./style.scss";
+import { cadastroFornecedorStep1 } from "services/cadastro.service";
+import { toastSuccess } from "components/Toast/dialogs";
 
 export const CadastroFornecedor = () => {
   const [empresa, setEmpresa] = useState({
@@ -132,6 +134,10 @@ export const CadastroFornecedor = () => {
   }, []);
 
   const onSubmit = async (values) => {
+    /*console.log(values);
+    const response = await cadastroFornecedorStep1(values);
+    console.log(response);*/
+    toastSuccess("Cadastro enviado com sucesso!");
     setTab("tabela-precos");
   };
 
