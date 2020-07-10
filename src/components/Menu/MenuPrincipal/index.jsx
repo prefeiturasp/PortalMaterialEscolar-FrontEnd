@@ -38,7 +38,7 @@ export const MenuPrincipal = () => {
                   className="nav-link text-secondary mb-1 pb-0"
                   to="/fornecedor"
                 >
-                  Área de fabricantes/fornecedores
+                  Área de fornecedores
                 </Link>
               </li>
             </ul>
