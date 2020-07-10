@@ -4,13 +4,100 @@ import { FileUpload } from "components/Input/FileUpload";
 import { required } from "helpers/validators";
 import { ArquivoExistente } from "./ArquivoExistente";
 import { htmlTextToDiv } from "helpers/helpers";
-import "./style.scss";
 import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
+import "primeicons/primeicons.css";
+import "primereact/resources/primereact.min.css";
+import "primereact/resources/themes/nova-light/theme.css";
+import "./style.scss";
 
 export const Arquivos = ({ empresa }) => {
   const [algumUploadEmAndamento, setAlgumUploadEmAndamento] = useState(false);
-  const [tiposDocumentos, setTiposDocumentos] = useState(null);
+  const [tiposDocumentos, setTiposDocumentos] = useState([
+    {
+      id: 15,
+      nome:
+        "Ato constitutivo, estatuto ou contrato social, devidamente registrado no Cartório Civil competente, em se tratando de sociedades comerciais, e, no caso de sociedades por ações, acompanhado de documentos de eleição de seus administradores",
+      obrigatorio: true,
+    },
+    {
+      id: 16,
+      nome: "Cadastro de Contribuinte Municipal – CCM",
+      obrigatorio: false,
+    },
+    {
+      id: 17,
+      nome:
+        "Certidão Débitos trabalhistas – CNDT nos termos da Lei nº 12.440/2011",
+      obrigatorio: true,
+    },
+    {
+      id: 18,
+      nome:
+        "Certidão Negativa Conjunta de Débitos (CND) relativos a Tributos Federais e à Dívida Ativa da União e Seguridade Social - INSS, expedida pela Receita Federal do Brasil, nos termos da Portaria RFB/PGFN 1.751, de 02/10/2014, com prazo de validade em vigência",
+      obrigatorio: true,
+    },
+    {
+      id: 19,
+      nome:
+        "Certidão Negativa de Tributos Mobiliários, relativos ao Município sede, com prazo de validade em vigência. Caso a interessada não esteja cadastrada como contribuinte neste Município, deverá apresentar Declaração, firmada pelo representante legal, sob as penas da lei, de que nada deve a Fazenda do Município de São Paulo (CTM)",
+      obrigatorio: true,
+    },
+    {
+      id: 20,
+      nome:
+        "Certidão de Regularidade referente ao Fundo de Garantia por Tempo de Serviço – FGTS, com prazo de validade em vigência",
+      obrigatorio: true,
+    },
+    {
+      id: 21,
+      nome:
+        "Certidão de regularidade relativo aos Tributos Estaduais expedida por meio de unidade estadual administrativa competente da sede do credenciado",
+      obrigatorio: true,
+    },
+    {
+      id: 22,
+      nome:
+        "Comprovante de inexistência de registros no Cadastro Informativo Municipal – CADIN MUNICIPAL, instituído pela Lei Municipal nº 14.094/05, regulamentada pelo Decreto nº 47.096/06",
+      obrigatorio: true,
+    },
+    {
+      id: 23,
+      nome:
+        "Comprovante de inscrição no Cadastro Nacional de Pessoas Jurídicas – CNPJ, emitida no sítio da Secretaria da Receita Federal do Brasil",
+      obrigatorio: true,
+    },
+    {
+      id: 24,
+      nome:
+        "Declaração de inexistência de servidores públicos municipais nos quadros sociais da proponente, ANEXO III do Edital",
+      obrigatorio: true,
+    },
+    {
+      id: 25,
+      nome:
+        "Declaração firmada pelo representante legal do credenciado, sob as penas da lei de que cumpre o quanto estabelecido no art. 7º, XXXIII, da Constituição Federal, de acordo com o modelo constante do ANEXO III do Edital",
+      obrigatorio: true,
+    },
+    {
+      id: 26,
+      nome:
+        "Decreto de autorização, em se tratando de empresa ou sociedade estrangeira em funcionamento no país",
+      obrigatorio: false,
+    },
+    {
+      id: 27,
+      nome:
+        "Inscrição do ato constitutivo, ata de eleição e posse da diretoria em exercício",
+      obrigatorio: false,
+    },
+    {
+      id: 28,
+      nome:
+        "Prova de inscrição no Cadastro do Contribuinte Estadual ou Municipal relativo ao domicílio ou sede do credenciado, pertinente ao seu ramo de atividade",
+      obrigatorio: false,
+    },
+  ]);
 
   const uploadFachadaLoja = async (e, uuidLoja, key) => {
     /*if (!e[0].arquivo.includes("image/")) {

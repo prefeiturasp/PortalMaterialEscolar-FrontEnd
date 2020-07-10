@@ -9,8 +9,26 @@ import {
   BUTTON_TYPE,
   BUTTON_ICON,
 } from "components/Botao/constants";
+import { toastError } from "components/Toast/dialogs";
+import "./style.scss";
 
 export const Cadastro = ({ values }) => {
+  const copiarEndereco = (fields) => {
+    if (!values.copiar_endereco && values.cidade) {
+      if (values.cidade !== "São Paulo") {
+        toastError("Endereço não é do município de São Paulo");
+      } else {
+        fields.value[0].endereco = values.endereco;
+        fields.value[0].cidade = values.cidade;
+        fields.value[0].uf = values.uf;
+        fields.value[0].bairro = values.bairro;
+        fields.value[0].cep = values.cep;
+        fields.value[0].numero = values.numero;
+        fields.value[0].complemento = values.complemento;
+      }
+    }
+  };
+
   return (
     <Fragment>
       <div className="card">
@@ -24,6 +42,15 @@ export const Cadastro = ({ values }) => {
             <div className="card-body">
               <h2>
                 Informações sobre ponto de venda físico ou stand de vendas
+                <span className="ml-3 copiar-endereco-checkbox">
+                  <Field
+                    component={"input"}
+                    name="copiar_endereco"
+                    type="checkbox"
+                    onClick={() => copiarEndereco(fields)}
+                  />
+                  Copiar endereço acima
+                </span>
               </h2>
               {fields.map((loja, index) => (
                 <Loja key={index} loja={loja} fields={fields} index={index} />

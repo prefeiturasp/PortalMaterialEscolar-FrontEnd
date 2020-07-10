@@ -1,6 +1,6 @@
 @import "styles/variaveis.scss";
 
-div.materiais-por-tipo-escola {
+div.kit-material-escolar {
   div.acordiao {
     font-size: 14px;
     border: 1px solid $grayDisabled;
@@ -15,10 +15,6 @@ div.materiais-por-tipo-escola {
         cursor: pointer;
       }
     }
-    div.qtd-total {
-      font-weight: bold;
-      color: $green;
-    }
   }
   div.parte-expandida {
     font-size: 14px;
@@ -32,22 +28,6 @@ div.materiais-por-tipo-escola {
       hr {
         border-top: 1px solid $blackInput;
       }
-    }
-    div.material {
-      &.disabled {
-        color: $grayDisabled;
-      }
-      label {
-        display: inline-flex;
-        input {
-          margin-left: 1em;
-          margin-right: 1em;
-        }
-      }
-    }
-    div.subtitle {
-      font-size: 11px;
-      font-weight: bold;
     }
   }
 }

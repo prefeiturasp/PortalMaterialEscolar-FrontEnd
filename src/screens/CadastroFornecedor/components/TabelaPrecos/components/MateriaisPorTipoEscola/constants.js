@@ -66,7 +66,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
   },
   ensino_fundamental_alfabetizacao: {
     label:
-      "Kit Educação Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
+      "Kit Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
     materiais: [
       {
         label: "Agenda Ensino Fundamental",
@@ -137,7 +137,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
   },
   ensino_fundamental_interdisciplinar: {
     label:
-      "Kit Educação Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
+      "Kit Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
     materiais: [
       {
         label: "Agenda Ensino Fundamental",
@@ -217,7 +217,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
     ],
   },
   ensino_fundamental_autoral: {
-    label: "Kit Educação Ensino Fundamental - Ciclo Autoral (7º ao 9º ano)",
+    label: "Kit Ensino Fundamental - Ciclo Autoral (7º ao 9º ano)",
     materiais: [
       {
         label: "Apontador",
@@ -302,7 +302,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
     ],
   },
   ensino_medio_eja_mova: {
-    label: "Kit Educação Ensino Fundamental - Ensino Médio/EJA e MOVA",
+    label: "Kit Ensino Fundamental - Ensino Médio/EJA e MOVA",
     materiais: [
       {
         label: "Apontador",

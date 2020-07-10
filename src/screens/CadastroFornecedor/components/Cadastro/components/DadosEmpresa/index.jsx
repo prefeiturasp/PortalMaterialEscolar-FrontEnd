@@ -12,6 +12,7 @@ import {
   validaEmail,
   somenteAlfanumericos,
   somenteCaracteresEEspacos,
+  validaCNPJ,
 } from "helpers/validators";
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
@@ -28,7 +29,7 @@ export const DadosEmpresa = ({ values }) => {
             label="CNPJ"
             name="cnpj"
             required
-            validate={composeValidators(required)}
+            validate={composeValidators(required, validaCNPJ)}
             placeholder="Digite o CNPJ da Empresa"
           />
         </div>
@@ -40,16 +41,6 @@ export const DadosEmpresa = ({ values }) => {
             required
             validate={composeValidators(required)}
             placeholder="Digite a Razão Social da Empresa"
-          />
-        </div>
-      </div>
-      <div className="row">
-        <div className="col-12">
-          <Field
-            component={InputText}
-            label="Código da atividade econômica principal"
-            name="cod_ativ_ec_princ"
-            placeholder="Digite o código da atividade econômica principal da empresa"
           />
         </div>
       </div>
@@ -116,7 +107,6 @@ export const DadosEmpresa = ({ values }) => {
             label="Complemento"
             name="complemento"
             validate={somenteAlfanumericos}
-            toUppercaseActive
           />
         </div>
         <div className="col-sm-2 col-12">
@@ -127,7 +117,6 @@ export const DadosEmpresa = ({ values }) => {
             name="numero"
             required
             validate={composeValidators(required, somenteAlfanumericos)}
-            toUppercaseActive
           />
         </div>
       </div>
@@ -138,8 +127,6 @@ export const DadosEmpresa = ({ values }) => {
             maxlength={20}
             label="Cidade"
             name="cidade"
-            validate={somenteAlfanumericos}
-            toUppercaseActive
             required
           />
         </div>
@@ -151,7 +138,6 @@ export const DadosEmpresa = ({ values }) => {
             name="uf"
             required
             validate={composeValidators(required, somenteAlfanumericos)}
-            toUppercaseActive
           />
         </div>
       </div>
@@ -166,7 +152,6 @@ export const DadosEmpresa = ({ values }) => {
             placeholder="Nome completo"
             required
             validate={composeValidators(required, somenteCaracteresEEspacos)}
-            toUppercaseActive
           />
         </div>
       </div>
