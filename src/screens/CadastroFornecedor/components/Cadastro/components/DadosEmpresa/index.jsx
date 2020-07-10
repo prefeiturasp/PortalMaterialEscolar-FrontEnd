@@ -127,7 +127,6 @@ export const DadosEmpresa = ({ values }) => {
             maxlength={20}
             label="Cidade"
             name="cidade"
-            validate={somenteAlfanumericos}
             required
           />
         </div>
