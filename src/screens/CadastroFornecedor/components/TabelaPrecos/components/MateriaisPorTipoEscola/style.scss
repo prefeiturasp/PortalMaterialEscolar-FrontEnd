@@ -11,13 +11,16 @@ div.materiais-por-tipo-escola {
     margin-top: 2em;
     div.valor-total {
       font-weight: bold;
-      i {
+      span {
+        font-weight: normal;
+        &.qtd-total {
+          font-weight: bold;
+          color: $green;
+        }
+      }
+      span i {
         cursor: pointer;
       }
-    }
-    div.qtd-total {
-      font-weight: bold;
-      color: $green;
     }
   }
   div.parte-expandida {

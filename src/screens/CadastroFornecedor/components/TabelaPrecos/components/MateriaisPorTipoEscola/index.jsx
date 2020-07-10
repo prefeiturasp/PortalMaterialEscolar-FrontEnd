@@ -13,21 +13,22 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
           <div className="col-6">
             {TIPO_ESCOLA_MATERIAIS[tipoEscola].label}{" "}
           </div>
-          <div
-            className={`col-1 ${
-              TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                (material) => values[material.value]
-              ).length === TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length &&
-              "qtd-total"
-            }`}
-          >
-            {`${
-              TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                (material) => values[material.value]
-              ).length
-            }/${TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length}`}
-          </div>
-          <div className="col-5 valor-total text-right">
+          <div className="col-6 valor-total text-right">
+            <span
+              className={`mr-4 ${
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
+                  (material) => values[material.value]
+                ).length ===
+                  TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length &&
+                "qtd-total"
+              }`}
+            >
+              {`${
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
+                  (material) => values[material.value]
+                ).length
+              }/${TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length} itens selecionados`}
+            </span>
             Valor total: R${" "}
             {getTotal(TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais, values)}{" "}
             <i
