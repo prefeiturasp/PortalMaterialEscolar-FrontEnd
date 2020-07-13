@@ -4,10 +4,18 @@ import { ProdutoPreco } from "./components/ProdutoPreco";
 import "./style.scss";
 import { MateriaisPorTipoEscola } from "./components/MateriaisPorTipoEscola";
 import Botao from "components/Botao";
-import { BUTTON_STYLE } from "components/Botao/constants";
+import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
+import { setTabelaPrecos } from "services/tabelaPrecos.service";
+import { formataTabelaPrecos } from "./helpers";
 
-export const TabelaPrecos = ({ form, values }) => {
+export const TabelaPrecos = ({ form, values, uuid }) => {
+  console.log(values);
   const [marcarTodosFlag, setMarcarTodosFlag] = useState(false);
+
+  const enviarPrecos = async () => {
+    const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
+    console.log(response);
+  };
 
   const marcarTodos = () => {
     setMarcarTodosFlag(!marcarTodosFlag);
@@ -188,7 +196,7 @@ export const TabelaPrecos = ({ form, values }) => {
             <div className="col-sm-6 col-12">
               <ProdutoPreco
                 name="giz_de_cera_ensino_fundamental_12_cores"
-                label=" Giz de cera Ensino Fundamental (12 cores)"
+                label="Giz de cera Ensino Fundamental (12 cores)"
                 values={values}
               />
             </div>
@@ -270,10 +278,19 @@ export const TabelaPrecos = ({ form, values }) => {
       />
       <div className="row mt-5 mb-5">
         <div className="col-6">
-          <Botao texto="Limpar" style={BUTTON_STYLE.BLUE_OUTLINE} />
+          <Botao
+            type={BUTTON_TYPE.RESET}
+            texto="Limpar"
+            style={BUTTON_STYLE.BLUE_OUTLINE}
+          />
         </div>
         <div className="col-6 text-right">
-          <Botao texto="Salvar" style={BUTTON_STYLE.BLUE} />
+          <Botao
+            texto="Salvar"
+            type={BUTTON_TYPE.BUTTON}
+            style={BUTTON_STYLE.BLUE}
+            onClick={() => enviarPrecos()}
+          />
         </div>
       </div>
     </div>

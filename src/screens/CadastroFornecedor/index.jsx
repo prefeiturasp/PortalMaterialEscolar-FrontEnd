@@ -91,7 +91,7 @@ export const CadastroFornecedor = () => {
                       <Cadastro values={values} empresa={empresa} />
                     )}
                     {tab === "tabela-precos" && (
-                      <TabelaPrecos form={form} values={values} />
+                      <TabelaPrecos form={form} values={values} uuid={uuid} />
                     )}
                     {tab === "arquivos" && (
                       <Arquivos empresa={empresa} setEmpresa={setEmpresa} />
