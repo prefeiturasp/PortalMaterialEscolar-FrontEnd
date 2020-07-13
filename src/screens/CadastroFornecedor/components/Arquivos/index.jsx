@@ -10,7 +10,7 @@ import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import { getTiposDocumentos } from "services/tiposDocumentos.service";
 import { setAnexo, setFachadaLoja, deleteAnexo } from "services/anexo.service";
 import { toastSuccess, toastError } from "components/Toast/dialogs";
-import { getProponente } from "services/cadastro.service";
+import { getProponente, concluirCadastro } from "services/cadastro.service";
 import { verificarSeFaltamArquivos } from "./helpers";
 import { OnChange } from "react-final-form-listeners";
 import "primeicons/primeicons.css";
@@ -143,6 +143,22 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
     });
   };
 
+  const finalizarCadastro = () => {
+    if (faltamArquivos) {
+      toastError(
+        "É preciso anexar todos os arquivos obrigatórios para finalizar seu cadastro"
+      );
+    } else {
+      concluirCadastro(empresa.uuid).then((response) => {
+        if (response.status === HTTP_STATUS.OK) {
+          window.location.href = "/confirmacao-cadastro";
+        } else {
+          toastError("Erro ao finalizar cadastro");
+        }
+      });
+    }
+  };
+
   return (
     <div className="arquivos">
       <div className="card w-100 mt-2">
@@ -273,19 +289,18 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
           )}
         </div>
       </div>
-      {
-        /*empresa && empresa.status !== "INSCRITO" && (*/
+      {empresa && empresa.status !== "INSCRITO" && (
         <div className="row">
           <div className="col-12 text-right mt-3 mb-3">
             <Botao
               type={BUTTON_TYPE.BUTTON}
               style={BUTTON_STYLE.BLUE}
+              onClick={() => finalizarCadastro()}
               texto="Finalizar"
             />
           </div>
         </div>
-        /*)*/
-      }
+      )}
     </div>
   );
 };
