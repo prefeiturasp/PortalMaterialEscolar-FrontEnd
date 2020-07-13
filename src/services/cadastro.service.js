@@ -44,4 +44,3 @@ export const getProponente = async (uuid) => {
       return error.json();
     });
 };
-
