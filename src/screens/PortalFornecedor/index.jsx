@@ -149,7 +149,7 @@ export const PortalFornecedor = () => {
             <div className="row mt-5">
               <div className="col-lg-6 col-sm-12 mb-lg-0">
                 <h2 className="cor-azul mb-4">
-                  Quais itens compõem o kit de material escolar da rede
+                  Quais itens compõem os kits de materiais escolares da rede
                   municipal de ensino?
                 </h2>
                 <KitMaterialEscolar tipoEscola="educacao_infantil" />

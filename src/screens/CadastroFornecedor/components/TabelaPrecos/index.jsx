@@ -92,14 +92,14 @@ export const TabelaPrecos = ({ form, values }) => {
             <div className="col-sm-6 col-12">
               <ProdutoPreco
                 name="caderno_brochurao_80_fls"
-                label="Caderno brochurão 80 Fls"
+                label="Caderno brochurão 80 Fls."
                 values={values}
               />
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
                 name="caderno_desenho_96_fls"
-                label="Caderno desenho 96 Fls"
+                label="Caderno desenho 96 Fls."
                 values={values}
               />
             </div>
@@ -108,14 +108,14 @@ export const TabelaPrecos = ({ form, values }) => {
             <div className="col-sm-6 col-12">
               <ProdutoPreco
                 name="caderno_universitario_96_fls"
-                label="Caderno universitário 96 Fls"
+                label="Caderno universitário 96 Fls."
                 values={values}
               />
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
                 name="caderno_universitario_200_fls"
-                label="Caderno universitário 200 Fls"
+                label="Caderno universitário 200 Fls."
                 values={values}
               />
             </div>

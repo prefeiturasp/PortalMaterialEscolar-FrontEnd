@@ -17,6 +17,9 @@ div.materiais-por-tipo-escola {
           font-weight: bold;
           color: $green;
         }
+        &.qtd-parcial {
+          color: $orange;
+        }
       }
       span i {
         cursor: pointer;

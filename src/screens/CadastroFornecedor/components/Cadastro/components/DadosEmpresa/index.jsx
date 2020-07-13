@@ -17,7 +17,7 @@ import {
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 
-export const DadosEmpresa = ({ values }) => {
+export const DadosEmpresa = ({ empresa, values }) => {
   return (
     <div>
       <h2>Dados da Empresa</h2>
@@ -31,6 +31,7 @@ export const DadosEmpresa = ({ values }) => {
             required
             validate={composeValidators(required, validaCNPJ)}
             placeholder="Digite o CNPJ da Empresa"
+            disabled={empresa}
           />
         </div>
         <div className="col-sm-6 col-12">
@@ -41,6 +42,7 @@ export const DadosEmpresa = ({ values }) => {
             required
             validate={composeValidators(required)}
             placeholder="Digite a Razão Social da Empresa"
+            disabled={empresa}
           />
         </div>
       </div>
@@ -50,30 +52,31 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             parse={formatString("12345-678")}
             label="CEP"
-            name="cep"
+            name="end_cep"
             required
             validate={composeValidators(required, validaCEP)}
             placeholder="Digite o CEP"
+            disabled={empresa}
           />
-          <OnChange name="cep">
+          <OnChange name="end_cep">
             {async (value, previous) => {
               if (value.length === 9) {
                 const response = await getEnderecoPorCEP(value);
                 if (response.status === HTTP_STATUS.OK) {
                   if (response.data.resultado === "0") {
                     toastError("CEP não encontrado");
-                    values.endereco = "";
-                    values.uf = "";
-                    values.cidade = "";
-                    values.bairro = "";
+                    values.end_logradouro = "";
+                    values.end_uf = "";
+                    values.end_cidade = "";
+                    values.end_bairro = "";
                   } else {
-                    values.endereco =
+                    values.end_logradouro =
                       response.data.tipo_logradouro +
                       " " +
                       response.data.logradouro;
-                    values.uf = response.data.uf;
-                    values.cidade = response.data.cidade;
-                    values.bairro = response.data.bairro;
+                    values.end_uf = response.data.uf;
+                    values.end_cidade = response.data.cidade;
+                    values.end_bairro = response.data.bairro;
                   }
                 }
               }
@@ -84,9 +87,10 @@ export const DadosEmpresa = ({ values }) => {
           <Field
             component={InputText}
             label="Bairro"
-            name="bairro"
+            name="end_bairro"
             required
             validate={required}
+            disabled={empresa}
           />
         </div>
       </div>
@@ -95,9 +99,10 @@ export const DadosEmpresa = ({ values }) => {
           <Field
             component={InputText}
             label="Endereço"
-            name="endereco"
+            name="end_logradouro"
             required
             validate={required}
+            disabled={empresa}
           />
         </div>
         <div className="col-sm-4 col-12">
@@ -105,8 +110,9 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             maxlength={20}
             label="Complemento"
-            name="complemento"
+            name="end_complemento"
             validate={somenteAlfanumericos}
+            disabled={empresa}
           />
         </div>
         <div className="col-sm-2 col-12">
@@ -114,9 +120,10 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             maxlength={255}
             label="Número"
-            name="numero"
+            name="end_numero"
             required
             validate={composeValidators(required, somenteAlfanumericos)}
+            disabled={empresa}
           />
         </div>
       </div>
@@ -126,8 +133,9 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             maxlength={20}
             label="Cidade"
-            name="cidade"
+            name="end_cidade"
             required
+            disabled={empresa}
           />
         </div>
         <div className="col-sm-2 col-12">
@@ -135,9 +143,10 @@ export const DadosEmpresa = ({ values }) => {
             component={InputText}
             maxlength={255}
             label="UF"
-            name="uf"
+            name="end_uf"
             required
             validate={composeValidators(required, somenteAlfanumericos)}
+            disabled={empresa}
           />
         </div>
       </div>
@@ -145,13 +154,14 @@ export const DadosEmpresa = ({ values }) => {
         <div className="col-12">
           <Field
             label="Nome completo"
-            name="nome"
+            name="responsavel"
             component={InputText}
             maxlength={255}
             type="text"
             placeholder="Nome completo"
             required
             validate={composeValidators(required, somenteCaracteresEEspacos)}
+            disabled={empresa}
           />
         </div>
       </div>
@@ -170,6 +180,7 @@ export const DadosEmpresa = ({ values }) => {
             required
             type="text"
             validate={composeValidators(required, validaTelefoneOuCelular)}
+            disabled={empresa}
           />
         </div>
         <div className="col-sm-6 col-12">
@@ -180,6 +191,7 @@ export const DadosEmpresa = ({ values }) => {
             name="email"
             type="text"
             validate={composeValidators(validaEmail)}
+            disabled={empresa}
           />
         </div>
       </div>
