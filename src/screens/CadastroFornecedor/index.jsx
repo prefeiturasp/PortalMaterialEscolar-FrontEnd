@@ -13,7 +13,7 @@ import {
   getProponente,
 } from "services/cadastro.service";
 import { toastSuccess, toastError } from "components/Toast/dialogs";
-import { formatarPayloadCadastro, addCidadeEstadoSP } from "./helpers";
+import { formatarPayloadCadastro, formataEmpresa } from "./helpers";
 import { getError } from "helpers/helpers";
 
 export const CadastroFornecedor = () => {
@@ -30,7 +30,7 @@ export const CadastroFornecedor = () => {
       if (uuid) {
         getProponente(uuid).then((response) => {
           if (response.status === HTTP_STATUS.OK) {
-            setEmpresa(addCidadeEstadoSP(response.data));
+            setEmpresa(formataEmpresa(response.data));
             setTab("tabela-precos");
             setUuid(uuid);
           } else {
@@ -47,9 +47,8 @@ export const CadastroFornecedor = () => {
       formatarPayloadCadastro(values)
     );
     if (response.status === HTTP_STATUS.CREATED) {
-      window.location.search += `?uuid=${response.data.uuid}`;
       toastSuccess("Cadastro enviado com sucesso!");
-      setTab("tabela-precos");
+      window.location.search += `?uuid=${response.data.uuid}`;
     } else {
       toastError(getError(response.data));
     }
@@ -70,6 +69,7 @@ export const CadastroFornecedor = () => {
                 }}
                 initialValues={{
                   ...empresa,
+                  marcar_todos: false,
                   lojas: empresa
                     ? empresa.lojas
                     : [

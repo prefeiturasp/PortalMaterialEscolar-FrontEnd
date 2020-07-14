@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useCallback } from "react";
+import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { ProdutoPreco } from "./components/ProdutoPreco";
 import "./style.scss";
@@ -7,47 +8,28 @@ import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
 import { setTabelaPrecos } from "services/tabelaPrecos.service";
 import { formataTabelaPrecos } from "./helpers";
+import { OnChange } from "react-final-form-listeners";
+import { toastSuccess, toastError } from "components/Toast/dialogs";
 
 export const TabelaPrecos = ({ form, values, uuid }) => {
-  console.log(values);
-  const [marcarTodosFlag, setMarcarTodosFlag] = useState(false);
-
   const enviarPrecos = async () => {
     const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
-    console.log(response);
-  };
-
-  const marcarTodos = () => {
-    setMarcarTodosFlag(!marcarTodosFlag);
-    values.agenda_educacao_infantil_check = !marcarTodosFlag;
-    values.agenda_ensino_fundamental_check = !marcarTodosFlag;
-    values.apontador_check = !marcarTodosFlag;
-    values.borracha_check = !marcarTodosFlag;
-    values.caderno_brochurao_80_fls_check = !marcarTodosFlag;
-    values.caderno_desenho_96_fls_check = !marcarTodosFlag;
-    values.caderno_universitario_96_fls_check = !marcarTodosFlag;
-    values.caderno_universitario_200_fls_check = !marcarTodosFlag;
-    values.caneta_esferografica_azul_check = !marcarTodosFlag;
-    values.caneta_esferografica_preta_check = !marcarTodosFlag;
-    values.caneta_esferografica_vermelha_check = !marcarTodosFlag;
-    values.caneta_hidrografica_12_cores_check = !marcarTodosFlag;
-    values.cola_branca_check = !marcarTodosFlag;
-    values.esquadro_45_check = !marcarTodosFlag;
-    values.esquadro_60_check = !marcarTodosFlag;
-    values.estojo_escolar_check = !marcarTodosFlag;
-    values.giz_de_cera_ensino_fundamental_12_cores_check = !marcarTodosFlag;
-    values.giz_de_cera_grosso_educacao_infantil_12_cores_check = !marcarTodosFlag;
-    values.lapis_de_cor_12_cores_check = !marcarTodosFlag;
-    values.lapis_grafite_check = !marcarTodosFlag;
-    values.massa_para_modelar_06_cores_check = !marcarTodosFlag;
-    values.regua_check = !marcarTodosFlag;
-    values.tesoura_check = !marcarTodosFlag;
-    values.tinta_guache_06_cores_check = !marcarTodosFlag;
-    values.transferidor_180_check = !marcarTodosFlag;
-    if (marcarTodosFlag) {
-      form.reset();
+    if (response.status === HTTP_STATUS.OK) {
+      toastSuccess("Tabela de preços atualizada com sucesso");
+    } else {
+      toastError("Erro ao atualizar tabela de preços");
     }
   };
+
+  const useForceUpdate = () => {
+    const [, setTick] = useState(0);
+    const update = useCallback(() => {
+      setTick((tick) => tick + 1);
+    }, []);
+    return update;
+  };
+
+  const forceUpdate = useForceUpdate();
 
   return (
     <div className="tabela-precos">
@@ -60,12 +42,40 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           </h3>
           <hr />
           <label className="marcar-todos">
-            <Field
-              name="marcar_todos"
-              component="input"
-              type="checkbox"
-              onClick={() => marcarTodos()}
-            />
+            <Field name="marcar_todos" component="input" type="checkbox" />
+            <OnChange name={`marcar_todos`}>
+              {(value, previous) => {
+                values.agenda_educacao_infantil_check = value;
+                values.agenda_ensino_fundamental_check = value;
+                values.apontador_check = value;
+                values.borracha_check = value;
+                values.caderno_brochurao_80_fls_check = value;
+                values.caderno_desenho_96_fls_check = value;
+                values.caderno_universitario_96_fls_check = value;
+                values.caderno_universitario_200_fls_check = value;
+                values.caneta_esferografica_azul_check = value;
+                values.caneta_esferografica_preta_check = value;
+                values.caneta_esferografica_vermelha_check = value;
+                values.caneta_hidrografica_12_cores_check = value;
+                values.cola_branca_check = value;
+                values.esquadro_45_check = value;
+                values.esquadro_60_check = value;
+                values.estojo_escolar_check = value;
+                values.giz_de_cera_ensino_fundamental_12_cores_check = value;
+                values.giz_de_cera_grosso_educacao_infantil_12_cores_check = value;
+                values.lapis_de_cor_12_cores_check = value;
+                values.lapis_grafite_check = value;
+                values.massa_para_modelar_06_cores_check = value;
+                values.regua_check = value;
+                values.tesoura_check = value;
+                values.tinta_guache_06_cores_check = value;
+                values.transferidor_180_check = value;
+                forceUpdate();
+                if (!value) {
+                  form.reset();
+                }
+              }}
+            </OnChange>
             Marcar todos
           </label>
           <div className="row mb-sm-3">

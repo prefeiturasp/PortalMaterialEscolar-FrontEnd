@@ -13,6 +13,7 @@ export const ProdutoPreco = ({ values, name, label }) => {
             (values[name] = values[`${name}_check`] ? "" : values[name])
           }
           name={`${name}_check`}
+          checked={values[`${name}_check`]}
           component="input"
           type="checkbox"
         />{" "}
