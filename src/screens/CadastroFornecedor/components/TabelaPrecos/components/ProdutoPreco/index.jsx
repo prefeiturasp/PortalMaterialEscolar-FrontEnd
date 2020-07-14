@@ -1,8 +1,8 @@
 import React from "react";
 import { Field } from "react-final-form";
-import "./style.scss";
 import { naoPodeMaiorQue10 } from "helpers/validators";
 import { InputText } from "components/Input/InputText";
+import "./style.scss";
 
 export const ProdutoPreco = ({ values, name, label }) => {
   return (

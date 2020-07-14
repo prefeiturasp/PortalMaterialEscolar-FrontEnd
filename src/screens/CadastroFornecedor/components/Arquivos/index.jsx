@@ -17,6 +17,7 @@ import "primeicons/primeicons.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "./style.scss";
+import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 
 export const Arquivos = ({ empresa, setEmpresa }) => {
   const [algumUploadEmAndamento, setAlgumUploadEmAndamento] = useState(false);
@@ -42,7 +43,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
   const forceUpdate = useForceUpdate();
 
   const setEmpresaEFaltaArquivos = (empresa) => {
-    setEmpresa(empresa);
+    setEmpresa(formataEmpresa(empresa));
     setFaltamArquivos(verificarSeFaltamArquivos(empresa, tiposDocumentos));
   };
 
@@ -72,7 +73,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
           toastError("Erro ao dar upload no arquivo");
           let empresa_ = empresa;
           empresa_.lojas[key].uploadEmAndamento = false;
-          setEmpresa(empresa_);
+          setEmpresa(formataEmpresa(empresa_));
           setAlgumUploadEmAndamento(false);
         }
       });

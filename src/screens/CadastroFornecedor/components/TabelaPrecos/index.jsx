@@ -70,10 +70,34 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
                 values.tesoura_check = value;
                 values.tinta_guache_06_cores_check = value;
                 values.transferidor_180_check = value;
-                forceUpdate();
                 if (!value) {
-                  form.reset();
+                  values.agenda_educacao_infantil = undefined;
+                  values.agenda_ensino_fundamental = undefined;
+                  values.apontador = undefined;
+                  values.borracha = undefined;
+                  values.caderno_brochurao_80_fls = undefined;
+                  values.caderno_desenho_96_fls = undefined;
+                  values.caderno_universitario_96_fls = undefined;
+                  values.caderno_universitario_200_fls = undefined;
+                  values.caneta_esferografica_azul = undefined;
+                  values.caneta_esferografica_preta = undefined;
+                  values.caneta_esferografica_vermelha = undefined;
+                  values.caneta_hidrografica_12_cores = undefined;
+                  values.cola_branca = undefined;
+                  values.esquadro_45 = undefined;
+                  values.esquadro_60 = undefined;
+                  values.estojo_escolar = undefined;
+                  values.giz_de_cera_ensino_fundamental_12_cores = undefined;
+                  values.giz_de_cera_grosso_educacao_infantil_12_cores = undefined;
+                  values.lapis_de_cor_12_cores = undefined;
+                  values.lapis_grafite = undefined;
+                  values.massa_para_modelar_06_cores = undefined;
+                  values.regua = undefined;
+                  values.tesoura = undefined;
+                  values.tinta_guache_06_cores = undefined;
+                  values.transferidor_180 = undefined;
                 }
+                forceUpdate()
               }}
             </OnChange>
             Marcar todos
@@ -291,6 +315,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <Botao
             type={BUTTON_TYPE.RESET}
             texto="Limpar"
+            onClick={() => form.reset()}
             style={BUTTON_STYLE.BLUE_OUTLINE}
           />
         </div>
