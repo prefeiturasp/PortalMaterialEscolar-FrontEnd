@@ -55,6 +55,7 @@ export const InputText = (props) => {
         min={min}
         max={max}
         name={name}
+        value={input.value}
         data-cy={input.name}
         placeholder={placeholder}
         required={required}

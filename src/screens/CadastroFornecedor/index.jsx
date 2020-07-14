@@ -68,6 +68,7 @@ export const CadastroFornecedor = () => {
                   ...arrayMutators,
                 }}
                 initialValues={{
+                  borracha_check: false,
                   ...empresa,
                   marcar_todos: false,
                   lojas: empresa
@@ -91,7 +92,13 @@ export const CadastroFornecedor = () => {
                       <Cadastro values={values} empresa={empresa} />
                     )}
                     {tab === "tabela-precos" && (
-                      <TabelaPrecos form={form} values={values} uuid={uuid} />
+                      <TabelaPrecos
+                        form={form}
+                        empresa={empresa}
+                        setEmpresa={setEmpresa}
+                        values={values}
+                        uuid={uuid}
+                      />
                     )}
                     {tab === "arquivos" && (
                       <Arquivos empresa={empresa} setEmpresa={setEmpresa} />

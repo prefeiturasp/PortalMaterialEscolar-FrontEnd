@@ -2,7 +2,6 @@ import React, { useState, useCallback } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { ProdutoPreco } from "./components/ProdutoPreco";
-import "./style.scss";
 import { MateriaisPorTipoEscola } from "./components/MateriaisPorTipoEscola";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
@@ -10,6 +9,7 @@ import { setTabelaPrecos } from "services/tabelaPrecos.service";
 import { formataTabelaPrecos } from "./helpers";
 import { OnChange } from "react-final-form-listeners";
 import { toastSuccess, toastError } from "components/Toast/dialogs";
+import "./style.scss";
 
 export const TabelaPrecos = ({ form, values, uuid }) => {
   const enviarPrecos = async () => {
@@ -97,7 +97,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
                   values.tinta_guache_06_cores = undefined;
                   values.transferidor_180 = undefined;
                 }
-                forceUpdate()
+                forceUpdate();
               }}
             </OnChange>
             Marcar todos
@@ -311,15 +311,14 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
         values={values}
       />
       <div className="row mt-5 mb-5">
-        <div className="col-6">
+        {/*<div className="col-6">
           <Botao
-            type={BUTTON_TYPE.RESET}
+            type={BUTTON_TYPE.BUTTON}
             texto="Limpar"
-            onClick={() => form.reset()}
             style={BUTTON_STYLE.BLUE_OUTLINE}
           />
-        </div>
-        <div className="col-6 text-right">
+            </div>*/}
+        <div className="col-12 text-right">
           <Botao
             texto="Salvar"
             type={BUTTON_TYPE.BUTTON}

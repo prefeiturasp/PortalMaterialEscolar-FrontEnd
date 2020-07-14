@@ -9,9 +9,9 @@ export const ProdutoPreco = ({ values, name, label }) => {
     <div className="row produto-preco">
       <label className="produto col-sm-6 col-12 my-auto">
         <Field
-          onClick={() =>
-            (values[name] = values[`${name}_check`] ? "" : values[name])
-          }
+          onClick={() => {
+            values[name] = values[`${name}_check`] ? "" : values[name];
+          }}
           name={`${name}_check`}
           checked={values[`${name}_check`]}
           component="input"

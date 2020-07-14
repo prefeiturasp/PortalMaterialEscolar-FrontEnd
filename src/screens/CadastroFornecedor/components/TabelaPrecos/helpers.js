@@ -31,7 +31,7 @@ export const MATERIAL_LABEL = {
 export const formataTabelaPrecos = (values) => {
   const ofertas_de_materiais = [];
   for (let [key, _] of Object.entries(values)) {
-    if (key.includes("_check")) {
+    if (key.includes("_check") && values[key]) {
       ofertas_de_materiais.push({
         nome: MATERIAL_LABEL[key.replace("_check", "")],
         valor: values[key.replace("_check", "")],
