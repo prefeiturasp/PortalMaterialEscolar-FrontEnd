@@ -68,7 +68,6 @@ export const CadastroFornecedor = () => {
                   ...arrayMutators,
                 }}
                 initialValues={{
-                  borracha_check: false,
                   ...empresa,
                   marcar_todos: false,
                   lojas: empresa

@@ -64,8 +64,8 @@ export const naoPodeMaiorQue10 = (value) =>
     : undefined;
 
 export const somenteValoresPositivos = (value) =>
-  value && parseFloat(value.replace(",", ".")) < 0
-    ? "Somente valores positivos"
+  value && parseFloat(value.replace(",", ".")) <= 0
+    ? "Somente valores positivos e maiores que 0"
     : undefined;
 
 export const validaCNPJ = (value) =>

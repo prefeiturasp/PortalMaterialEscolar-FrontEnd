@@ -28,6 +28,31 @@ export const MATERIAL_LABEL = {
   transferidor_180: "Transferidor 180º",
 };
 
+export const validarFormulario = (form, values) => {
+  let erro = false;
+  for (let [key, _] of Object.entries(values)) {
+    if (
+      key.includes("_check") &&
+      values[key] &&
+      !values[key.replace("_check", "")]
+    ) {
+      erro = `Campo ${
+        MATERIAL_LABEL[key.replace("_check", "")]
+      } não possui valor`;
+      return erro;
+    } else if (
+      key.includes("_check") &&
+      values[key.replace("_check", "")] &&
+      parseFloat(values[key.replace("_check", "")]) > 10
+    ) {
+      erro = `Valor máximo do campo ${
+        MATERIAL_LABEL[key.replace("_check", "")]
+      }: R$ 10,00`;
+    }
+  }
+  return erro;
+};
+
 export const formataTabelaPrecos = (values) => {
   const ofertas_de_materiais = [];
   for (let [key, _] of Object.entries(values)) {

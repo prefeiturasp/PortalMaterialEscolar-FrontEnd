@@ -6,18 +6,23 @@ import { MateriaisPorTipoEscola } from "./components/MateriaisPorTipoEscola";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
 import { setTabelaPrecos } from "services/tabelaPrecos.service";
-import { formataTabelaPrecos } from "./helpers";
+import { formataTabelaPrecos, validarFormulario } from "./helpers";
 import { OnChange } from "react-final-form-listeners";
-import { toastSuccess, toastError } from "components/Toast/dialogs";
+import { toastSuccess, toastError, toastWarn } from "components/Toast/dialogs";
 import "./style.scss";
 
 export const TabelaPrecos = ({ form, values, uuid }) => {
   const enviarPrecos = async () => {
-    const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
-    if (response.status === HTTP_STATUS.OK) {
-      toastSuccess("Tabela de preços atualizada com sucesso");
+    const erro = validarFormulario(form, values);
+    if (!erro) {
+      const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
+      if (response.status === HTTP_STATUS.OK) {
+        toastSuccess("Tabela de preços atualizada com sucesso");
+      } else {
+        toastError("Erro ao atualizar tabela de preços");
+      }
     } else {
-      toastError("Erro ao atualizar tabela de preços");
+      toastWarn(erro);
     }
   };
 
