@@ -29,6 +29,59 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
     return update;
   };
 
+  const limparTabelaPrecos = () => {
+    form.change("agenda_educacao_infantil_check", false);
+    form.change("agenda_ensino_fundamental_check", false);
+    form.change("apontador_check", false);
+    form.change("borracha_check", false);
+    form.change("caderno_brochurao_80_fls_check", false);
+    form.change("caderno_desenho_96_fls_check", false);
+    form.change("caderno_universitario_96_fls_check", false);
+    form.change("caderno_universitario_200_fls_check", false);
+    form.change("caneta_esferografica_azul_check", false);
+    form.change("caneta_esferografica_preta_check", false);
+    form.change("caneta_esferografica_vermelha_check", false);
+    form.change("caneta_hidrografica_12_cores_check", false);
+    form.change("cola_branca_check", false);
+    form.change("esquadro_45_check", false);
+    form.change("esquadro_60_check", false);
+    form.change("estojo_escolar_check", false);
+    form.change("giz_de_cera_ensino_fundamental_12_cores_check", false);
+    form.change("giz_de_cera_grosso_educacao_infantil_12_cores_check", false);
+    form.change("lapis_de_cor_12_cores_check", false);
+    form.change("lapis_grafite_check", false);
+    form.change("massa_para_modelar_06_cores_check", false);
+    form.change("regua_check", false);
+    form.change("tesoura_check", false);
+    form.change("tinta_guache_06_cores_check", false);
+    form.change("transferidor_180_check", false);
+    form.change("agenda_educacao_infantil", undefined);
+    form.change("agenda_ensino_fundamental", undefined);
+    form.change("apontador", undefined);
+    form.change("borracha", undefined);
+    form.change("caderno_brochurao_80_fls", undefined);
+    form.change("caderno_desenho_96_fls", undefined);
+    form.change("caderno_universitario_96_fls", undefined);
+    form.change("caderno_universitario_200_fls", undefined);
+    form.change("caneta_esferografica_azul", undefined);
+    form.change("caneta_esferografica_preta", undefined);
+    form.change("caneta_esferografica_vermelha", undefined);
+    form.change("caneta_hidrografica_12_cores", undefined);
+    form.change("cola_branca", undefined);
+    form.change("esquadro_45", undefined);
+    form.change("esquadro_60", undefined);
+    form.change("estojo_escolar", undefined);
+    form.change("giz_de_cera_ensino_fundamental_12_cores", undefined);
+    form.change("giz_de_cera_grosso_educacao_infantil_12_cores", undefined);
+    form.change("lapis_de_cor_12_cores", undefined);
+    form.change("lapis_grafite", undefined);
+    form.change("massa_para_modelar_06_cores", undefined);
+    form.change("regua", undefined);
+    form.change("tesoura", undefined);
+    form.change("tinta_guache_06_cores", undefined);
+    form.change("transferidor_180", undefined);
+  };
+
   const forceUpdate = useForceUpdate();
 
   return (
@@ -71,31 +124,37 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
                 values.tinta_guache_06_cores_check = value;
                 values.transferidor_180_check = value;
                 if (!value) {
-                  values.agenda_educacao_infantil = undefined;
-                  values.agenda_ensino_fundamental = undefined;
-                  values.apontador = undefined;
-                  values.borracha = undefined;
-                  values.caderno_brochurao_80_fls = undefined;
-                  values.caderno_desenho_96_fls = undefined;
-                  values.caderno_universitario_96_fls = undefined;
-                  values.caderno_universitario_200_fls = undefined;
-                  values.caneta_esferografica_azul = undefined;
-                  values.caneta_esferografica_preta = undefined;
-                  values.caneta_esferografica_vermelha = undefined;
-                  values.caneta_hidrografica_12_cores = undefined;
-                  values.cola_branca = undefined;
-                  values.esquadro_45 = undefined;
-                  values.esquadro_60 = undefined;
-                  values.estojo_escolar = undefined;
-                  values.giz_de_cera_ensino_fundamental_12_cores = undefined;
-                  values.giz_de_cera_grosso_educacao_infantil_12_cores = undefined;
-                  values.lapis_de_cor_12_cores = undefined;
-                  values.lapis_grafite = undefined;
-                  values.massa_para_modelar_06_cores = undefined;
-                  values.regua = undefined;
-                  values.tesoura = undefined;
-                  values.tinta_guache_06_cores = undefined;
-                  values.transferidor_180 = undefined;
+                  form.change("agenda_educacao_infantil", undefined);
+                  form.change("agenda_ensino_fundamental", undefined);
+                  form.change("apontador", undefined);
+                  form.change("borracha", undefined);
+                  form.change("caderno_brochurao_80_fls", undefined);
+                  form.change("caderno_desenho_96_fls", undefined);
+                  form.change("caderno_universitario_96_fls", undefined);
+                  form.change("caderno_universitario_200_fls", undefined);
+                  form.change("caneta_esferografica_azul", undefined);
+                  form.change("caneta_esferografica_preta", undefined);
+                  form.change("caneta_esferografica_vermelha", undefined);
+                  form.change("caneta_hidrografica_12_cores", undefined);
+                  form.change("cola_branca", undefined);
+                  form.change("esquadro_45", undefined);
+                  form.change("esquadro_60", undefined);
+                  form.change("estojo_escolar", undefined);
+                  form.change(
+                    "giz_de_cera_ensino_fundamental_12_cores",
+                    undefined
+                  );
+                  form.change(
+                    "giz_de_cera_grosso_educacao_infantil_12_cores",
+                    undefined
+                  );
+                  form.change("lapis_de_cor_12_cores", undefined);
+                  form.change("lapis_grafite", undefined);
+                  form.change("massa_para_modelar_06_cores", undefined);
+                  form.change("regua", undefined);
+                  form.change("tesoura", undefined);
+                  form.change("tinta_guache_06_cores", undefined);
+                  form.change("transferidor_180", undefined);
                 }
                 forceUpdate();
               }}
@@ -311,13 +370,14 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
         values={values}
       />
       <div className="row mt-5 mb-5">
-        {/*<div className="col-6">
+        <div className="col-6">
           <Botao
             type={BUTTON_TYPE.BUTTON}
+            onClick={() => limparTabelaPrecos()}
             texto="Limpar"
             style={BUTTON_STYLE.BLUE_OUTLINE}
           />
-            </div>*/}
+        </div>
         <div className="col-12 text-right">
           <Botao
             texto="Salvar"
