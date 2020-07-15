@@ -13,7 +13,7 @@ import "./style.scss";
 
 export const TabelaPrecos = ({ form, values, uuid }) => {
   const enviarPrecos = async () => {
-    const erro = validarFormulario(form, values);
+    const erro = validarFormulario(values);
     if (!erro) {
       const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
       if (response.status === HTTP_STATUS.OK) {

@@ -28,7 +28,7 @@ export const MATERIAL_LABEL = {
   transferidor_180: "Transferidor 180º",
 };
 
-export const validarFormulario = (form, values) => {
+export const validarFormulario = (values) => {
   let erro = false;
   for (let [key, _] of Object.entries(values)) {
     if (
@@ -48,6 +48,7 @@ export const validarFormulario = (form, values) => {
       erro = `Valor máximo do campo ${
         MATERIAL_LABEL[key.replace("_check", "")]
       }: R$ 10,00`;
+      return erro;
     }
   }
   return erro;
