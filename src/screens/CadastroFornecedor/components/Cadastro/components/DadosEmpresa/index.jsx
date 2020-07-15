@@ -39,6 +39,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             component={InputText}
             label="Razão Social"
             name="razao_social"
+            maxlength={255}
             required
             validate={composeValidators(required)}
             placeholder="Digite a Razão Social da Empresa"
@@ -90,6 +91,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             component={InputText}
             label="Bairro"
             name="end_bairro"
+            maxlength={100}
             required
             validate={required}
             disabled={empresa}
@@ -102,6 +104,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             component={InputText}
             label="Endereço"
             name="end_logradouro"
+            maxlength={100}
             required
             validate={required}
             disabled={empresa}
@@ -112,6 +115,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             component={InputText}
             maxlength={20}
             label="Complemento"
+            maxlength={100}
             name="end_complemento"
             validate={somenteAlfanumericos}
             disabled={empresa}
@@ -120,7 +124,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
         <div className="col-sm-2 col-12">
           <Field
             component={InputText}
-            maxlength={255}
+            maxlength={20}
             label="Número"
             name="end_numero"
             required
@@ -133,7 +137,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
         <div className="col-sm-10 col-12">
           <Field
             component={InputText}
-            maxlength={20}
+            maxlength={100}
             label="Cidade"
             name="end_cidade"
             required
@@ -143,7 +147,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
         <div className="col-sm-2 col-12">
           <Field
             component={InputText}
-            maxlength={255}
+            maxlength={2}
             label="UF"
             name="end_uf"
             required
@@ -191,6 +195,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             placeholder={"E-mail"}
             label="E-mail"
             name="email"
+            maxlength={255}
             type="text"
             validate={composeValidators(validaEmail)}
             disabled={empresa}

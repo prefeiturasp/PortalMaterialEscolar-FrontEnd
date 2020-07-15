@@ -58,6 +58,11 @@ export const somenteAlfanumericos = (value) =>
     ? "Somente caracteres alfanuméricos"
     : undefined;
 
+export const somenteNumeros = (value) =>
+  value && /[^0-9.,]/i.test(value)
+    ? "Somente números decimais"
+    : undefined;
+
 export const naoPodeMaiorQue10 = (value) =>
   value && parseFloat(value.replace(",", ".")) > 10.0
     ? `Valor máximo: R$ 10,00`

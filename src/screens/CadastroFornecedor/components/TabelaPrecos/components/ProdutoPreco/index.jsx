@@ -4,6 +4,7 @@ import {
   naoPodeMaiorQue10,
   composeValidators,
   somenteValoresPositivos,
+  somenteNumeros,
 } from "helpers/validators";
 import { InputText } from "components/Input/InputText";
 import "./style.scss";
@@ -31,11 +32,10 @@ export const ProdutoPreco = ({ form, values, name, label }) => {
         <Field
           name={name}
           component={InputText}
-          type="number"
-          min={0}
           className="col-10"
           validate={composeValidators(
             naoPodeMaiorQue10,
+            somenteNumeros,
             somenteValoresPositivos
           )}
           disabled={!values[`${name}_check`]}

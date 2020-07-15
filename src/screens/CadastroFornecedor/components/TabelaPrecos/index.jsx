@@ -1,4 +1,4 @@
-import React, { useState, useCallback } from "react";
+import React, { Fragment, useState, useCallback } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { ProdutoPreco } from "./components/ProdutoPreco";
@@ -9,14 +9,23 @@ import { setTabelaPrecos } from "services/tabelaPrecos.service";
 import { formataTabelaPrecos, validarFormulario } from "./helpers";
 import { OnChange } from "react-final-form-listeners";
 import { toastSuccess, toastError, toastWarn } from "components/Toast/dialogs";
+import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 import "./style.scss";
 
-export const TabelaPrecos = ({ form, values, uuid, setTab }) => {
+export const TabelaPrecos = ({
+  form,
+  values,
+  uuid,
+  setTab,
+  empresa,
+  setEmpresa,
+}) => {
   const enviarPrecos = async () => {
     const erro = validarFormulario(values);
     if (!erro) {
       const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
       if (response.status === HTTP_STATUS.OK) {
+        setEmpresa(formataEmpresa(response.data));
         toastSuccess("Tabela de preços atualizada com sucesso");
         setTab("arquivos");
       } else {
@@ -413,22 +422,26 @@ export const TabelaPrecos = ({ form, values, uuid, setTab }) => {
         values={values}
       />
       <div className="row mt-5 mb-5">
-        <div className="col-6">
-          <Botao
-            type={BUTTON_TYPE.BUTTON}
-            onClick={() => limparTabelaPrecos()}
-            texto="Limpar"
-            style={BUTTON_STYLE.BLUE_OUTLINE}
-          />
-        </div>
-        <div className="col-12 text-right">
-          <Botao
-            texto="Salvar"
-            type={BUTTON_TYPE.BUTTON}
-            style={BUTTON_STYLE.BLUE}
-            onClick={() => enviarPrecos()}
-          />
-        </div>
+        {empresa && empresa.status !== "INSCRITO" && (
+          <Fragment>
+            <div className="col-6">
+              <Botao
+                type={BUTTON_TYPE.BUTTON}
+                onClick={() => limparTabelaPrecos()}
+                texto="Limpar"
+                style={BUTTON_STYLE.BLUE_OUTLINE}
+              />
+            </div>
+            <div className="col-12 text-right">
+              <Botao
+                texto="Salvar"
+                type={BUTTON_TYPE.BUTTON}
+                style={BUTTON_STYLE.BLUE}
+                onClick={() => enviarPrecos()}
+              />
+            </div>
+          </Fragment>
+        )}
       </div>
     </div>
   );

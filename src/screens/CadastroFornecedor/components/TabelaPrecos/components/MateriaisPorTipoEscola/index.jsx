@@ -74,7 +74,6 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
                       <label>
                         R${" "}
                         <input
-                          type="number"
                           value={values[material.value]}
                           className="col-7"
                           disabled
@@ -87,7 +86,7 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
                       {values[material.value]
                         ? (
                             material.quantidade *
-                            parseFloat(values[material.value])
+                            parseFloat(values[material.value].replace(",", "."))
                           )
                             .toFixed(2)
                             .toString()

@@ -49,6 +49,15 @@ export const validarFormulario = (values) => {
         MATERIAL_LABEL[key.replace("_check", "")]
       }: R$ 10,00`;
       return erro;
+    } else if (
+      key.includes("_check") &&
+      values[key.replace("_check", "")] &&
+      parseFloat(values[key.replace("_check", "")]) === 0
+    ) {
+      erro = `Valor do campo ${
+        MATERIAL_LABEL[key.replace("_check", "")]
+      } não pode ser R$ 0,00`;
+      return erro;
     }
   }
   return erro;
@@ -60,7 +69,7 @@ export const formataTabelaPrecos = (values) => {
     if (key.includes("_check") && values[key]) {
       ofertas_de_materiais.push({
         nome: MATERIAL_LABEL[key.replace("_check", "")],
-        valor: values[key.replace("_check", "")],
+        valor: parseFloat(values[key.replace("_check", "")].replace(",", ".")),
       });
     }
   }

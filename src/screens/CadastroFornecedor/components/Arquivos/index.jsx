@@ -146,10 +146,13 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
   };
 
   const finalizarCadastro = () => {
+    setEmpresaEFaltaArquivos(empresa);
     if (faltamArquivos) {
       toastError(
         "É preciso anexar todos os arquivos obrigatórios para finalizar seu cadastro"
       );
+    } else if (empresa.ofertas_de_materiais.length === 0) {
+      toastError("É preciso fornecer ao menos um material escolar");
     } else {
       concluirCadastro(empresa.uuid).then((response) => {
         if (response.status === HTTP_STATUS.OK) {
@@ -291,18 +294,18 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
           )}
         </div>
       </div>
-      {empresa && empresa.status !== "INSCRITO" && (
-        <div className="row">
-          <div className="col-12 text-right mt-3 mb-3">
+      <div className="row">
+        <div className="col-12 text-right mt-3 mb-3">
+          {empresa && empresa.status !== "INSCRITO" && (
             <Botao
               type={BUTTON_TYPE.BUTTON}
               style={BUTTON_STYLE.BLUE}
               onClick={() => finalizarCadastro()}
               texto="Finalizar"
             />
-          </div>
+          )}
         </div>
-      )}
+      </div>
     </div>
   );
 };
