@@ -88,7 +88,7 @@ export const CadastroFornecedor = () => {
                 }) => (
                   <form onSubmit={handleSubmit}>
                     {tab === "cadastro" && (
-                      <Cadastro values={values} empresa={empresa} />
+                      <Cadastro values={values} empresa={empresa} form={form} />
                     )}
                     {tab === "tabela-precos" && (
                       <TabelaPrecos

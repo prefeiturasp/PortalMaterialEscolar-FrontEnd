@@ -17,7 +17,7 @@ import {
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 
-export const DadosEmpresa = ({ empresa, values }) => {
+export const DadosEmpresa = ({ empresa, form, values }) => {
   return (
     <div>
       <h2>Dados da Empresa</h2>
@@ -65,18 +65,20 @@ export const DadosEmpresa = ({ empresa, values }) => {
                 if (response.status === HTTP_STATUS.OK) {
                   if (response.data.resultado === "0") {
                     toastError("CEP não encontrado");
-                    values.end_logradouro = "";
-                    values.end_uf = "";
-                    values.end_cidade = "";
-                    values.end_bairro = "";
+                    form.change("end_logradouro", "");
+                    form.change("end_uf", "");
+                    form.change("end_cidade", "");
+                    form.change("end_bairro", "");
                   } else {
-                    values.end_logradouro =
+                    form.change(
+                      "end_logradouro",
                       response.data.tipo_logradouro +
-                      " " +
-                      response.data.logradouro;
-                    values.end_uf = response.data.uf;
-                    values.end_cidade = response.data.cidade;
-                    values.end_bairro = response.data.bairro;
+                        " " +
+                        response.data.logradouro
+                    );
+                    form.change("end_uf", response.data.uf);
+                    form.change("end_cidade", response.data.cidade);
+                    form.change("end_bairro", response.data.bairro);
                   }
                 }
               }

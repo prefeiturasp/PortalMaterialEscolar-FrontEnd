@@ -12,7 +12,7 @@ import {
 import { toastError } from "components/Toast/dialogs";
 import "./style.scss";
 
-export const Cadastro = ({ values, empresa }) => {
+export const Cadastro = ({ values, empresa, form }) => {
   const copiarEndereco = (fields) => {
     if (!values.copiar_endereco && values.end_cidade) {
       if (values.end_cidade !== "São Paulo") {
@@ -26,6 +26,14 @@ export const Cadastro = ({ values, empresa }) => {
         fields.value[0].numero = values.end_numero;
         fields.value[0].complemento = values.end_complemento;
       }
+    } else if (values.copiar_endereco) {
+      fields.value[0].endereco = "";
+      fields.value[0].cidade = "";
+      fields.value[0].uf = "";
+      fields.value[0].bairro = "";
+      fields.value[0].cep = "";
+      fields.value[0].numero = "";
+      fields.value[0].complemento = "";
     }
   };
 
@@ -33,7 +41,7 @@ export const Cadastro = ({ values, empresa }) => {
     <Fragment>
       <div className="card">
         <div className="card-body">
-          <DadosEmpresa values={values} empresa={empresa} />
+          <DadosEmpresa values={values} empresa={empresa} form={form} />
         </div>
       </div>
       <FieldArray name="lojas">
