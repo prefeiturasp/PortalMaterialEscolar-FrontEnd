@@ -25,6 +25,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
   const [faltamArquivos, setFaltamArquivos] = useState(true);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     const loadDocumentos = async () => {
       const response = await getTiposDocumentos();
       setTiposDocumentos(response.data);

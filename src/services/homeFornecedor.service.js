@@ -1,30 +1,7 @@
 import { API_URL } from "../config";
 
-export const cadastroFornecedorStep1 = async (payload) => {
-  const url = `${API_URL}/proponentes/`;
-  let status = 0;
-  return fetch(url, {
-    headers: {
-      "Accept-Language": "pt-br",
-      "Content-Type": "application/json",
-    },
-    method: "POST",
-    body: JSON.stringify(payload),
-  })
-    .then((res) => {
-      status = res.status;
-      return res.json();
-    })
-    .then((data) => {
-      return { data: data, status: status };
-    })
-    .catch((error) => {
-      return error;
-    });
-};
-
-export const getProponente = async (uuid) => {
-  const url = `${API_URL}/proponentes/${uuid}/`;
+export const getEdital = async () => {
+  const url = `${API_URL}/edital/`;
   let status = 0;
   return fetch(url, {
     headers: {
@@ -45,15 +22,15 @@ export const getProponente = async (uuid) => {
     });
 };
 
-export const concluirCadastro = async (uuid) => {
-  const url = `${API_URL}/proponentes/${uuid}/concluir-cadastro/`;
+export const busca_url_instrucao_normativa = async () => {
+  const url = `${API_URL}/instrucao_normativa/`;
   let status = 0;
   return fetch(url, {
     headers: {
       "Accept-Language": "pt-br",
       "Content-Type": "application/json",
     },
-    method: "PATCH",
+    method: "GET",
   })
     .then((res) => {
       status = res.status;

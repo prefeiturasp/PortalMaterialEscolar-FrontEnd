@@ -7,7 +7,6 @@ import { Tabs } from "./components/Tabs";
 import { Cadastro } from "./components/Cadastro";
 import { Arquivos } from "./components/Arquivos";
 import { TabelaPrecos } from "./components/TabelaPrecos";
-import "./style.scss";
 import {
   cadastroFornecedorStep1,
   getProponente,
@@ -15,12 +14,16 @@ import {
 import { toastSuccess, toastError } from "components/Toast/dialogs";
 import { formatarPayloadCadastro, formataEmpresa } from "./helpers";
 import { getError } from "helpers/helpers";
+import { API_URL } from "config";
+import { getEdital } from "services/homeFornecedor.service";
+import "./style.scss";
 
 export const CadastroFornecedor = () => {
   const [empresa, setEmpresa] = useState(null);
   const [tab, setTab] = useState("cadastro");
   const [uuid, setUuid] = useState(null);
   const [erroAPI, setErroAPI] = useState(false);
+  const [edital, setEdital] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -39,7 +42,15 @@ export const CadastroFornecedor = () => {
         });
       }
     };
+    const carregaEdital = async () => {
+      getEdital().then((response) => {
+        if (response.status === HTTP_STATUS.OK) {
+          setEdital(API_URL.replace("api", "") + response.data);
+        }
+      });
+    };
     carregaEmpresa();
+    carregaEdital();
   }, []);
 
   const onSubmit = async (values) => {
@@ -88,7 +99,12 @@ export const CadastroFornecedor = () => {
                 }) => (
                   <form onSubmit={handleSubmit}>
                     {tab === "cadastro" && (
-                      <Cadastro values={values} empresa={empresa} form={form} />
+                      <Cadastro
+                        values={values}
+                        empresa={empresa}
+                        form={form}
+                        edital={edital}
+                      />
                     )}
                     {tab === "tabela-precos" && (
                       <TabelaPrecos
@@ -97,6 +113,7 @@ export const CadastroFornecedor = () => {
                         setEmpresa={setEmpresa}
                         values={values}
                         uuid={uuid}
+                        setTab={setTab}
                       />
                     )}
                     {tab === "arquivos" && (

@@ -1,15 +1,28 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
+import HTTP_STATUS from "http-status-codes";
 import { Link } from "react-router-dom";
 import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
 import imgDesenhoFornecedor from "assets/img/landing-fornecedor-wide.jpg";
 import imgFachadaLoja from "assets/img/landing-loja-fundo-branco.jpg";
 import imgMateriais from "assets/img/materiais.svg";
-import "./style.scss";
 import Botao from "components/Botao";
 import { BUTTON_STYLE } from "components/Botao/constants";
 import { KitMaterialEscolar } from "./KitMaterialEscolar";
+import { getEdital } from "services/homeFornecedor.service";
+import { API_URL } from "config";
+import "./style.scss";
 
 export const PortalFornecedor = () => {
+  const [edital, setEdital] = useState(null);
+
+  useEffect(() => {
+    getEdital().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setEdital(API_URL.replace("api", "") + response.data);
+      }
+    });
+  }, []);
+
   return (
     <div className="portal-fornecedor">
       <PaginaComCabecalhoRodape>
@@ -79,14 +92,14 @@ export const PortalFornecedor = () => {
                     <li>
                       Possuir toda a documentação válida conforme as condições
                       do
-                      <a className="links-intrucoes" href={"/"}>
+                      <a className="links-intrucoes" href={edital}>
                         <strong> Edital</strong>
                       </a>
                       ;
                     </li>
                     <li>
                       Conhecer e concordar com as regras previstas no{" "}
-                      <a className="links-intrucoes" href={"/"}>
+                      <a className="links-intrucoes" href={edital}>
                         <strong> Edital </strong>
                       </a>
                       de Credenciamento;
@@ -131,11 +144,11 @@ export const PortalFornecedor = () => {
                   <p>
                     <a
                       className="links-intrucoes"
-                      href={"/"}
+                      href={edital}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <strong>edital label</strong>
+                      <strong>[Link Edital]</strong>
                     </a>
                   </p>
                 </div>

@@ -11,13 +11,14 @@ import { OnChange } from "react-final-form-listeners";
 import { toastSuccess, toastError, toastWarn } from "components/Toast/dialogs";
 import "./style.scss";
 
-export const TabelaPrecos = ({ form, values, uuid }) => {
+export const TabelaPrecos = ({ form, values, uuid, setTab }) => {
   const enviarPrecos = async () => {
     const erro = validarFormulario(values);
     if (!erro) {
       const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
       if (response.status === HTTP_STATUS.OK) {
         toastSuccess("Tabela de preços atualizada com sucesso");
+        setTab("arquivos");
       } else {
         toastError("Erro ao atualizar tabela de preços");
       }

@@ -12,7 +12,7 @@ import {
 import { toastError } from "components/Toast/dialogs";
 import "./style.scss";
 
-export const Cadastro = ({ values, empresa, form }) => {
+export const Cadastro = ({ values, empresa, form, edital }) => {
   const copiarEndereco = (fields) => {
     if (!values.copiar_endereco && values.end_cidade) {
       if (values.end_cidade !== "São Paulo") {
@@ -96,7 +96,7 @@ export const Cadastro = ({ values, empresa, form }) => {
                 required
                 type="checkbox"
               />
-              <label title="" className="form-check-label">
+              <label className="form-check-label">
                 Declaro que as informações acima prestadas são verdadeiras.
               </label>
             </div>
@@ -110,11 +110,11 @@ export const Cadastro = ({ values, empresa, form }) => {
                 required
                 type="checkbox"
               />
-              <label title="" className="form-check-label">
+              <label className="form-check-label">
                 Li e concordo com os termos e condições apresentados no
                 <a
                   className="links-intrucoes"
-                  href={"/"}
+                  href={edital}
                   target="_blank"
                   rel="noopener noreferrer"
                 >
@@ -132,7 +132,7 @@ export const Cadastro = ({ values, empresa, form }) => {
                 required
                 type="checkbox"
               />
-              <label title="" className="form-check-label">
+              <label className="form-check-label">
                 Declaro que fornecerei os itens pelos valores máximos indicados
                 acima
               </label>
