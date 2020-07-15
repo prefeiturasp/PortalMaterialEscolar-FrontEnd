@@ -164,6 +164,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="agenda_educacao_infantil"
                 label="Agenda Educação Infantil"
                 values={values}
@@ -171,6 +172,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="agenda_ensino_fundamental"
                 label="Agenda Ensino Fundamental"
                 values={values}
@@ -180,18 +182,25 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="apontador"
                 label="Apontador"
                 values={values}
               />
             </div>
             <div className="col-sm-6 col-12">
-              <ProdutoPreco name="borracha" label="Borracha" values={values} />
+              <ProdutoPreco
+                form={form}
+                name="borracha"
+                label="Borracha"
+                values={values}
+              />
             </div>
           </div>
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caderno_brochurao_80_fls"
                 label="Caderno brochurão 80 Fls."
                 values={values}
@@ -199,6 +208,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caderno_desenho_96_fls"
                 label="Caderno desenho 96 Fls."
                 values={values}
@@ -208,6 +218,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caderno_universitario_96_fls"
                 label="Caderno universitário 96 Fls."
                 values={values}
@@ -215,6 +226,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caderno_universitario_200_fls"
                 label="Caderno universitário 200 Fls."
                 values={values}
@@ -224,6 +236,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caneta_esferografica_azul"
                 label="Caneta esferográfica azul"
                 values={values}
@@ -231,6 +244,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caneta_esferografica_preta"
                 label="Caneta esferográfica preta"
                 values={values}
@@ -240,6 +254,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caneta_esferografica_vermelha"
                 label="Caneta esferográfica vermelha"
                 values={values}
@@ -247,6 +262,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="caneta_hidrografica_12_cores"
                 label="Caneta hidrográfica (12 cores)"
                 values={values}
@@ -256,6 +272,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="cola_branca"
                 label="Cola branca"
                 values={values}
@@ -263,6 +280,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="esquadro_45"
                 label="Esquadro 45º"
                 values={values}
@@ -272,6 +290,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="esquadro_60"
                 label="Esquadro 60º"
                 values={values}
@@ -279,6 +298,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="estojo_escolar"
                 label="Estojo escolar"
                 values={values}
@@ -288,6 +308,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="giz_de_cera_ensino_fundamental_12_cores"
                 label="Giz de cera Ensino Fundamental (12 cores)"
                 values={values}
@@ -295,6 +316,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="giz_de_cera_grosso_educacao_infantil_12_cores"
                 label="Giz de cera grosso Educação Infantil (12 cores)"
                 values={values}
@@ -304,6 +326,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="lapis_de_cor_12_cores"
                 label="Lápis de cor (12 cores)"
                 values={values}
@@ -311,6 +334,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="lapis_grafite"
                 label="Lápis grafite"
                 values={values}
@@ -320,21 +344,33 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="massa_para_modelar_06_cores"
                 label="Massa para modelar (06 cores)"
                 values={values}
               />
             </div>
             <div className="col-sm-6 col-12">
-              <ProdutoPreco name="regua" label="Régua" values={values} />
+              <ProdutoPreco
+                form={form}
+                name="regua"
+                label="Régua"
+                values={values}
+              />
             </div>
           </div>
           <div className="row  mb-sm-3">
             <div className="col-sm-6 col-12">
-              <ProdutoPreco name="tesoura" label="Tesoura" values={values} />
+              <ProdutoPreco
+                form={form}
+                name="tesoura"
+                label="Tesoura"
+                values={values}
+              />
             </div>
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="tinta_guache_06_cores"
                 label="Tinta guache (06 cores)"
                 values={values}
@@ -344,6 +380,7 @@ export const TabelaPrecos = ({ form, values, uuid }) => {
           <div className="row mb-sm-3">
             <div className="col-sm-6 col-12">
               <ProdutoPreco
+                form={form}
                 name="transferidor_180"
                 label="Transferidor 180º"
                 values={values}

@@ -63,5 +63,10 @@ export const naoPodeMaiorQue10 = (value) =>
     ? `Valor máximo: R$ 10,00`
     : undefined;
 
+export const somenteValoresPositivos = (value) =>
+  value && parseFloat(value.replace(",", ".")) < 0
+    ? "Somente valores positivos"
+    : undefined;
+
 export const validaCNPJ = (value) =>
   validate(value) ? undefined : "CNPJ inválido";

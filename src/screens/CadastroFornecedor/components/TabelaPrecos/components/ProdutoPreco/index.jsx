@@ -1,16 +1,23 @@
 import React from "react";
 import { Field } from "react-final-form";
-import { naoPodeMaiorQue10 } from "helpers/validators";
+import {
+  naoPodeMaiorQue10,
+  composeValidators,
+  somenteValoresPositivos,
+} from "helpers/validators";
 import { InputText } from "components/Input/InputText";
 import "./style.scss";
 
-export const ProdutoPreco = ({ values, name, label }) => {
+export const ProdutoPreco = ({ form, values, name, label }) => {
   return (
     <div className="row produto-preco">
       <label className="produto col-sm-6 col-12 my-auto">
         <Field
           onClick={() => {
-            values[name] = values[`${name}_check`] ? "" : values[name];
+            form.change(
+              name,
+              values[`${name}_check`] ? undefined : values[name]
+            );
           }}
           name={`${name}_check`}
           checked={values[`${name}_check`]}
@@ -25,8 +32,12 @@ export const ProdutoPreco = ({ values, name, label }) => {
           name={name}
           component={InputText}
           type="number"
+          min={0}
           className="col-10"
-          validate={naoPodeMaiorQue10}
+          validate={composeValidators(
+            naoPodeMaiorQue10,
+            somenteValoresPositivos
+          )}
           disabled={!values[`${name}_check`]}
         />
       </label>
