@@ -20,7 +20,7 @@ export const MegaPortal = () => {
                   lojas credenciadas, oferecendo mais qualidade e agilidade.
                 </h1>
                 <p>
-                  Em 2020, os kits de material escolar continuarão com a mesma
+                  Em 2020, os kits de materiais escolares continuarão com a mesma
                   composição, mas, com inovações na forma de fornecimento.
                 </p>
               </div>

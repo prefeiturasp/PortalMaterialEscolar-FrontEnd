@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import "./style.scss";
 import { TIPO_ESCOLA_MATERIAIS } from "./constants";
-import { getTotal } from "./helpers";
+import { getTotal, getLabelTotalItens } from "./helpers";
 
 export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
   const [ativo, setAtivo] = useState(false);
@@ -21,13 +21,28 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
                 ).length ===
                   TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length &&
                 "qtd-total"
+              } ${
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
+                  (material) => values[material.value]
+                ).length !== 0 &&
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
+                  (material) => values[material.value]
+                ).length < TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length &&
+                "qtd-parcial"
               }`}
             >
               {`${
                 TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
                   (material) => values[material.value]
                 ).length
-              }/${TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length} itens selecionados`}
+              }/${
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length
+              } ${getLabelTotalItens(
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
+                  (material) => values[material.value]
+                ).length,
+                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length
+              )}`}
             </span>
             Valor total: R${" "}
             {getTotal(TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais, values)}{" "}
@@ -59,7 +74,6 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
                       <label>
                         R${" "}
                         <input
-                          type="number"
                           value={values[material.value]}
                           className="col-7"
                           disabled
@@ -72,7 +86,7 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
                       {values[material.value]
                         ? (
                             material.quantidade *
-                            parseFloat(values[material.value])
+                            parseFloat(values[material.value].replace(",", "."))
                           )
                             .toFixed(2)
                             .toString()

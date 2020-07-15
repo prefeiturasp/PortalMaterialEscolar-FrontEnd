@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useCallback } from "react";
+import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { FileUpload } from "components/Input/FileUpload";
 import { required } from "helpers/validators";
@@ -6,184 +7,132 @@ import { ArquivoExistente } from "./ArquivoExistente";
 import { htmlTextToDiv } from "helpers/helpers";
 import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
+import { getTiposDocumentos } from "services/tiposDocumentos.service";
+import { setAnexo, setFachadaLoja, deleteAnexo } from "services/anexo.service";
+import { toastSuccess, toastError } from "components/Toast/dialogs";
+import { getProponente, concluirCadastro } from "services/cadastro.service";
+import { verificarSeFaltamArquivos } from "./helpers";
+import { OnChange } from "react-final-form-listeners";
 import "primeicons/primeicons.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "./style.scss";
+import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 
-export const Arquivos = ({ empresa }) => {
+export const Arquivos = ({ empresa, setEmpresa }) => {
   const [algumUploadEmAndamento, setAlgumUploadEmAndamento] = useState(false);
-  const [tiposDocumentos, setTiposDocumentos] = useState([
-    {
-      id: 15,
-      nome:
-        "Ato constitutivo, estatuto ou contrato social, devidamente registrado no Cartório Civil competente, em se tratando de sociedades comerciais, e, no caso de sociedades por ações, acompanhado de documentos de eleição de seus administradores",
-      obrigatorio: true,
-    },
-    {
-      id: 16,
-      nome: "Cadastro de Contribuinte Municipal – CCM",
-      obrigatorio: false,
-    },
-    {
-      id: 17,
-      nome:
-        "Certidão Débitos trabalhistas – CNDT nos termos da Lei nº 12.440/2011",
-      obrigatorio: true,
-    },
-    {
-      id: 18,
-      nome:
-        "Certidão Negativa Conjunta de Débitos (CND) relativos a Tributos Federais e à Dívida Ativa da União e Seguridade Social - INSS, expedida pela Receita Federal do Brasil, nos termos da Portaria RFB/PGFN 1.751, de 02/10/2014, com prazo de validade em vigência",
-      obrigatorio: true,
-    },
-    {
-      id: 19,
-      nome:
-        "Certidão Negativa de Tributos Mobiliários, relativos ao Município sede, com prazo de validade em vigência. Caso a interessada não esteja cadastrada como contribuinte neste Município, deverá apresentar Declaração, firmada pelo representante legal, sob as penas da lei, de que nada deve a Fazenda do Município de São Paulo (CTM)",
-      obrigatorio: true,
-    },
-    {
-      id: 20,
-      nome:
-        "Certidão de Regularidade referente ao Fundo de Garantia por Tempo de Serviço – FGTS, com prazo de validade em vigência",
-      obrigatorio: true,
-    },
-    {
-      id: 21,
-      nome:
-        "Certidão de regularidade relativo aos Tributos Estaduais expedida por meio de unidade estadual administrativa competente da sede do credenciado",
-      obrigatorio: true,
-    },
-    {
-      id: 22,
-      nome:
-        "Comprovante de inexistência de registros no Cadastro Informativo Municipal – CADIN MUNICIPAL, instituído pela Lei Municipal nº 14.094/05, regulamentada pelo Decreto nº 47.096/06",
-      obrigatorio: true,
-    },
-    {
-      id: 23,
-      nome:
-        "Comprovante de inscrição no Cadastro Nacional de Pessoas Jurídicas – CNPJ, emitida no sítio da Secretaria da Receita Federal do Brasil",
-      obrigatorio: true,
-    },
-    {
-      id: 24,
-      nome:
-        "Declaração de inexistência de servidores públicos municipais nos quadros sociais da proponente, ANEXO III do Edital",
-      obrigatorio: true,
-    },
-    {
-      id: 25,
-      nome:
-        "Declaração firmada pelo representante legal do credenciado, sob as penas da lei de que cumpre o quanto estabelecido no art. 7º, XXXIII, da Constituição Federal, de acordo com o modelo constante do ANEXO III do Edital",
-      obrigatorio: true,
-    },
-    {
-      id: 26,
-      nome:
-        "Decreto de autorização, em se tratando de empresa ou sociedade estrangeira em funcionamento no país",
-      obrigatorio: false,
-    },
-    {
-      id: 27,
-      nome:
-        "Inscrição do ato constitutivo, ata de eleição e posse da diretoria em exercício",
-      obrigatorio: false,
-    },
-    {
-      id: 28,
-      nome:
-        "Prova de inscrição no Cadastro do Contribuinte Estadual ou Municipal relativo ao domicílio ou sede do credenciado, pertinente ao seu ramo de atividade",
-      obrigatorio: false,
-    },
-  ]);
+  const [tiposDocumentos, setTiposDocumentos] = useState(null);
+  const [faltamArquivos, setFaltamArquivos] = useState(true);
+
+  useEffect(() => {
+    window.scrollTo(0, 0);
+    const loadDocumentos = async () => {
+      const response = await getTiposDocumentos();
+      setTiposDocumentos(response.data);
+    };
+    loadDocumentos();
+  }, []);
+
+  const useForceUpdate = () => {
+    const [, setTick] = useState(0);
+    const update = useCallback(() => {
+      setTick((tick) => tick + 1);
+    }, []);
+    return update;
+  };
+
+  const forceUpdate = useForceUpdate();
+
+  const setEmpresaEFaltaArquivos = (empresa) => {
+    setEmpresa(formataEmpresa(empresa));
+    setFaltamArquivos(verificarSeFaltamArquivos(empresa, tiposDocumentos));
+  };
 
   const uploadFachadaLoja = async (e, uuidLoja, key) => {
-    /*if (!e[0].arquivo.includes("image/")) {
+    if (!e[0].arquivo.includes("image/")) {
       toastError("Formato de arquivo inválido");
     } else {
       const arquivoAnexo = {
-        foto_fachada: e[0].arquivo
+        foto_fachada: e[0].arquivo,
       };
       let empresa_ = empresa;
       empresa_.lojas[key].uploadEmAndamento = true;
       setEmpresa(empresa_);
       setAlgumUploadEmAndamento(true);
       forceUpdate();
-      setFachadaLoja(arquivoAnexo, uuidLoja).then(response => {
+      setFachadaLoja(arquivoAnexo, uuidLoja).then((response) => {
         if (response.status === HTTP_STATUS.OK) {
           toastSuccess("Arquivo salvo com sucesso!");
           let empresa_ = empresa;
           empresa_.lojas[key].uploadEmAndamento = false;
           setEmpresa(empresa_);
           setAlgumUploadEmAndamento(false);
-          getEmpresa(uuid).then(empresa => {
+          getProponente(empresa.uuid).then((empresa) => {
             setEmpresaEFaltaArquivos(empresa.data);
           });
         } else {
           toastError("Erro ao dar upload no arquivo");
           let empresa_ = empresa;
           empresa_.lojas[key].uploadEmAndamento = false;
-          setEmpresa(empresa_);
+          setEmpresa(formataEmpresa(empresa_));
           setAlgumUploadEmAndamento(false);
         }
       });
-    }*/
+    }
   };
 
   const deleteFachadaLoja = async (uuidLoja) => {
-    /*if (window.confirm("Deseja remover este anexo?")) {
+    if (window.confirm("Deseja remover este anexo?")) {
       const arquivoAnexo = {
-        foto_fachada: null
+        foto_fachada: null,
       };
-      setFachadaLoja(arquivoAnexo, uuidLoja).then(response => {
+      setFachadaLoja(arquivoAnexo, uuidLoja).then((response) => {
         if (response.status === HTTP_STATUS.OK) {
           toastSuccess("Arquivo excluído com sucesso!");
-          getEmpresa(uuid).then(empresa => {
+          getProponente(empresa.uuid).then((empresa) => {
             setEmpresaEFaltaArquivos(empresa.data);
           });
         } else {
           toastError("Erro ao dar excluir no arquivo");
         }
       });
-    }*/
+    }
   };
 
   const removeAnexo = async (uuidAnexo) => {
-    /*if (window.confirm("Deseja remover este anexo?")) {
-      deleteAnexo(uuidAnexo).then(response => {
+    if (window.confirm("Deseja remover este anexo?")) {
+      deleteAnexo(uuidAnexo).then((response) => {
         if (response.status === HTTP_STATUS.NO_CONTENT) {
           toastSuccess("Arquivo removido com sucesso!");
-          getEmpresa(uuid).then(empresa => {
+          getProponente(empresa.uuid).then((empresa) => {
             setEmpresaEFaltaArquivos(empresa.data);
           });
         } else {
           toastError("Erro ao remover arquivo");
         }
       });
-    }*/
+    }
   };
 
   const uploadAnexo = async (e, tipo, key) => {
-    /*const arquivoAnexo = {
+    const arquivoAnexo = {
       ...e[0],
       tipo_documento: tipo.id,
-      proponente: uuid
+      proponente: empresa.uuid,
     };
     let tiposDocumentos_ = tiposDocumentos;
     tiposDocumentos_[key].uploadEmAndamento = true;
     setTiposDocumentos(tiposDocumentos_);
     setAlgumUploadEmAndamento(true);
     forceUpdate();
-    setAnexo(arquivoAnexo).then(response => {
+    setAnexo(arquivoAnexo).then((response) => {
       if (response.status === HTTP_STATUS.CREATED) {
         toastSuccess("Arquivo salvo com sucesso!");
         let tiposDocumentos_ = tiposDocumentos;
         tiposDocumentos_[key].uploadEmAndamento = false;
         setTiposDocumentos(tiposDocumentos_);
         setAlgumUploadEmAndamento(false);
-        getEmpresa(uuid).then(empresa => {
+        getProponente(empresa.uuid).then((empresa) => {
           setEmpresaEFaltaArquivos(empresa.data);
         });
       } else {
@@ -193,7 +142,26 @@ export const Arquivos = ({ empresa }) => {
         setTiposDocumentos(tiposDocumentos_);
         setAlgumUploadEmAndamento(false);
       }
-    });*/
+    });
+  };
+
+  const finalizarCadastro = () => {
+    setEmpresaEFaltaArquivos(empresa);
+    if (faltamArquivos) {
+      toastError(
+        "É preciso anexar todos os arquivos obrigatórios para finalizar seu cadastro"
+      );
+    } else if (empresa.ofertas_de_materiais.length === 0) {
+      toastError("É preciso fornecer ao menos um material escolar");
+    } else {
+      concluirCadastro(empresa.uuid).then((response) => {
+        if (response.status === HTTP_STATUS.OK) {
+          window.location.href = "/confirmacao-cadastro";
+        } else {
+          toastError("Erro ao finalizar cadastro");
+        }
+      });
+    }
   };
 
   return (
@@ -213,7 +181,7 @@ export const Arquivos = ({ empresa }) => {
                 >
                   <Field
                     component={FileUpload}
-                    name={`arqs_${key}`}
+                    name={`loja_${key}`}
                     disabled={algumUploadEmAndamento}
                     id={`${key}`}
                     key={key}
@@ -224,12 +192,14 @@ export const Arquivos = ({ empresa }) => {
                     required
                     validate={required}
                     multiple={false}
-                    onChange={(e) => {
-                      if (e.length > 0) {
-                        uploadFachadaLoja(e, loja.uuid, key);
+                  />
+                  <OnChange name={`loja_${key}`}>
+                    {async (value, previous) => {
+                      if (value.length > 0) {
+                        uploadFachadaLoja(value, loja.uuid, key);
                       }
                     }}
-                  />
+                  </OnChange>
                   {loja.uploadEmAndamento && (
                     <span className="font-weight-bold">
                       {`Upload de documento em andamento. `}
@@ -301,12 +271,14 @@ export const Arquivos = ({ empresa }) => {
                     required={tipo.obrigatorio}
                     validate={tipo.obrigatorio && required}
                     multiple={false}
-                    onChange={(e) => {
-                      if (e.length > 0) {
-                        uploadAnexo(e, tipo, key);
+                  />
+                  <OnChange name={`arqs_${key}`}>
+                    {async (value, previous) => {
+                      if (value.length > 0) {
+                        uploadAnexo(value, tipo, key);
                       }
                     }}
-                  />
+                  </OnChange>
                   {tipo.uploadEmAndamento && (
                     <span className="font-weight-bold">
                       {`Upload de documento em andamento. `}
@@ -322,19 +294,18 @@ export const Arquivos = ({ empresa }) => {
           )}
         </div>
       </div>
-      {
-        /*empresa && empresa.status !== "INSCRITO" && (*/
-        <div className="row">
-          <div className="col-12 text-right mt-3 mb-3">
+      <div className="row">
+        <div className="col-12 text-right mt-3 mb-3">
+          {empresa && empresa.status !== "INSCRITO" && (
             <Botao
               type={BUTTON_TYPE.BUTTON}
               style={BUTTON_STYLE.BLUE}
+              onClick={() => finalizarCadastro()}
               texto="Finalizar"
             />
-          </div>
+          )}
         </div>
-        /*)*/
-      }
+      </div>
     </div>
   );
 };

@@ -1,7 +1,7 @@
 import { API_URL } from "../config";
 
-export const cadastroFornecedorStep1 = async (payload) => {
-  const url = `${API_URL}/proponentes/`;
+export const setAnexo = async (payload) => {
+  const url = `${API_URL}/anexos/`;
   let status = 0;
   return fetch(url, {
     headers: {
@@ -23,30 +23,30 @@ export const cadastroFornecedorStep1 = async (payload) => {
     });
 };
 
-export const getProponente = async (uuid) => {
-  const url = `${API_URL}/proponentes/${uuid}/`;
+export const deleteAnexo = async (uuid) => {
+  const url = `${API_URL}/anexos/${uuid}/`;
   let status = 0;
   return fetch(url, {
     headers: {
       "Accept-Language": "pt-br",
       "Content-Type": "application/json",
     },
-    method: "GET",
+    method: "DELETE",
   })
-    .then((res) => {
-      status = res.status;
-      return res.json();
+    .then((response) => {
+      status = response.status;
+      return response.text();
     })
     .then((data) => {
-      return { data: data, status: status };
+      return Promise.resolve(data ? JSON.parse(data) : { status: status });
     })
     .catch((error) => {
-      return error;
+      return Promise.reject(error);
     });
 };
 
-export const concluirCadastro = async (uuid) => {
-  const url = `${API_URL}/proponentes/${uuid}/concluir-cadastro/`;
+export const setFachadaLoja = async (payload, uuid) => {
+  const url = `${API_URL}/lojas/${uuid}/`;
   let status = 0;
   return fetch(url, {
     headers: {
@@ -54,6 +54,7 @@ export const concluirCadastro = async (uuid) => {
       "Content-Type": "application/json",
     },
     method: "PATCH",
+    body: JSON.stringify(payload),
   })
     .then((res) => {
       status = res.status;

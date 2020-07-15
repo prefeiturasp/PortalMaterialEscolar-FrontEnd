@@ -58,9 +58,19 @@ export const somenteAlfanumericos = (value) =>
     ? "Somente caracteres alfanuméricos"
     : undefined;
 
+export const somenteNumeros = (value) =>
+  value && /[^0-9.,]/i.test(value)
+    ? "Somente números decimais"
+    : undefined;
+
 export const naoPodeMaiorQue10 = (value) =>
   value && parseFloat(value.replace(",", ".")) > 10.0
     ? `Valor máximo: R$ 10,00`
+    : undefined;
+
+export const somenteValoresPositivos = (value) =>
+  value && parseFloat(value.replace(",", ".")) <= 0
+    ? "Somente valores positivos e maiores que 0"
     : undefined;
 
 export const validaCNPJ = (value) =>

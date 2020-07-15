@@ -18,7 +18,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Caderno de desenho 96 Fls",
+        label: "Caderno de desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 2,
       },
@@ -84,12 +84,12 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 2,
       },
       {
-        label: "Caderno brochurao 80 Fls",
+        label: "Caderno brochurão 80 Fls.",
         value: "caderno_brochurao_80_fls",
         quantidade: 4,
       },
       {
-        label: "Caderno de desenho 96 Fls",
+        label: "Caderno de desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 2,
       },
@@ -155,12 +155,12 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 2,
       },
       {
-        label: "Caderno universitário 96 Fls",
+        label: "Caderno universitário 96 Fls.",
         value: "caderno_universitario_96_fls",
         quantidade: 5,
       },
       {
-        label: "Caderno de desenho 96 Fls",
+        label: "Caderno de desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -230,12 +230,12 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 2,
       },
       {
-        label: "Caderno universitário 200 Fls",
+        label: "Caderno universitário 200 Fls.",
         value: "caderno_universitario_200_fls",
         quantidade: 3,
       },
       {
-        label: "Caderno de desenho 96 Fls",
+        label: "Caderno de desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -315,12 +315,12 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 2,
       },
       {
-        label: "Caderno universitário 200 Fls",
+        label: "Caderno universitário 200 Fls.",
         value: "caderno_universitario_200_fls",
         quantidade: 3,
       },
       {
-        label: "Caderno de desenho 96 Fls",
+        label: "Caderno de desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },

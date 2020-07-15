@@ -1,0 +1,13 @@
+@import "styles/variaveis.scss";
+
+div.finalizado-box {
+  background-color: $green;
+  border-radius: 4px;
+  color: white;
+  font-size: 14px;
+  margin-bottom: 2em;
+  p.title {
+    text-align: center;
+    font-size: 16px;
+  }
+}

@@ -25,6 +25,7 @@ export const InputText = (props) => {
     pattern,
     icone,
     toUppercaseActive,
+    step,
   } = props;
   return (
     <div className={`input ${icone && "icon"}`}>
@@ -54,7 +55,9 @@ export const InputText = (props) => {
         autoComplete="new-password"
         min={min}
         max={max}
+        step="any"
         name={name}
+        value={input.value}
         data-cy={input.name}
         placeholder={placeholder}
         required={required}

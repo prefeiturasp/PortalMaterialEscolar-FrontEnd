@@ -2,6 +2,7 @@ import { MegaPortal } from "screens/MegaPortal";
 import { CadastroFornecedor } from "../screens/CadastroFornecedor";
 import { PortalFornecedor } from "screens/PortalFornecedor";
 import { PortalFamilia } from "screens/PortalFamilia";
+import { FinalizadoComSucesso } from "screens/FinalizadoComSucesso";
 
 export const routes = [
   {
@@ -22,6 +23,11 @@ export const routes = [
   {
     path: "/familia",
     component: PortalFamilia,
+    exact: true,
+  },
+  {
+    path: "/confirmacao-cadastro",
+    component: FinalizadoComSucesso,
     exact: true,
   },
 ];
