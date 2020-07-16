@@ -16,6 +16,7 @@ export const PortalFornecedor = () => {
   const [edital, setEdital] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getEdital().then((response) => {
       if (response.status === HTTP_STATUS.OK) {
         setEdital(API_URL.replace("api", "") + response.data);
