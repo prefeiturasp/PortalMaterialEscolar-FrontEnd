@@ -172,7 +172,7 @@ export const PortalFornecedor = () => {
                 <KitMaterialEscolar tipoEscola="ensino_fundamental_autoral" />
                 <KitMaterialEscolar tipoEscola="ensino_medio_eja_mova" />
               </div>
-              <div className="col-lg-6 col-sm-12 d-flex justify-content-lg-end justify-content-center">
+              <div className="col-lg-6 col-sm-12">
                 <img
                   src={imgMateriais}
                   alt="Peças do uniforme escolar"
