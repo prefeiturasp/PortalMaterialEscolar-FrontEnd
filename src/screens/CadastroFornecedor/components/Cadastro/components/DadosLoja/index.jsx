@@ -76,6 +76,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
                     fields.value[index].cidade = response.data.cidade;
                     fields.value[index].uf = response.data.uf;
                     fields.value[index].bairro = response.data.bairro;
+                    fields.update(index, fields.value[index]);
                   }
                 } else {
                   setApiCEPfora(true);
@@ -147,6 +148,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             value="SP"
             required
             validate={composeValidators(required)}
+            toUppercaseActive
             disabled
           />
         </div>

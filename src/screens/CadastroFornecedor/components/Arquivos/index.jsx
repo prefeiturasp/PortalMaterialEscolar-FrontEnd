@@ -33,6 +33,12 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
     loadDocumentos();
   }, []);
 
+  useEffect(() => {
+    if (tiposDocumentos) {
+      setEmpresaEFaltaArquivos(empresa);
+    }
+  }, [tiposDocumentos]);
+
   const useForceUpdate = () => {
     const [, setTick] = useState(0);
     const update = useCallback(() => {
@@ -146,7 +152,6 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
   };
 
   const finalizarCadastro = () => {
-    setEmpresaEFaltaArquivos(empresa);
     if (faltamArquivos) {
       toastError(
         "É preciso anexar todos os arquivos obrigatórios para finalizar seu cadastro"
@@ -193,6 +198,11 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                     validate={required}
                     multiple={false}
                   />
+                  <div className="campos-permitidos">
+                    Formatos permitidos: .png, .jpg, .jpeg, .zip, .pdf
+                    <br />
+                    Tamanho máximo: 5 MB
+                  </div>
                   <OnChange name={`loja_${key}`}>
                     {async (value, previous) => {
                       if (value.length > 0) {
@@ -272,6 +282,11 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                     validate={tipo.obrigatorio && required}
                     multiple={false}
                   />
+                  <div className="campos-permitidos">
+                    Formatos permitidos: .png, .jpg, .jpeg, .zip, .pdf
+                    <br />
+                    Tamanho máximo: 5 MB
+                  </div>
                   <OnChange name={`arqs_${key}`}>
                     {async (value, previous) => {
                       if (value.length > 0) {

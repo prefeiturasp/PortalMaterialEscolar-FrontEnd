@@ -25,7 +25,7 @@ export const InputText = (props) => {
     pattern,
     icone,
     toUppercaseActive,
-    step,
+    removeLeadingZeros,
   } = props;
   return (
     <div className={`input ${icone && "icon"}`}>
@@ -73,6 +73,10 @@ export const InputText = (props) => {
         onInput={(e) => {
           e.target.value = toUppercaseActive
             ? e.target.value.toUpperCase()
+            : removeLeadingZeros &&
+              e.target.value.length === 1 &&
+              e.target.value === "0"
+            ? ""
             : e.target.value;
         }}
       />

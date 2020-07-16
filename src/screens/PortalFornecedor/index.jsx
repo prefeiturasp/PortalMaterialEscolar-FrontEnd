@@ -16,6 +16,7 @@ export const PortalFornecedor = () => {
   const [edital, setEdital] = useState(null);
 
   useEffect(() => {
+    window.scrollTo(0, 0);
     getEdital().then((response) => {
       if (response.status === HTTP_STATUS.OK) {
         setEdital(API_URL.replace("api", "") + response.data);
@@ -171,7 +172,7 @@ export const PortalFornecedor = () => {
                 <KitMaterialEscolar tipoEscola="ensino_fundamental_autoral" />
                 <KitMaterialEscolar tipoEscola="ensino_medio_eja_mova" />
               </div>
-              <div className="col-lg-6 col-sm-12 d-flex justify-content-lg-end justify-content-center">
+              <div className="col-lg-6 col-sm-12">
                 <img
                   src={imgMateriais}
                   alt="Peças do uniforme escolar"
