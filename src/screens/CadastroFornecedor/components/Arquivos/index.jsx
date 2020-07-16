@@ -199,7 +199,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                     multiple={false}
                   />
                   <div className="campos-permitidos">
-                    Formatos permitidos: .png, .jpg, .jpeg, .zip, .pdf
+                    Formatos permitidos: .png, .jpg, .jpeg
                     <br />
                     Tamanho máximo: 5 MB
                   </div>
