@@ -43,7 +43,7 @@ export const validarFormulario = (values) => {
     } else if (
       key.includes("_check") &&
       values[key.replace("_check", "")] &&
-      parseFloat(values[key.replace("_check", "")]) > 10
+      parseFloat(values[key.replace("_check", "")].replace(",", ".")) > 10
     ) {
       erro = `Valor máximo do campo ${
         MATERIAL_LABEL[key.replace("_check", "")]
@@ -52,7 +52,7 @@ export const validarFormulario = (values) => {
     } else if (
       key.includes("_check") &&
       values[key.replace("_check", "")] &&
-      parseFloat(values[key.replace("_check", "")]) === 0
+      parseFloat(values[key.replace("_check", "")].replace(",", ".")) === 0
     ) {
       erro = `Valor do campo ${
         MATERIAL_LABEL[key.replace("_check", "")]
