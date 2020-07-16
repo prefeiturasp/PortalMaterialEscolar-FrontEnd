@@ -33,6 +33,12 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
     loadDocumentos();
   }, []);
 
+  useEffect(() => {
+    if (tiposDocumentos) {
+      setEmpresaEFaltaArquivos(empresa);
+    }
+  }, [tiposDocumentos]);
+
   const useForceUpdate = () => {
     const [, setTick] = useState(0);
     const update = useCallback(() => {
@@ -146,7 +152,6 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
   };
 
   const finalizarCadastro = () => {
-    setEmpresaEFaltaArquivos(empresa);
     if (faltamArquivos) {
       toastError(
         "É preciso anexar todos os arquivos obrigatórios para finalizar seu cadastro"
