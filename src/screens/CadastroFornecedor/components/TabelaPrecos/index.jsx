@@ -101,6 +101,28 @@ export const TabelaPrecos = ({
 
   return (
     <div className="tabela-precos">
+      <div className="row mb-5">
+        {empresa && empresa.status !== "INSCRITO" && (
+          <Fragment>
+            <div className="col-6">
+              <Botao
+                type={BUTTON_TYPE.BUTTON}
+                onClick={() => limparTabelaPrecos()}
+                texto="Limpar"
+                style={BUTTON_STYLE.BLUE_OUTLINE}
+              />
+            </div>
+            <div className="col-6 text-right">
+              <Botao
+                texto="Salvar"
+                type={BUTTON_TYPE.BUTTON}
+                style={BUTTON_STYLE.BLUE}
+                onClick={() => enviarPrecos()}
+              />
+            </div>
+          </Fragment>
+        )}
+      </div>
       <div className="card">
         <div className="card-body">
           <h2>Preços (fornecimento)</h2>
@@ -432,7 +454,7 @@ export const TabelaPrecos = ({
                 style={BUTTON_STYLE.BLUE_OUTLINE}
               />
             </div>
-            <div className="col-12 text-right">
+            <div className="col-6 text-right">
               <Botao
                 texto="Salvar"
                 type={BUTTON_TYPE.BUTTON}
