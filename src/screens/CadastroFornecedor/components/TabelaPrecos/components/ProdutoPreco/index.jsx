@@ -38,6 +38,7 @@ export const ProdutoPreco = ({ form, values, name, label }) => {
             somenteNumeros,
             somenteValoresPositivos
           )}
+          removeLeadingZeros
           disabled={!values[`${name}_check`]}
         />
       </label>
