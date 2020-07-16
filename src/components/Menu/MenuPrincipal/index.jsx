@@ -43,9 +43,11 @@ export const MenuPrincipal = () => {
               </li>
             </ul>
           )}
-          {["/fornecedor", "/fornecedor/cadastro"].includes(
-            window.location.pathname
-          ) && (
+          {[
+            "/fornecedor",
+            "/fornecedor/cadastro",
+            "/confirmacao-cadastro",
+          ].includes(window.location.pathname) && (
             <ul className="nav nav-tabs border-0">
               <li className="nav-item">
                 <Link
