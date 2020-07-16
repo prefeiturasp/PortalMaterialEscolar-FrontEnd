@@ -16,6 +16,8 @@ import {
 } from "helpers/validators";
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
+import { ESTADOS } from "../../constants";
+import Select from "components/Select";
 
 export const DadosEmpresa = ({ empresa, form, values }) => {
   return (
@@ -141,19 +143,20 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             label="Cidade"
             name="end_cidade"
             required
+            validate={required}
             disabled={empresa}
           />
         </div>
         <div className="col-sm-2 col-12">
           <Field
-            component={InputText}
-            maxlength={2}
-            label="UF"
+            component={Select}
             name="end_uf"
+            label="UF"
+            options={ESTADOS}
             required
-            validate={composeValidators(required, somenteAlfanumericos)}
+            validate={required}
+            naoDesabilitarPrimeiraOpcao
             disabled={empresa}
-            toUppercaseActive
           />
         </div>
       </div>
