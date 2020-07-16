@@ -147,6 +147,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             value="SP"
             required
             validate={composeValidators(required)}
+            toUppercaseActive
             disabled
           />
         </div>

@@ -25,7 +25,6 @@ export const InputText = (props) => {
     pattern,
     icone,
     toUppercaseActive,
-    step,
   } = props;
   return (
     <div className={`input ${icone && "icon"}`}>

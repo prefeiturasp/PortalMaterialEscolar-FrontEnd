@@ -153,6 +153,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             required
             validate={composeValidators(required, somenteAlfanumericos)}
             disabled={empresa}
+            toUppercaseActive
           />
         </div>
       </div>
