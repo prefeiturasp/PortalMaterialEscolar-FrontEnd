@@ -1,15 +1,15 @@
 import React from "react";
 import { Field } from "react-final-form";
 import {
-  naoPodeMaiorQue10,
   composeValidators,
   somenteValoresPositivos,
   somenteNumeros,
+  naoPodeSerMaiorQueX,
 } from "helpers/validators";
 import { InputText } from "components/Input/InputText";
 import "./style.scss";
 
-export const ProdutoPreco = ({ form, values, name, label }) => {
+export const ProdutoPreco = ({ form, values, name, label, precoMaximo }) => {
   return (
     <div className="row produto-preco">
       <label className="produto col-sm-6 col-12 my-auto">
@@ -34,7 +34,7 @@ export const ProdutoPreco = ({ form, values, name, label }) => {
           component={InputText}
           className="col-10"
           validate={composeValidators(
-            naoPodeMaiorQue10,
+            naoPodeSerMaiorQueX(precoMaximo),
             somenteNumeros,
             somenteValoresPositivos
           )}

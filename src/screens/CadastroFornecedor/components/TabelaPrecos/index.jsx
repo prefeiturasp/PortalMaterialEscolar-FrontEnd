@@ -1,12 +1,17 @@
-import React, { Fragment, useState, useCallback } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { ProdutoPreco } from "./components/ProdutoPreco";
 import { MateriaisPorTipoEscola } from "./components/MateriaisPorTipoEscola";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
-import { setTabelaPrecos } from "services/tabelaPrecos.service";
-import { formataTabelaPrecos, validarFormulario } from "./helpers";
+import { setTabelaPrecos, getMateriais } from "services/tabelaPrecos.service";
+import {
+  formataTabelaPrecos,
+  validarFormulario,
+  getNameFromLabel,
+  formataMateriais,
+} from "./helpers";
 import { OnChange } from "react-final-form-listeners";
 import { toastSuccess, toastError, toastWarn } from "components/Toast/dialogs";
 import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
@@ -20,10 +25,23 @@ export const TabelaPrecos = ({
   empresa,
   setEmpresa,
 }) => {
+  const [materiais, setMateriais] = useState(null);
+
+  useEffect(() => {
+    getMateriais().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setMateriais(formataMateriais(response.data));
+      }
+    });
+  }, []);
+
   const enviarPrecos = async () => {
-    const erro = validarFormulario(values);
+    const erro = validarFormulario(values, materiais);
     if (!erro) {
-      const response = await setTabelaPrecos(uuid, formataTabelaPrecos(values));
+      const response = await setTabelaPrecos(
+        uuid,
+        formataTabelaPrecos(values, materiais)
+      );
       if (response.status === HTTP_STATUS.OK) {
         setEmpresa(formataEmpresa(response.data));
         toastSuccess("Tabela de preços atualizada com sucesso");
@@ -36,68 +54,13 @@ export const TabelaPrecos = ({
     }
   };
 
-  const useForceUpdate = () => {
-    const [, setTick] = useState(0);
-    const update = useCallback(() => {
-      setTick((tick) => tick + 1);
-    }, []);
-    return update;
-  };
-
   const limparTabelaPrecos = () => {
-    form.change("agenda_educacao_infantil_check", false);
-    form.change("agenda_ensino_fundamental_check", false);
-    form.change("apontador_check", false);
-    form.change("borracha_check", false);
-    form.change("caderno_brochurao_80_fls_check", false);
-    form.change("caderno_desenho_96_fls_check", false);
-    form.change("caderno_universitario_96_fls_check", false);
-    form.change("caderno_universitario_200_fls_check", false);
-    form.change("caneta_esferografica_azul_check", false);
-    form.change("caneta_esferografica_preta_check", false);
-    form.change("caneta_esferografica_vermelha_check", false);
-    form.change("caneta_hidrografica_12_cores_check", false);
-    form.change("cola_branca_check", false);
-    form.change("esquadro_45_check", false);
-    form.change("esquadro_60_check", false);
-    form.change("estojo_escolar_check", false);
-    form.change("giz_de_cera_ensino_fundamental_12_cores_check", false);
-    form.change("giz_de_cera_grosso_educacao_infantil_12_cores_check", false);
-    form.change("lapis_de_cor_12_cores_check", false);
-    form.change("lapis_grafite_check", false);
-    form.change("massa_para_modelar_06_cores_check", false);
-    form.change("regua_check", false);
-    form.change("tesoura_check", false);
-    form.change("tinta_guache_06_cores_check", false);
-    form.change("transferidor_180_check", false);
-    form.change("agenda_educacao_infantil", undefined);
-    form.change("agenda_ensino_fundamental", undefined);
-    form.change("apontador", undefined);
-    form.change("borracha", undefined);
-    form.change("caderno_brochurao_80_fls", undefined);
-    form.change("caderno_desenho_96_fls", undefined);
-    form.change("caderno_universitario_96_fls", undefined);
-    form.change("caderno_universitario_200_fls", undefined);
-    form.change("caneta_esferografica_azul", undefined);
-    form.change("caneta_esferografica_preta", undefined);
-    form.change("caneta_esferografica_vermelha", undefined);
-    form.change("caneta_hidrografica_12_cores", undefined);
-    form.change("cola_branca", undefined);
-    form.change("esquadro_45", undefined);
-    form.change("esquadro_60", undefined);
-    form.change("estojo_escolar", undefined);
-    form.change("giz_de_cera_ensino_fundamental_12_cores", undefined);
-    form.change("giz_de_cera_grosso_educacao_infantil_12_cores", undefined);
-    form.change("lapis_de_cor_12_cores", undefined);
-    form.change("lapis_grafite", undefined);
-    form.change("massa_para_modelar_06_cores", undefined);
-    form.change("regua", undefined);
-    form.change("tesoura", undefined);
-    form.change("tinta_guache_06_cores", undefined);
-    form.change("transferidor_180", undefined);
+    materiais &&
+      materiais.forEach((material) => {
+        form.change(`${getNameFromLabel(material.nome)}_check`, false);
+        form.change(getNameFromLabel(material.nome), undefined);
+      });
   };
-
-  const forceUpdate = useForceUpdate();
 
   return (
     <div className="tabela-precos">
@@ -135,295 +98,54 @@ export const TabelaPrecos = ({
             <Field name="marcar_todos" component="input" type="checkbox" />
             <OnChange name={`marcar_todos`}>
               {(value, previous) => {
-                values.agenda_educacao_infantil_check = value;
-                values.agenda_ensino_fundamental_check = value;
-                values.apontador_check = value;
-                values.borracha_check = value;
-                values.caderno_brochurao_80_fls_check = value;
-                values.caderno_desenho_96_fls_check = value;
-                values.caderno_universitario_96_fls_check = value;
-                values.caderno_universitario_200_fls_check = value;
-                values.caneta_esferografica_azul_check = value;
-                values.caneta_esferografica_preta_check = value;
-                values.caneta_esferografica_vermelha_check = value;
-                values.caneta_hidrografica_12_cores_check = value;
-                values.cola_branca_check = value;
-                values.esquadro_45_check = value;
-                values.esquadro_60_check = value;
-                values.estojo_escolar_check = value;
-                values.giz_de_cera_ensino_fundamental_12_cores_check = value;
-                values.giz_de_cera_grosso_educacao_infantil_12_cores_check = value;
-                values.lapis_de_cor_12_cores_check = value;
-                values.lapis_grafite_check = value;
-                values.massa_para_modelar_06_cores_check = value;
-                values.regua_check = value;
-                values.tesoura_check = value;
-                values.tinta_guache_06_cores_check = value;
-                values.transferidor_180_check = value;
-                if (!value) {
-                  form.change("agenda_educacao_infantil", undefined);
-                  form.change("agenda_ensino_fundamental", undefined);
-                  form.change("apontador", undefined);
-                  form.change("borracha", undefined);
-                  form.change("caderno_brochurao_80_fls", undefined);
-                  form.change("caderno_desenho_96_fls", undefined);
-                  form.change("caderno_universitario_96_fls", undefined);
-                  form.change("caderno_universitario_200_fls", undefined);
-                  form.change("caneta_esferografica_azul", undefined);
-                  form.change("caneta_esferografica_preta", undefined);
-                  form.change("caneta_esferografica_vermelha", undefined);
-                  form.change("caneta_hidrografica_12_cores", undefined);
-                  form.change("cola_branca", undefined);
-                  form.change("esquadro_45", undefined);
-                  form.change("esquadro_60", undefined);
-                  form.change("estojo_escolar", undefined);
-                  form.change(
-                    "giz_de_cera_ensino_fundamental_12_cores",
-                    undefined
-                  );
-                  form.change(
-                    "giz_de_cera_grosso_educacao_infantil_12_cores",
-                    undefined
-                  );
-                  form.change("lapis_de_cor_12_cores", undefined);
-                  form.change("lapis_grafite", undefined);
-                  form.change("massa_para_modelar_06_cores", undefined);
-                  form.change("regua", undefined);
-                  form.change("tesoura", undefined);
-                  form.change("tinta_guache_06_cores", undefined);
-                  form.change("transferidor_180", undefined);
-                }
-                forceUpdate();
+                materiais &&
+                  materiais.forEach((material) => {
+                    form.change(
+                      `${getNameFromLabel(material.nome)}_check`,
+                      value
+                    );
+                    if (!value) {
+                      form.change(getNameFromLabel(material.nome), undefined);
+                    }
+                  });
               }}
             </OnChange>
             Marcar todos
           </label>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="agenda_educacao_infantil"
-                label="Agenda Educação Infantil"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="agenda_ensino_fundamental"
-                label="Agenda Ensino Fundamental"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="apontador"
-                label="Apontador"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="borracha"
-                label="Borracha"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caderno_brochurao_80_fls"
-                label="Caderno brochurão 80 Fls."
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caderno_desenho_96_fls"
-                label="Caderno desenho 96 Fls."
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caderno_universitario_96_fls"
-                label="Caderno universitário 96 Fls."
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caderno_universitario_200_fls"
-                label="Caderno universitário 200 Fls."
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caneta_esferografica_azul"
-                label="Caneta esferográfica azul"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caneta_esferografica_preta"
-                label="Caneta esferográfica preta"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caneta_esferografica_vermelha"
-                label="Caneta esferográfica vermelha"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="caneta_hidrografica_12_cores"
-                label="Caneta hidrográfica (12 cores)"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="cola_branca"
-                label="Cola branca"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="esquadro_45"
-                label="Esquadro 45º"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="esquadro_60"
-                label="Esquadro 60º"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="estojo_escolar"
-                label="Estojo escolar"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="giz_de_cera_ensino_fundamental_12_cores"
-                label="Giz de cera Ensino Fundamental (12 cores)"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="giz_de_cera_grosso_educacao_infantil_12_cores"
-                label="Giz de cera grosso Educação Infantil (12 cores)"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="lapis_de_cor_12_cores"
-                label="Lápis de cor (12 cores)"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="lapis_grafite"
-                label="Lápis grafite"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="massa_para_modelar_06_cores"
-                label="Massa para modelar (06 cores)"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="regua"
-                label="Régua"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row  mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="tesoura"
-                label="Tesoura"
-                values={values}
-              />
-            </div>
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="tinta_guache_06_cores"
-                label="Tinta guache (06 cores)"
-                values={values}
-              />
-            </div>
-          </div>
-          <div className="row mb-sm-3">
-            <div className="col-sm-6 col-12">
-              <ProdutoPreco
-                form={form}
-                name="transferidor_180"
-                label="Transferidor 180º"
-                values={values}
-              />
-            </div>
-          </div>
+          {materiais &&
+            materiais.map((material, index) => {
+              const materialDiv2 = materiais[index + 1]
+                ? materiais[index + 1]
+                : null;
+              return (
+                <div key={index}>
+                  {index % 2 === 0 && (
+                    <div className="row mb-sm-3">
+                      <div className="col-sm-6 col-12">
+                        <ProdutoPreco
+                          form={form}
+                          name={getNameFromLabel(material.nome)}
+                          precoMaximo={material.preco_maximo}
+                          label={material.nome}
+                          values={values}
+                        />
+                      </div>
+                      {materialDiv2 && (
+                        <div className="col-sm-6 col-12">
+                          <ProdutoPreco
+                            form={form}
+                            name={getNameFromLabel(materiais[index + 1].nome)}
+                            label={materiais[index + 1].nome}
+                            precoMaximo={materiais[index + 1].preco_maximo}
+                            values={values}
+                          />
+                        </div>
+                      )}
+                    </div>
+                  )}
+                </div>
+              );
+            })}
         </div>
       </div>
       <MateriaisPorTipoEscola tipoEscola="educacao_infantil" values={values} />

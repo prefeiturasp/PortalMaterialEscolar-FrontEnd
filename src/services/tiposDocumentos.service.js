@@ -18,6 +18,6 @@ export const getTiposDocumentos = async () => {
       return { data: data, status: status };
     })
     .catch((error) => {
-      return error.json();
+      return error;
     });
 };
