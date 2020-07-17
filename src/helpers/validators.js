@@ -59,14 +59,17 @@ export const somenteAlfanumericos = (value) =>
     : undefined;
 
 export const somenteNumeros = (value) =>
-  value && /[^0-9.,]/i.test(value)
-    ? "Somente números decimais"
-    : undefined;
+  value && /[^0-9.,]/i.test(value) ? "Somente números decimais" : undefined;
 
 export const naoPodeMaiorQue10 = (value) =>
   value && parseFloat(value.replace(",", ".")) > 10.0
     ? `Valor máximo: R$ 10,00`
     : undefined;
+
+export const naoPodeSerMaiorQueX = (max) => (value) =>
+  isNaN(value) || value < parseFloat(max)
+    ? undefined
+    : `Valor máximo: R$ ${max.replace(".", ",")}`;
 
 export const somenteValoresPositivos = (value) =>
   value && parseFloat(value.replace(",", ".")) <= 0

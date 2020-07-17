@@ -18,6 +18,6 @@ export const getAPIVersion = async () => {
       return { data: data.API_Version, status: status };
     })
     .catch((error) => {
-      return error.json();
+      return error;
     });
 };

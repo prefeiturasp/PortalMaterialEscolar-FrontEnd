@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import { PaginaComCabecalhoRodape } from "../../components/PaginaComCabecalhoRodape";
 import imgDesenhoCriancas from "assets/img/desenho-alunos-mobile.svg";
 import imgFamilia from "assets/img/landing-familia.png";
-import imgLoja from "assets/img/landing-loja.png";
+import imgLoja from "assets/img/landing-loja.jpg";
 import "./style.scss";
 
 export const MegaPortal = () => {

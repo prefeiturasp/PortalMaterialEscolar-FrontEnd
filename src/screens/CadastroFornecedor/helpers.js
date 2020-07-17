@@ -1,4 +1,4 @@
-import { MATERIAL_LABEL } from "./components/TabelaPrecos/helpers";
+import { getNameFromLabel } from "./components/TabelaPrecos/helpers";
 
 export const formatarPayloadCadastro = (payload) => {
   payload.ofertas_de_materiais = [];
@@ -20,7 +20,7 @@ export const getKeyByValue = (object, value) => {
 
 const getTabelaPrecosValues = (empresa) => {
   empresa.ofertas_de_materiais.forEach((oferta) => {
-    const key = getKeyByValue(MATERIAL_LABEL, oferta.material.nome);
+    const key = getNameFromLabel(oferta.material.nome);
     empresa[key] = oferta.preco.toString().replace(".", ",");
     empresa[`${key}_check`] = true;
   });
