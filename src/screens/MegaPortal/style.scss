@@ -12,7 +12,7 @@
   }
   .material-escolar {
     @media screen and (min-width: 992px) {
-      background: url("../../assets/img/desenho-alunos.png"), #c4c4c4;
+      background: url("../../assets/img/desenho-alunos.svg"), #c4c4c4;
       background-position: right;
       background-repeat: no-repeat;
       background-color: #daeeff;
@@ -61,8 +61,14 @@
   }
 
   @media screen and (max-width: 575px) {
+    h2 {
+      font-size: 24px;
+    }
     .area-fabricantes {
       margin-top: 3em;
+    }
+    .home {
+      margin-top: 7em;
     }
   }
 

@@ -1,7 +1,7 @@
 import React from "react";
 import { Link } from "react-router-dom";
 import { PaginaComCabecalhoRodape } from "../../components/PaginaComCabecalhoRodape";
-import imgDesenhoCriancas from "assets/img/desenho-alunos-mobile.png";
+import imgDesenhoCriancas from "assets/img/desenho-alunos-mobile.svg";
 import imgFamilia from "assets/img/landing-familia.png";
 import imgLoja from "assets/img/landing-loja.png";
 import "./style.scss";
@@ -20,7 +20,7 @@ export const MegaPortal = () => {
                   lojas credenciadas, oferecendo mais qualidade e agilidade.
                 </h1>
                 <p>
-                  Em 2020, os kits de material escolar continuarão com a mesma
+                  Em 2020, os kits de materiais escolares continuarão com a mesma
                   composição, mas, com inovações na forma de fornecimento.
                 </p>
               </div>
@@ -78,7 +78,7 @@ export const MegaPortal = () => {
               />
               <div className="pt-5">
                 <h2 className="cor-azul mb-4 fs-29">
-                  Área de fabricantes/fornecedores
+                  Área de Fornecedores
                 </h2>
                 <div className="justify-content-lg-end justify-content-center">
                   Venha contribuir com o fornecimento dos materiais escolares
@@ -91,7 +91,7 @@ export const MegaPortal = () => {
                     size="lg"
                     className="btn btn-primary col-12 pl-4 pr-4"
                   >
-                    <strong>Fabricantes/fornecedores</strong>
+                    <strong>Fornecedores</strong>
                   </button>
                 </Link>
               </div>

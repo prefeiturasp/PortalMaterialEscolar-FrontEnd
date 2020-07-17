@@ -20,7 +20,6 @@ export const InputText = (props) => {
     name,
     placeholder,
     required,
-    type,
     title,
     maxlength,
     pattern,
@@ -55,14 +54,18 @@ export const InputText = (props) => {
         autoComplete="new-password"
         min={min}
         max={max}
+        step="any"
         name={name}
+        value={input.value}
         data-cy={input.name}
         placeholder={placeholder}
         required={required}
-        onFocus={(e) => e.relatedTarget &&
-              e.relatedTarget.nodeName === "BUTTON" &&
-              window.scrollBy(0, -30)}
-        type={type}
+        onFocus={(e) =>
+          e.relatedTarget &&
+          e.relatedTarget.nodeName === "BUTTON" &&
+          window.scrollBy(0, -30)
+        }
+        type={input.type}
         title={title}
         pattern={pattern}
         maxLength={maxlength}

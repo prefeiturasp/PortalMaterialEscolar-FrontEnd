@@ -6,7 +6,7 @@ export const Tabs = ({ tab, setTab, uuid }) => {
     <div className="tabs pb-5">
       <div className="row">
         <div
-          onClick={() => setTab("cadastro")}
+          onClick={() => uuid && setTab("cadastro")}
           className={`tab col-4 ${
             tab === "cadastro" ? "active" : uuid ? "enabled" : "inactive"
           }`}
@@ -14,20 +14,20 @@ export const Tabs = ({ tab, setTab, uuid }) => {
           Cadastro
         </div>
         <div
-          onClick={() => setTab("tabela-precos")}
+          onClick={() => uuid && setTab("tabela-precos")}
           className={`tab col-4 ml-1 ${
             tab === "tabela-precos" ? "active" : uuid ? "enabled" : "inactive"
           }`}
         >
-          Tabela de Preços
+          Tabela de Preço
         </div>
         <div
-          onClick={() => setTab("arquivos")}
+          onClick={() => uuid && setTab("arquivos")}
           className={`tab col-4 ml-1 ${
             tab === "arquivos" ? "active" : uuid ? "enabled" : "inactive"
           }`}
         >
-          Arquivos
+          Anexo
         </div>
       </div>
     </div>

@@ -21,7 +21,7 @@ import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 import formatString from "format-string-by-pattern";
 
-export const Loja = ({ loja, fields, index }) => {
+export const Loja = ({ loja, fields, index, empresa }) => {
   const [apiCEPfora, setApiCEPfora] = useState(false);
 
   return (
@@ -35,6 +35,7 @@ export const Loja = ({ loja, fields, index }) => {
             required
             validate={composeValidators(required)}
             placeholder="Digite o Nome Fantasia da loja"
+            disabled={empresa}
           />
         </div>
       </div>
@@ -48,6 +49,7 @@ export const Loja = ({ loja, fields, index }) => {
             required
             validate={composeValidators(required, validaCEP, validaRangeCEP)}
             placeholder="Digite o CEP"
+            disabled={empresa}
           />
           <OnChange name={`${loja}.cep`}>
             {async (value, previous) => {
@@ -74,6 +76,7 @@ export const Loja = ({ loja, fields, index }) => {
                     fields.value[index].cidade = response.data.cidade;
                     fields.value[index].uf = response.data.uf;
                     fields.value[index].bairro = response.data.bairro;
+                    fields.update(index, fields.value[index]);
                   }
                 } else {
                   setApiCEPfora(true);
@@ -89,6 +92,7 @@ export const Loja = ({ loja, fields, index }) => {
             name={`${loja}.bairro`}
             required
             validate={required}
+            disabled={empresa}
           />
         </div>
       </div>
@@ -100,7 +104,7 @@ export const Loja = ({ loja, fields, index }) => {
             name={`${loja}.endereco`}
             required
             validate={required}
-            disabled={!apiCEPfora}
+            disabled={!empresa || !apiCEPfora}
           />
         </div>
         <div className="col-sm-2 col-12">
@@ -111,6 +115,7 @@ export const Loja = ({ loja, fields, index }) => {
             name={`${loja}.numero`}
             required
             validate={composeValidators(required)}
+            disabled={empresa}
           />
         </div>
         <div className="col-sm-4 col-12">
@@ -119,6 +124,7 @@ export const Loja = ({ loja, fields, index }) => {
             maxlength={20}
             label="Complemento"
             name={`${loja}.complemento`}
+            disabled={empresa}
           />
         </div>
       </div>
@@ -129,6 +135,7 @@ export const Loja = ({ loja, fields, index }) => {
             maxlength={20}
             label="Cidade"
             name={`${loja}.cidade`}
+            value="São Paulo"
             disabled
           />
         </div>
@@ -138,8 +145,10 @@ export const Loja = ({ loja, fields, index }) => {
             maxlength={255}
             label="UF"
             name={`${loja}.uf`}
+            value="SP"
             required
             validate={composeValidators(required)}
+            toUppercaseActive
             disabled
           />
         </div>
@@ -158,21 +167,25 @@ export const Loja = ({ loja, fields, index }) => {
             required
             type="text"
             validate={composeValidators(required, validaTelefoneOuCelular)}
+            disabled={empresa}
           />
         </div>
       </div>
-      <div className="row mt-2">
-        <div className="col-12 text-right">
-          <Botao
-            style={BUTTON_STYLE.BLUE_OUTLINE}
-            texto="Remover"
-            type={BUTTON_TYPE.BUTTON}
-            icon={BUTTON_ICON.TRASH}
-            onClick={() => fields.remove(index)}
-            disabled={fields.length === 1}
-          />
+      {!empresa && (
+        <div className="row mt-2">
+          <div className="col-12 text-right">
+            <Botao
+              style={BUTTON_STYLE.BLUE_OUTLINE}
+              texto="Remover"
+              type={BUTTON_TYPE.BUTTON}
+              icon={BUTTON_ICON.TRASH}
+              onClick={() => fields.remove(index)}
+              disabled={fields.length === 1}
+            />
+          </div>
         </div>
-      </div>
+      )}
+      {fields.value.length > 1 && index !== fields.value.length - 1 && <hr />}
     </div>
   );
 };
