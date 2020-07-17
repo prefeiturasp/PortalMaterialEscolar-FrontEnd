@@ -30,13 +30,20 @@ export const validarFormulario = (values, materiais) => {
     } else if (
       key.includes("_check") &&
       values[key.replace("_check", "")] &&
-      parseFloat(values[key.replace("_check", "")].replace(",", ".")) > 10
+      parseFloat(values[key.replace("_check", "")].replace(",", ".")) >
+        parseFloat(
+          materiais.find(
+            (material) => material.name === key.replace("_check", "")
+          ).preco_maximo
+        )
     ) {
       erro = `Valor máximo do campo ${
         materiais.find(
           (material) => material.name === key.replace("_check", "")
         ).nome
-      }: R$ 10,00`;
+      }: ${materiais.find(
+        (material) => material.name === key.replace("_check", "")
+      ).preco_maximo.replace(".", ",")}`;
       return erro;
     } else if (
       key.includes("_check") &&
