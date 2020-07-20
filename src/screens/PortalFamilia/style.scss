@@ -1,0 +1,53 @@
+@import "styles/variaveis.scss";
+
+.busca-mapa {
+  background: url("../../assets/img/mapa-uniformes.png");
+  height: 487px;
+  background-size: cover;
+  background-position: bottom center;
+  text-align: center;
+  color: #5c6f78;
+  div.title {
+    @media screen and (max-width: 767px) {
+      padding-top: 1em;
+    }
+    padding-top: 4em;
+    font-weight: bold;
+    font-size: 30px;
+  }
+  div.subtitle {
+    font-size: 16px;
+    padding-top: 1em;
+  }
+  form {
+    text-align: left;
+    .field-endereco,
+    .field-uniforme {
+      @media (max-width: 767px) {
+        padding-left: 3em;
+        padding-right: 3em;
+      }
+    }
+    label.multiselect {
+      color: $blue;
+      font-size: 11.5px;
+    }
+    .dropdown-heading,
+    .select-panel {
+      font-size: 14px;
+      font-weight: normal;
+    }
+  }
+}
+
+div.btn-consultar {
+  margin-top: 30px;
+  button {
+    border-radius: 30px;
+    background-color: $green;
+    color: white;
+    &:hover {
+      background-color: $green;
+    }
+  }
+}

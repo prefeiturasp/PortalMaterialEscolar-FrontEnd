@@ -7,7 +7,7 @@ import imgFachadaLoja from "assets/img/landing-loja-fundo-branco.jpg";
 import imgMateriais from "assets/img/materiais.svg";
 import Botao from "components/Botao";
 import { BUTTON_STYLE } from "components/Botao/constants";
-import { KitMaterialEscolar } from "./KitMaterialEscolar";
+import { KitMaterialEscolar } from "../../components/KitMaterialEscolar";
 import { getEdital } from "services/homeFornecedor.service";
 import { API_URL } from "config";
 import "./style.scss";
