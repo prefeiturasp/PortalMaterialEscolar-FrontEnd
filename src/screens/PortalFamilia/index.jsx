@@ -12,6 +12,10 @@ import { formatarParaMultiselect } from "helpers/helpers";
 import { toastWarn } from "components/Toast/dialogs";
 import { useHistory } from "react-router-dom";
 import "./style.scss";
+import Select from "components/Select";
+import { OPCOES_MATERIAIS, KITS } from "./constants";
+import Botao from "components/Botao";
+import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 
 export const PortalFamilia = () => {
   const [kits, setKits] = useState(null);
@@ -31,11 +35,14 @@ export const PortalFamilia = () => {
     });
   }, []);
 
-  const consultarEndereco = () => {
+  const consultarEndereco = (values) => {
     if (!latitude || !longitude) {
       toastWarn("Selecione um dos resultados de endereço para buscar");
-    } else if (materiaisSelecionados.length === 0) {
-      toastWarn("Selecione ao menos um materialEscolar");
+    } else if (
+      values.tipo_busca === "itens" &&
+      materiaisSelecionados.length === 0
+    ) {
+      toastWarn("Selecione ao menos um material escolar");
     } else {
       history.push({
         pathname: "/mapa-de-fornecedores",
@@ -88,37 +95,67 @@ export const PortalFamilia = () => {
                         handleChange={handleAddressChange}
                       />
                     </div>
-                    <div className="field-uniforme col-sm-12 col-md-4">
-                      <label
-                        htmlFor={"tipo_uniforme"}
-                        className={`multiselect`}
-                      >
-                        Selecione itens do uniforme *
-                      </label>
+                    <div className="col-md-4 col-12">
                       <Field
-                        component={StatefulMultiSelect}
-                        name="material_escolar"
-                        selected={materiaisSelecionados}
-                        options={materiais}
-                        onSelectedChanged={(values) =>
-                          setMateriaisSelecionados(values)
-                        }
-                        disableSearch={true}
-                        overrideStrings={{
-                          selectSomeItems: "Selecione",
-                          allItemsAreSelected:
-                            "Todos os itens estão selecionados",
-                          selectAll: "Todos",
-                        }}
+                        component={Select}
+                        labelClassName="multiselect"
+                        name="tipo_busca"
+                        label="Busque kit completo ou itens avulsos*"
+                        options={OPCOES_MATERIAIS}
+                        validate={required}
+                        naoDesabilitarPrimeiraOpcao
                       />
                     </div>
+                    {values.tipo_busca === "itens" && (
+                      <div className="field-uniforme col-sm-12 col-md-4">
+                        <label
+                          htmlFor={"tipo_uniforme"}
+                          className={`multiselect`}
+                        >
+                          Selecione etapa de ensino ou materiais escolares
+                        </label>
+                        <Field
+                          component={StatefulMultiSelect}
+                          name="material_escolar"
+                          selected={materiaisSelecionados}
+                          options={materiais}
+                          onSelectedChanged={(values) =>
+                            setMateriaisSelecionados(values)
+                          }
+                          disableSearch={true}
+                          overrideStrings={{
+                            selectSomeItems: "Selecione",
+                            allItemsAreSelected:
+                              "Todos os itens estão selecionados",
+                            selectAll: "Todos",
+                          }}
+                        />
+                      </div>
+                    )}
+                    {values.tipo_busca !== "itens" && (
+                      <div className="col-md-4 col-12">
+                        <Field
+                          component={Select}
+                          labelClassName="multiselect"
+                          name="kit"
+                          label="Selecione etapa de ensino ou materiais escolares"
+                          options={KITS}
+                          validate={required}
+                          naoDesabilitarPrimeiraOpcao
+                          disabled={
+                            !values.tipo_busca ||
+                            values.tipo_busca === "Selecione"
+                          }
+                        />
+                      </div>
+                    )}
                   </div>
                   <div className="btn-consultar text-center">
                     <button
                       size="lg"
                       type="button"
-                      className="btn btn-light pl-4 pr-4"
-                      onClick={() => consultarEndereco()}
+                      className="btn btn-light col-sm-3 col-12"
+                      onClick={() => consultarEndereco(values)}
                     >
                       <strong>Consultar</strong>
                     </button>
@@ -131,32 +168,21 @@ export const PortalFamilia = () => {
         <div id="conteudo" className="w-100 home">
           <div className="container">
             <div className="row mt-5">
-              <div className="col-lg-6">
+              <div className="col-12">
                 <h2 className="cor-azul mb-4">
-                  Por que o modelo de compra de uniforme mudou?"
+                  Como funciona o novo modelo de fornecimento de material
+                  escolar?
                 </h2>
                 <div className="justify-content-lg-end justify-content-center">
-                  O uniforme escolar, em geral, era comprado de forma
-                  centralizada pela Prefeitura e distribuído aos estudantes nas
-                  escolas. Esse modelo de compra tinha como desvantagens
-                  dificuldades em encontrar fornecedores que oferecessem
-                  produtos de qualidade aliados a bom preço, seguindo as regras
-                  do processo de compra pública (chamado de licitação). Outro
-                  fator complicador era de os estudantes não poderem provar o
-                  uniforme antes da compra (causando problemas na escolha do
-                  tamanho adequado para cada peça) e a complexa logística de
-                  distribuição (que aumentava o risco de atraso na entrega).
-                </div>
-              </div>
-              <div className="col-lg-6 mb-lg-0">
-                <div className="embed-responsive embed-responsive-16by9">
-                  <iframe
-                    title="Vídeo sobre o Portal do Uniforme"
-                    src="https://www.youtube.com/embed/eggj-Pw2LHI"
-                    frameBorder="0"
-                    allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                    allowFullScreen
-                  ></iframe>
+                  A Prefeitura disponibiliza o crédito para que as famílias
+                  realizem a compra diretamente nas lojas credenciadas. Isso
+                  torna a aquisição do material escolar mais rápida, atendendo
+                  critérios de qualidade e as preferências dos estudantes e
+                  famílias, respeitando a lista de itens necessários para cada
+                  etapa. Por exemplo: se a criança já possui a tesoura do ano
+                  anterior em bom estado, não precisa comprar outra e pode
+                  gastar o valor para escolher um determinado modelo de um item
+                  do seu kit que mais a agrade.
                 </div>
               </div>
             </div>
@@ -170,6 +196,8 @@ export const PortalFamilia = () => {
                   Quais itens compõem os kits de materiais escolares da rede
                   municipal de ensino?
                 </h2>
+                <KitMaterialEscolar tipoEscola="bercario" />
+                <KitMaterialEscolar tipoEscola="mini_grupo" />
                 <KitMaterialEscolar tipoEscola="educacao_infantil" />
                 <KitMaterialEscolar tipoEscola="ensino_fundamental_alfabetizacao" />
                 <KitMaterialEscolar tipoEscola="ensino_fundamental_interdisciplinar" />
@@ -186,48 +214,18 @@ export const PortalFamilia = () => {
             </div>
           </div>
         </div>
-        <div className="container agora-cada-bloco">
-          Agora, cada família poderá compor o kit da forma que for mais adequada
-          a cada estudante, consideradas suas necessidades específicas e
-          respeitado o padrão das peças aprovado pela Secretaria Municipal de
-          Educação e o valor limite de R$ 215 disponibilizado. <br /> A compra
-          será feita diretamente pelas famílias nas lojas credenciadas, a partir
-          de um sistema de crédito. O(a) responsável legal pelo estudante não
-          receberá diretamente os R$ 215 do kit do uniforme escolar na sua
-          conta, mas sim terá direito a gastar esse valor adquirindo o uniforme
-          escolar nas lojas autorizadas (e são elas que farão a prestação de
-          contas à Prefeitura).
-        </div>
-        <div className="container">
-          <div className="row mt-5">
-            <div className="col-lg-6">
-              <h2 className="cor-azul mb-4">
-                Ajude a Prefeitura a garantir a qualidade do uniforme
-              </h2>
-              <div className="justify-content-lg-end justify-content-center">
-                As lojas credenciadas para a venda do uniforme escolar precisam
-                seguir o padrão estabelecido pela Secretaria Municipal de
-                Educação, tanto no que diz respeito aos modelos, cores, quanto à
-                qualidade do material. Para saber como conferir se os produtos
-                vendidos estão de fato cumprindo com todas as exigências, veja
-                as dicas neste vídeo:
-              </div>
-            </div>
-            <div className="col-lg-6 mb-lg-0">
-              <div className="embed-responsive embed-responsive-16by9">
-                <iframe
-                  title="Vídeo sobre o Portal do Uniforme"
-                  src="https://www.youtube.com/embed/kjN_J1RRkq4"
-                  frameBorder="0"
-                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
-                  allowFullScreen
-                ></iframe>
-              </div>
-            </div>
-          </div>
+        <div className="mt-4 container agora-cada-bloco">
+          É importante lembrar que, embora a decisão de comprar ou não todos os
+          itens de um determinado kit seja das famílias, o(a) estudante precisa
+          levar para a escola todos os itens que compõem o kit de sua faixa
+          etária. Isso porque esses materiais são essenciais para o trabalho
+          pedagógico que será desenvolvido ao longo do ano letivo, ou seja, para
+          realização de todas as atividades que contribuem para a aprendizagem.
         </div>
         <div className="container mt-3">
-          <h2 className="cor-azul mb-4">Problemas na compra do uniforme</h2>
+          <h2 className="cor-azul mb-4">
+            Problemas na compra do material escolar?
+          </h2>
           <div className="justify-content-lg-end justify-content-center">
             Em caso de problemas como possíveis falhas na confecção das peças,
             entre em contato com a loja onde produto foi adquirido. Para
@@ -237,24 +235,27 @@ export const PortalFamilia = () => {
           </div>
           <div className="text-center pt-3 pb-3">
             <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616">
-              <button size="lg" className="btn btn-primary pl-4 pr-4">
-                <strong>Avise sobre problemas</strong>
-              </button>
+              <Botao
+                texto="Avise sobre problemas"
+                className="col-sm-3 col-12 fs-16"
+                type={BUTTON_TYPE.BUTTON}
+                style={BUTTON_STYLE.BLUE}
+              />
             </a>
           </div>
         </div>
-        <div className="w-100 sociedade-governo text-center mt-5">
+        <div className="w-100 perguntas-frequentes text-center mt-5">
           <div className="container">
             <div className="col-lg-12 mb-4 mb-lg-0">
-              <h3 className="text-white mb-4">
-                Não perca tempo, solicite já o uniforme!
+              <h3 className="mb-4">
+                Ainda com dúvidas? Veja lista com perguntas frequentes
               </h3>
               <a
                 className="mb-0"
                 href="https://pedido-uniforme.sme.prefeitura.sp.gov.br"
               >
                 <button size="lg" className="btn btn-light pl-4 pr-4">
-                  <strong>Solicite o uniforme</strong>
+                  <strong>Perguntas frequentes</strong>
                 </button>
               </a>
             </div>
