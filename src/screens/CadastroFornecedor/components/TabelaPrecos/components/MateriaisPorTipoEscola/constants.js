@@ -1,4 +1,29 @@
 export const TIPO_ESCOLA_MATERIAIS = {
+  bercario: {
+    label: "Kit Educação Infantil - Berçário I e II",
+    materiais: [
+      {
+        label: "Agenda Educação Infantil",
+        value: "agenda_educacao_infantil",
+        quantidade: 1,
+      },
+    ],
+  },
+  mini_grupo: {
+    label: "Kit Educação Infantil - Mini Grupo I e II",
+    materiais: [
+      {
+        label: "Agenda Educação Infantil",
+        value: "agenda_educacao_infantil",
+        quantidade: 1,
+      },
+      {
+        label: "Giz de cera grosso Educação Infantil (12 cores)",
+        value: "giz_de_cera_grosso_educacao_infantil_12_cores",
+        quantidade: 1,
+      },
+    ],
+  },
   educacao_infantil: {
     label: "Kit Educação Infantil (Infantil I e II - EMEI)",
     materiais: [
@@ -65,8 +90,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
     ],
   },
   ensino_fundamental_alfabetizacao: {
-    label:
-      "Kit Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
+    label: "Kit Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
     materiais: [
       {
         label: "Agenda Ensino Fundamental",
@@ -136,8 +160,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
     ],
   },
   ensino_fundamental_interdisciplinar: {
-    label:
-      "Kit Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
+    label: "Kit Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
     materiais: [
       {
         label: "Agenda Ensino Fundamental",
