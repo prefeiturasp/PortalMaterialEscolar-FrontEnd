@@ -3,6 +3,7 @@ import { CadastroFornecedor } from "../screens/CadastroFornecedor";
 import { PortalFornecedor } from "screens/PortalFornecedor";
 import { PortalFamilia } from "screens/PortalFamilia";
 import { FinalizadoComSucesso } from "screens/FinalizadoComSucesso";
+import { MapaFornecedores } from "screens/MapaFornecedores";
 
 export const routes = [
   {
@@ -28,6 +29,11 @@ export const routes = [
   {
     path: "/confirmacao-cadastro",
     component: FinalizadoComSucesso,
+    exact: true,
+  },
+  {
+    path: "/mapa-de-fornecedores",
+    component: MapaFornecedores,
     exact: true,
   },
 ];
