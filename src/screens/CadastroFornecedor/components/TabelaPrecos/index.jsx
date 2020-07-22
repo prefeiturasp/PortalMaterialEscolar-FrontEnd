@@ -148,23 +148,17 @@ export const TabelaPrecos = ({
             })}
         </div>
       </div>
-      <MateriaisPorTipoEscola tipoEscola="educacao_infantil" values={values} />
+      <MateriaisPorTipoEscola tipoEscola="EMEI" values={values} />
       <MateriaisPorTipoEscola
-        tipoEscola="ensino_fundamental_alfabetizacao"
+        tipoEscola="CICLO_ALFABETIZACAO"
         values={values}
       />
       <MateriaisPorTipoEscola
-        tipoEscola="ensino_fundamental_interdisciplinar"
+        tipoEscola="CICLO_INTERDISCIPLINAR"
         values={values}
       />
-      <MateriaisPorTipoEscola
-        tipoEscola="ensino_fundamental_autoral"
-        values={values}
-      />
-      <MateriaisPorTipoEscola
-        tipoEscola="ensino_medio_eja_mova"
-        values={values}
-      />
+      <MateriaisPorTipoEscola tipoEscola="CICLO_ALTORAL" values={values} />
+      <MateriaisPorTipoEscola tipoEscola="MEDIO_EJA_MOVA" values={values} />
       <div className="row mt-5 mb-5">
         {empresa && empresa.status !== "INSCRITO" && (
           <Fragment>

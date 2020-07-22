@@ -1,5 +1,5 @@
 export const TIPO_ESCOLA_MATERIAIS = {
-  bercario: {
+  BERCARIO: {
     label: "Kit Educação Infantil - Berçário I e II",
     materiais: [
       {
@@ -9,7 +9,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  mini_grupo: {
+  MINI_GRUPO: {
     label: "Kit Educação Infantil - Mini Grupo I e II",
     materiais: [
       {
@@ -24,7 +24,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  educacao_infantil: {
+  EMEI: {
     label: "Kit Educação Infantil (Infantil I e II - EMEI)",
     materiais: [
       {
@@ -89,7 +89,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_fundamental_alfabetizacao: {
+  CICLO_ALFABETIZACAO: {
     label: "Kit Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
     materiais: [
       {
@@ -159,7 +159,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_fundamental_interdisciplinar: {
+  CICLO_INTERDISCIPLINAR: {
     label: "Kit Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
     materiais: [
       {
@@ -239,7 +239,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_fundamental_autoral: {
+  CICLO_ALTORAL: {
     label: "Kit Ensino Fundamental - Ciclo Autoral (7º ao 9º ano)",
     materiais: [
       {
@@ -324,7 +324,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_medio_eja_mova: {
+  MEDIO_EJA_MOVA: {
     label: "Kit Ensino Fundamental - Ensino Médio/EJA e MOVA",
     materiais: [
       {

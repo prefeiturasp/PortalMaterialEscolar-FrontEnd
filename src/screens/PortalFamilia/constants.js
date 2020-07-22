@@ -12,22 +12,22 @@ export const OPCOES_MATERIAIS = [
 export const KITS = [
   {
     nome: "Educação Infantil (EMEI - Infantil I e II)",
-    uuid: "ei",
+    uuid: "EMEI",
   },
   {
     nome: "Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
-    uuid: "ef_1_a_3",
+    uuid: "CICLO_ALFABETIZACAO",
   },
   {
     nome: "Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
-    uuid: "ef_4_a_6",
+    uuid: "CICLO_INTERDISCIPLINAR",
   },
   {
     nome: "Ensino Fundamental - Ciclo Autoral (7º ao 9º ano)",
-    uuid: "ef_7_a_9",
+    uuid: "CICLO_ALTORAL",
   },
   {
     nome: "Ensino Médio, EJA/MOVA",
-    uuid: "em",
+    uuid: "MEDIO_EJA_MOVA",
   },
 ];

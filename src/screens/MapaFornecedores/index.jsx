@@ -8,7 +8,11 @@ import { AutoComplete } from "components/Input/AutoComplete";
 import { required } from "helpers/validators";
 import StatefulMultiSelect from "@khanacademy/react-multi-select";
 import { getLojasCredenciadas } from "services/mapaFornecedores.service";
-import { sortByParam } from "./helpers";
+import {
+  sortByParam,
+  acrescentaTotalMateriais,
+  getArrayMateriais,
+} from "./helpers";
 import Select from "components/Select";
 import { ORDENAR_OPCOES } from "./constants";
 import { QUANTIDADE_POR_PAGINA } from "components/Paginacao/constants";
@@ -16,6 +20,7 @@ import { Paginacao } from "components/Paginacao";
 import Mapa from "components/Mapa";
 import { getMateriais } from "services/tabelaPrecos.service";
 import { formatarParaMultiselect } from "helpers/helpers";
+import { KITS } from "../PortalFamilia/constants";
 import "./style.scss";
 
 export const MapaFornecedores = (props) => {
@@ -28,6 +33,8 @@ export const MapaFornecedores = (props) => {
   const [pagina, setPagina] = useState(1);
   const [lojaHover, setLojaHover] = useState(null);
   const [materiaisState, setMateriaisState] = useState([]);
+  const [tipoBusca, setTipoBusca] = useState(null);
+  const [kit, setKit] = useState(null);
 
   const history = useHistory();
 
@@ -38,13 +45,26 @@ export const MapaFornecedores = (props) => {
         longitude,
         materiaisSelecionados,
         endereco,
+        tipoBusca,
+        kit,
       } = props.location.state;
-      getLojasCredenciadas(latitude, longitude).then((response) => {
+      getLojasCredenciadas(latitude, longitude, {
+        tipo_busca: tipoBusca,
+        kit: kit,
+      }).then((response) => {
         setLatitude(latitude);
         setLongitude(longitude);
         setMateriaisState(materiaisSelecionados);
         setEndereco(endereco);
-        setLojas(sortByParam(response.data, "distancia"));
+        setTipoBusca(tipoBusca);
+        setKit(kit);
+        setLojas(
+          acrescentaTotalMateriais(
+            sortByParam(response.data, "distancia"),
+            materiaisSelecionados,
+            kit
+          )
+        );
       });
       getMateriais().then((response) => {
         if (response.status === HTTP_STATUS.OK) {
@@ -70,7 +90,14 @@ export const MapaFornecedores = (props) => {
     setLojas(null);
     setPagina(1);
     getLojasCredenciadas(latitude, longitude).then((response) => {
-      setLojas(sortByParam(response.data, materiaisState), "distancia");
+      setLojas(
+        acrescentaTotalMateriais(
+          sortByParam(response.data, materiaisState),
+          "distancia"
+        ),
+        materiaisState,
+        kit
+      );
     });
   };
 
@@ -121,7 +148,8 @@ export const MapaFornecedores = (props) => {
                   {lojas && lojas.length === 0 && !consultarNovamente && (
                     <div className="text-dark col-lg-6 col-sm-12 lojas">
                       Infelizmente <strong>não há lojas</strong> credenciadas
-                      para fornecimento do uniforme próximas da {endereco}.
+                      para fornecimento do material escolar próximas da{" "}
+                      {endereco}.
                       <div className="pt-3 text-center">
                         <button
                           size="lg"
@@ -137,11 +165,11 @@ export const MapaFornecedores = (props) => {
                   {consultarNovamente && (
                     <div className="col-lg-6 col-sm-12 lojas">
                       <div className="text-dark pt-4">
-                        Para encontrar as lojas fornecedoras de uniformes mais
-                        próximas a você, basta informar abaixo seu endereço e
-                        quais itens do uniforme você procura.
+                        Para encontrar as lojas fornecedoras de materiais
+                        escolares mais próximas a você, basta informar abaixo
+                        seu endereço e qual kit ou quais materiais escolares
+                        você procura.
                       </div>
-
                       <form>
                         <div className="row pt-5">
                           <div className="field-endereco col-12">
@@ -157,7 +185,7 @@ export const MapaFornecedores = (props) => {
                           </div>
                           <div className="field-uniforme col-12">
                             <label
-                              htmlFor={"tipo_uniforme"}
+                              htmlFor={"material_escolar"}
                               className={`multiselect`}
                             >
                               Selecione itens do uniforme *
@@ -195,10 +223,19 @@ export const MapaFornecedores = (props) => {
                   )}
                   {lojas && lojas.length > 0 && !consultarNovamente && (
                     <div className="text-dark col-lg-6 col-sm-12 lojas">
-                      Essas são as <span>{lojas && lojas.length} lojas </span>
-                      credenciadas que vendem os seguintes itens do uniforme
-                      escolar (Bermuda, blusão de moletom, calça, camiseta,
-                      jaqueta, meia e sapato) mais próximas da {endereco}.
+                      Essas são as{" "}
+                      <span className="font-weight-bold">
+                        {lojas && lojas.length} lojas{" "}
+                      </span>
+                      credenciadas que vendem os seguintes itens{" "}
+                      {kit &&
+                        `do kit ${
+                          KITS.find((kit_) => kit_.uuid === kit).nome
+                        } `}
+                      {materiaisState.length > 0 &&
+                        ` de material escolar (${materiaisState.join(", ")}) `}
+                      mais próximas da{" "}
+                      <span className="font-weight-bold">{endereco}</span>.
                       <div className="row">
                         <div className="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-8 pt-3">
                           <Select
@@ -212,10 +249,7 @@ export const MapaFornecedores = (props) => {
                       </div>
                       <div className="tabela-lojas">
                         <div className="tabela-header row">
-                          <div className="col-12 col-sm-7">Nome</div>
-                          <div className="d-none d-md-block col-sm-5">
-                            Itens de uniforme disponíveis
-                          </div>
+                          <div className="col-12">Nome</div>
                         </div>
                         {lojas &&
                           lojas
@@ -295,20 +329,26 @@ export const MapaFornecedores = (props) => {
                                             </tr>
                                           </thead>
                                           <tbody>
-                                            {loja.proponente.ofertas_de_uniformes
-                                              .filter((uniforme) =>
-                                                materiaisState.includes(
-                                                  uniforme.item.split(" ")[0]
-                                                )
+                                            {loja.proponente.ofertas_de_materiais
+                                              .filter((materialEscolar) =>
+                                                materiaisState.length > 0
+                                                  ? materiaisState.includes(
+                                                      materialEscolar.item
+                                                    )
+                                                  : getArrayMateriais(
+                                                      kit
+                                                    ).includes(
+                                                      materialEscolar.item
+                                                    )
                                               )
-                                              .map((uniforme, key) => {
+                                              .map((materialEscolar, key) => {
                                                 return (
                                                   <tr className="row" key={key}>
                                                     <td className="col-8">
-                                                      {uniforme.item}
+                                                      {materialEscolar.item}
                                                     </td>
                                                     <td className="col-4">
-                                                      {uniforme.preco.replace(
+                                                      {materialEscolar.preco.replace(
                                                         ".",
                                                         ","
                                                       )}
@@ -321,7 +361,7 @@ export const MapaFornecedores = (props) => {
                                                 Valor Total (R$)
                                               </td>
                                               <td className="col-4">
-                                                {loja.total_uniformes}
+                                                {loja.total_materiais}
                                               </td>
                                             </tr>
                                           </tbody>
