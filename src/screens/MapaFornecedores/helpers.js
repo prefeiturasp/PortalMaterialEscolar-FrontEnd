@@ -50,9 +50,53 @@ export const sortByParam = (lista, param) => {
         if (parseFloat(a[param]) < parseFloat(b[param])) return -1;
         else if (parseFloat(a[param]) > parseFloat(b[param])) return 1;
         return 0;
-      } else {
+      } else if (param === "nome_fantasia") {
         if (a[param].toUpperCase() < b[param].toUpperCase()) return -1;
         else if (a[param].toUpperCase() > b[param].toUpperCase()) return 1;
+        return 0;
+      } else {
+        if (
+          parseFloat(
+            a.proponente.ofertas_de_materiais.find(
+              (material) => material.item === param
+            )
+              ? a.proponente.ofertas_de_materiais.find(
+                  (material) => material.item === param
+                ).preco
+              : 99
+          ) <
+          parseFloat(
+            b.proponente.ofertas_de_materiais.find(
+              (material) => material.item === param
+            )
+              ? b.proponente.ofertas_de_materiais.find(
+                  (material) => material.item === param
+                ).preco
+              : 99
+          )
+        )
+          return -1;
+        else if (
+          parseFloat(
+            a.proponente.ofertas_de_materiais.find(
+              (material) => material.item === param
+            )
+              ? a.proponente.ofertas_de_materiais.find(
+                  (material) => material.item === param
+                ).preco
+              : 99
+          ) >
+          parseFloat(
+            b.proponente.ofertas_de_materiais.find(
+              (material) => material.item === param
+            )
+              ? b.proponente.ofertas_de_materiais.find(
+                  (material) => material.item === param
+                ).preco
+              : 99
+          )
+        )
+          return 1;
         return 0;
       }
     });

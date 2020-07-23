@@ -43,7 +43,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 2,
       },
@@ -53,7 +53,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 2,
       },
@@ -113,7 +113,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 4,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 2,
       },
@@ -123,7 +123,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 2,
       },
@@ -183,7 +183,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 5,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -193,7 +193,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 2,
       },
@@ -258,7 +258,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 3,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -268,7 +268,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 1,
       },
@@ -325,7 +325,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
     ],
   },
   MEDIO_EJA_MOVA: {
-    label: "Kit Ensino Fundamental - Ensino Médio/EJA e MOVA",
+    label: "Kit Ensino Médio/EJA e MOVA",
     materiais: [
       {
         label: "Apontador",
@@ -343,7 +343,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 3,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -353,7 +353,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 1,
       },

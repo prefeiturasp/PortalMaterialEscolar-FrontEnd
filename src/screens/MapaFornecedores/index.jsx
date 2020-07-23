@@ -7,22 +7,23 @@ import { LoadingCircle } from "components/LoadingCircle";
 import { AutoComplete } from "components/Input/AutoComplete";
 import { required } from "helpers/validators";
 import StatefulMultiSelect from "@khanacademy/react-multi-select";
-import { getLojasCredenciadas } from "services/mapaFornecedores.service";
+import { getLojasCredenciadas2 } from "services/mapaFornecedores.service";
 import {
   sortByParam,
   acrescentaTotalMateriais,
   getArrayMateriais,
 } from "./helpers";
 import Select from "components/Select";
-import { ORDENAR_OPCOES } from "./constants";
+import { ORDENAR_OPCOES, ORDENAR_OPCOES_KIT } from "./constants";
 import { QUANTIDADE_POR_PAGINA } from "components/Paginacao/constants";
 import { Paginacao } from "components/Paginacao";
 import Mapa from "components/Mapa";
 import { getMateriais } from "services/tabelaPrecos.service";
-import { formatarParaMultiselect } from "helpers/helpers";
+import { formatarParaMultiselect, formatarParaSelect } from "helpers/helpers";
 import { KITS, OPCOES_MATERIAIS } from "../PortalFamilia/constants";
 import "./style.scss";
 import { toastWarn } from "components/Toast/dialogs";
+import { OnChange } from "react-final-form-listeners";
 
 export const MapaFornecedores = (props) => {
   const [lojas, setLojas] = useState(null);
@@ -49,7 +50,7 @@ export const MapaFornecedores = (props) => {
         tipoBusca,
         kit,
       } = props.location.state;
-      getLojasCredenciadas(latitude, longitude, {
+      getLojasCredenciadas2(latitude, longitude, {
         tipo_busca: tipoBusca,
         kit: kit,
       }).then((response) => {
@@ -82,7 +83,7 @@ export const MapaFornecedores = (props) => {
   };
 
   const onSelectChanged = (value) => {
-    setLojas(sortByParam(lojas, value));
+    if (value !== "menor_preco_item") setLojas(sortByParam(lojas, value));
   };
 
   const getLojasNovoEndereco = (form, values) => {
@@ -97,7 +98,7 @@ export const MapaFornecedores = (props) => {
       setConsultarNovamente(false);
       setLojas(null);
       setPagina(1);
-      getLojasCredenciadas(latitude, longitude).then((response) => {
+      getLojasCredenciadas2(latitude, longitude).then((response) => {
         setLojas(
           acrescentaTotalMateriais(
             sortByParam(response.data, "distancia"),
@@ -281,11 +282,35 @@ export const MapaFornecedores = (props) => {
                         ` de material escolar (${materiaisState.join(", ")}) `}
                       mais próximas da{" "}
                       <span className="font-weight-bold">{endereco}</span>.
-                      <div className="row">
-                        <div className="col-6 offset-6 col-sm-6 offset-sm-6 col-md-4 offset-md-8 pt-3">
-                          <Select
-                            options={ORDENAR_OPCOES}
+                      <div className="row pt-3">
+                        <div className="col-sm-5 col-12">
+                          <Field
+                            component={Select}
+                            options={
+                              tipoBusca === "kits"
+                                ? ORDENAR_OPCOES_KIT
+                                : ORDENAR_OPCOES
+                            }
+                            name="ordenar_por"
                             naoDesabilitarPrimeiraOpcao
+                            primeiraOpcao="Ordenar por"
+                          />
+                          <OnChange name={`ordenar_por`}>
+                            {(value, previous) => {
+                              onSelectChanged(value);
+                            }}
+                          </OnChange>
+                        </div>
+                        <div className="col-sm-7 col-12">
+                          <Select
+                            options={
+                              tipoBusca === "kits"
+                                ? formatarParaSelect(getArrayMateriais(kit))
+                                : formatarParaSelect(materiaisState)
+                            }
+                            disabled={values.ordenar_por !== "menor_preco_item"}
+                            naoDesabilitarPrimeiraOpcao
+                            primeiraOpcao="Selecionar item"
                             onChange={(event) =>
                               onSelectChanged(event.target.value)
                             }
