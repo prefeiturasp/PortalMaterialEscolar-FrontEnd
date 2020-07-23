@@ -13,11 +13,11 @@ import { toastSuccess, toastError } from "components/Toast/dialogs";
 import { getProponente, concluirCadastro } from "services/cadastro.service";
 import { verificarSeFaltamArquivos } from "./helpers";
 import { OnChange } from "react-final-form-listeners";
+import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 import "primeicons/primeicons.css";
 import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "./style.scss";
-import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 
 export const Arquivos = ({ empresa, setEmpresa }) => {
   const [algumUploadEmAndamento, setAlgumUploadEmAndamento] = useState(false);

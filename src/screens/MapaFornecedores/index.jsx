@@ -363,16 +363,44 @@ export const MapaFornecedores = (props) => {
                                       </div>
                                     </div>
                                     <div className="badges col-sm-5 col-12">
-                                      {/*lojaForneceMalharia(loja) && (
-                                    <span className="badge-fornecimento">
-                                      Vestuário
-                                    </span>
-                                  )}
-                                  {lojaForneceCalcado(loja) && (
-                                    <span className="badge-fornecimento">
-                                      Calçado
-                                    </span>
-                                  )*/}
+                                      <span
+                                        className={`badge-fornecimento ${
+                                          (tipoBusca === "kits" ||
+                                            (tipoBusca === "itens" &&
+                                              loja.proponente.ofertas_de_materiais.filter(
+                                                (ofertaMaterial) =>
+                                                  materiaisState.includes(
+                                                    ofertaMaterial.item
+                                                  )
+                                              ).length ===
+                                                materiaisState.length)) &&
+                                          "completo"
+                                        }`}
+                                      >
+                                        {tipoBusca === "kits"
+                                          ? `(${
+                                              getArrayMateriais(kit).length
+                                            }/${
+                                              getArrayMateriais(kit).length
+                                            }) Kit Completo`
+                                          : `${
+                                              loja.proponente.ofertas_de_materiais.filter(
+                                                (ofertaMaterial) =>
+                                                  materiaisState.includes(
+                                                    ofertaMaterial.item
+                                                  )
+                                              ).length
+                                            }/${materiaisState.length} ${
+                                              loja.proponente.ofertas_de_materiais.filter(
+                                                (ofertaMaterial) =>
+                                                  materiaisState.includes(
+                                                    ofertaMaterial.item
+                                                  )
+                                              ).length === materiaisState.length
+                                                ? "itens - Completo"
+                                                : "itens - Parcial"
+                                            }`}
+                                      </span>
                                     </div>
                                     {loja.ativo && (
                                       <Fragment>
