@@ -82,8 +82,10 @@ export const MapaFornecedores = (props) => {
     setEndereco(values.endereco);
   };
 
-  const onSelectChanged = (value) => {
+  const onSelectChanged = (form, value) => {
     if (value !== "menor_preco_item") setLojas(sortByParam(lojas, value));
+    if (["distancia", "nome_fantasia", "total_materiais"].includes(value))
+      form.change("ordenar_por_item", null);
   };
 
   const getLojasNovoEndereco = (form, values) => {
@@ -297,12 +299,14 @@ export const MapaFornecedores = (props) => {
                           />
                           <OnChange name={`ordenar_por`}>
                             {(value, previous) => {
-                              onSelectChanged(value);
+                              onSelectChanged(form, value);
                             }}
                           </OnChange>
                         </div>
                         <div className="col-sm-7 col-12">
-                          <Select
+                          <Field
+                            component={Select}
+                            name="ordenar_por_item"
                             options={
                               tipoBusca === "kits"
                                 ? formatarParaSelect(getArrayMateriais(kit))
@@ -311,10 +315,12 @@ export const MapaFornecedores = (props) => {
                             disabled={values.ordenar_por !== "menor_preco_item"}
                             naoDesabilitarPrimeiraOpcao
                             primeiraOpcao="Selecionar item"
-                            onChange={(event) =>
-                              onSelectChanged(event.target.value)
-                            }
                           />
+                          <OnChange name={`ordenar_por_item`}>
+                            {(value, previous) => {
+                              onSelectChanged(form, value);
+                            }}
+                          </OnChange>
                         </div>
                       </div>
                       <div className="tabela-lojas">
