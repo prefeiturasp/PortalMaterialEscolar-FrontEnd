@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect } from "react";
+import React, { Fragment, useState, useEffect, useCallback } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Form, Field } from "react-final-form";
 import { useHistory } from "react-router-dom";
@@ -20,8 +20,9 @@ import { Paginacao } from "components/Paginacao";
 import Mapa from "components/Mapa";
 import { getMateriais } from "services/tabelaPrecos.service";
 import { formatarParaMultiselect } from "helpers/helpers";
-import { KITS } from "../PortalFamilia/constants";
+import { KITS, OPCOES_MATERIAIS } from "../PortalFamilia/constants";
 import "./style.scss";
+import { toastWarn } from "components/Toast/dialogs";
 
 export const MapaFornecedores = (props) => {
   const [lojas, setLojas] = useState(null);
@@ -84,22 +85,39 @@ export const MapaFornecedores = (props) => {
     setLojas(sortByParam(lojas, value));
   };
 
-  const getLojasNovoEndereco = (form) => {
-    form.change("endereco", "");
-    setConsultarNovamente(false);
-    setLojas(null);
-    setPagina(1);
-    getLojasCredenciadas(latitude, longitude).then((response) => {
-      setLojas(
-        acrescentaTotalMateriais(
-          sortByParam(response.data, materiaisState),
-          "distancia"
-        ),
-        materiaisState,
-        kit
-      );
-    });
+  const getLojasNovoEndereco = (form, values) => {
+    if (values.tipo_busca === "kits" && !values.kit) {
+      toastWarn("Selecione um kit");
+    } else if (values.tipo_busca === "itens" && materiaisState.length === 0) {
+      toastWarn("Selecione ao menos um material escolar");
+    } else {
+      form.change("endereco", "");
+      setKit(values.kit);
+      setTipoBusca(values.tipo_busca);
+      setConsultarNovamente(false);
+      setLojas(null);
+      setPagina(1);
+      getLojasCredenciadas(latitude, longitude).then((response) => {
+        setLojas(
+          acrescentaTotalMateriais(
+            sortByParam(response.data, "distancia"),
+            materiaisState,
+            values.kit
+          )
+        );
+      });
+    }
   };
+
+  const useForceUpdate = () => {
+    const [, setTick] = useState(0);
+    const update = useCallback(() => {
+      setTick((tick) => tick + 1);
+    }, []);
+    return update;
+  };
+
+  const forceUpdate = useForceUpdate();
 
   const collapseLoja = (id) => {
     lojas.forEach((loja) => {
@@ -109,6 +127,7 @@ export const MapaFornecedores = (props) => {
       (loja) => loja.id === id
     ).ativo;
     setLojas(lojas);
+    forceUpdate();
   };
 
   const onSubmit = (values) => {
@@ -183,12 +202,23 @@ export const MapaFornecedores = (props) => {
                               handleChange={handleAddressChange}
                             />
                           </div>
-                          <div className="field-uniforme col-12">
+                        </div>
+                        <Field
+                          component={Select}
+                          labelClassName="multiselect"
+                          name="tipo_busca"
+                          label="Busque kit completo ou itens avulsos*"
+                          options={OPCOES_MATERIAIS}
+                          validate={required}
+                          naoDesabilitarPrimeiraOpcao
+                        />
+                        {values.tipo_busca === "itens" && (
+                          <div className="field-uniforme">
                             <label
                               htmlFor={"material_escolar"}
                               className={`multiselect`}
                             >
-                              Selecione itens do uniforme *
+                              Selecione itens do material escolar*
                             </label>
                             <Field
                               component={StatefulMultiSelect}
@@ -207,16 +237,31 @@ export const MapaFornecedores = (props) => {
                               disableSearch
                             />
                           </div>
-                          <div className="btn-consultar text-center pt-3 col-12">
-                            <button
-                              size="lg"
-                              className="btn btn-light pl-4 pr-4"
-                              type="button"
-                              onClick={() => getLojasNovoEndereco(form)}
-                            >
-                              <strong>Consultar</strong>
-                            </button>
-                          </div>
+                        )}
+                        {values.tipo_busca !== "itens" && (
+                          <Field
+                            component={Select}
+                            labelClassName="multiselect"
+                            name="kit"
+                            label="Selecione etapa de ensino"
+                            options={KITS}
+                            validate={required}
+                            naoDesabilitarPrimeiraOpcao
+                            disabled={
+                              !values.tipo_busca ||
+                              values.tipo_busca === "Selecione"
+                            }
+                          />
+                        )}
+                        <div className="btn-consultar text-center pt-3">
+                          <button
+                            size="lg"
+                            className="btn btn-light pl-4 pr-4"
+                            type="button"
+                            onClick={() => getLojasNovoEndereco(form, values)}
+                          >
+                            <strong>Consultar</strong>
+                          </button>
                         </div>
                       </form>
                     </div>
@@ -228,11 +273,11 @@ export const MapaFornecedores = (props) => {
                         {lojas && lojas.length} lojas{" "}
                       </span>
                       credenciadas que vendem os seguintes itens{" "}
-                      {kit &&
+                      {tipoBusca === "kits" &&
                         `do kit ${
                           KITS.find((kit_) => kit_.uuid === kit).nome
                         } `}
-                      {materiaisState.length > 0 &&
+                      {tipoBusca === "itens" &&
                         ` de material escolar (${materiaisState.join(", ")}) `}
                       mais próximas da{" "}
                       <span className="font-weight-bold">{endereco}</span>.
@@ -388,6 +433,8 @@ export const MapaFornecedores = (props) => {
                             onClick={() => {
                               setConsultarNovamente(true);
                               form.change("endereco", endereco);
+                              form.change("kit", kit);
+                              form.change("tipo_busca", tipoBusca);
                             }}
                           >
                             <strong>Consultar novamente</strong>
