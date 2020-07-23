@@ -18,7 +18,6 @@ import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import "./style.scss";
 
 export const PortalFamilia = () => {
-  const [kits, setKits] = useState(null);
   const [materiais, setMateriais] = useState([]);
   const [materiaisSelecionados, setMateriaisSelecionados] = useState([]);
   const [latitude, setLatitude] = useState(null);
@@ -38,11 +37,15 @@ export const PortalFamilia = () => {
   const consultarEndereco = (values) => {
     if (!latitude || !longitude) {
       toastWarn("Selecione um dos resultados de endereço para buscar");
+    } else if (!values.tipo_busca) {
+      toastWarn("Selecione um tipo de busca");
     } else if (
       values.tipo_busca === "itens" &&
       materiaisSelecionados.length === 0
     ) {
       toastWarn("Selecione ao menos um material escolar");
+    } else if (values.tipo_busca === "kits" && !values.kit) {
+      toastWarn("Selecione um kit");
     } else {
       history.push({
         pathname: "/mapa-de-fornecedores",

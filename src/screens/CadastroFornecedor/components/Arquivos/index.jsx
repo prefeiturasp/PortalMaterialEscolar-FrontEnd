@@ -37,7 +37,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
     if (tiposDocumentos) {
       setEmpresaEFaltaArquivos(empresa);
     }
-  }, [tiposDocumentos]);
+  });
 
   const useForceUpdate = () => {
     const [, setTick] = useState(0);

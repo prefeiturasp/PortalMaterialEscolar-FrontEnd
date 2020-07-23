@@ -74,7 +74,7 @@ export const MapaFornecedores = (props) => {
         }
       });
     }
-  }, []);
+  }, [props.location]);
 
   const handleAddressChange = (values) => {
     setLatitude(values.latitude);

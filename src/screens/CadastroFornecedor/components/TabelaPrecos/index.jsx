@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { ProdutoPreco } from "./components/ProdutoPreco";

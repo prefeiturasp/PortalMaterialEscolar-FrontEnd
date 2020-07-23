@@ -22,13 +22,6 @@
 }
 form {
   text-align: left;
-  .field-endereco,
-  .field-uniforme {
-    @media (max-width: 767px) {
-      padding-left: 3em;
-      padding-right: 3em;
-    }
-  }
   label.multiselect {
     color: $blue;
     font-size: 11.5px;
