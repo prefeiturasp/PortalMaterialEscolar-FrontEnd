@@ -378,11 +378,11 @@ export const MapaFornecedores = (props) => {
                                         }`}
                                       >
                                         {tipoBusca === "kits"
-                                          ? `(${
+                                          ? `${
                                               getArrayMateriais(kit).length
                                             }/${
                                               getArrayMateriais(kit).length
-                                            }) Kit Completo`
+                                            } - Kit Completo`
                                           : `${
                                               loja.proponente.ofertas_de_materiais.filter(
                                                 (ofertaMaterial) =>
