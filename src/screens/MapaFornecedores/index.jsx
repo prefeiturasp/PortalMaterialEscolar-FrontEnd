@@ -21,9 +21,9 @@ import Mapa from "components/Mapa";
 import { getMateriais } from "services/tabelaPrecos.service";
 import { formatarParaMultiselect, formatarParaSelect } from "helpers/helpers";
 import { KITS, OPCOES_MATERIAIS } from "../PortalFamilia/constants";
-import "./style.scss";
 import { toastWarn } from "components/Toast/dialogs";
 import { OnChange } from "react-final-form-listeners";
+import "./style.scss";
 
 export const MapaFornecedores = (props) => {
   const [lojas, setLojas] = useState(null);
@@ -53,6 +53,7 @@ export const MapaFornecedores = (props) => {
       getLojasCredenciadas2(latitude, longitude, {
         tipo_busca: tipoBusca,
         kit: kit,
+        materiais: materiaisSelecionados,
       }).then((response) => {
         setLatitude(latitude);
         setLongitude(longitude);
@@ -100,7 +101,11 @@ export const MapaFornecedores = (props) => {
       setConsultarNovamente(false);
       setLojas(null);
       setPagina(1);
-      getLojasCredenciadas2(latitude, longitude).then((response) => {
+      getLojasCredenciadas2(latitude, longitude, {
+        tipo_busca: tipoBusca,
+        kit: kit,
+        materiais: materiaisState,
+      }).then((response) => {
         setLojas(
           acrescentaTotalMateriais(
             sortByParam(response.data, "distancia"),
@@ -378,9 +383,7 @@ export const MapaFornecedores = (props) => {
                                         }`}
                                       >
                                         {tipoBusca === "kits"
-                                          ? `${
-                                              getArrayMateriais(kit).length
-                                            }/${
+                                          ? `${getArrayMateriais(kit).length}/${
                                               getArrayMateriais(kit).length
                                             } - Kit Completo`
                                           : `${
