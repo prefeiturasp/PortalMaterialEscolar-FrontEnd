@@ -49,7 +49,7 @@ export class AutoSuggestAddress extends Component {
     const suggestions = await this.fetchSuggestions(value, "search");
     const promises = suggestions.filter((s) => {
       let { housenumber, street, ...rest } = s.properties;
-      if (!street) return;
+      if (!street) return null;
       if (!housenumber && numberFound) {
         housenumber = numberFound;
       }
@@ -75,6 +75,7 @@ export class AutoSuggestAddress extends Component {
           suggestions = suggestions.filter((s) => {
             if (s.properties.housenumber === numeroBuscado) {
               sugestaoBoa = s;
+              return null;
             } else {
               return s;
             }

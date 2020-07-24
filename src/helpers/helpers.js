@@ -58,3 +58,12 @@ export const formatarParaMultiselect = (lista) => {
     };
   });
 };
+
+export const formatarParaSelect = (lista) => {
+  return lista.map((element) => {
+    return {
+      nome: element,
+      uuid: element,
+    };
+  });
+};

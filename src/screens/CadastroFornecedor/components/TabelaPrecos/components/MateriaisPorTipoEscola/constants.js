@@ -1,5 +1,5 @@
 export const TIPO_ESCOLA_MATERIAIS = {
-  bercario: {
+  BERCARIO: {
     label: "Kit Educação Infantil - Berçário I e II",
     materiais: [
       {
@@ -9,7 +9,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  mini_grupo: {
+  MINI_GRUPO: {
     label: "Kit Educação Infantil - Mini Grupo I e II",
     materiais: [
       {
@@ -24,7 +24,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  educacao_infantil: {
+  EMEI: {
     label: "Kit Educação Infantil (Infantil I e II - EMEI)",
     materiais: [
       {
@@ -43,7 +43,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 2,
       },
@@ -53,7 +53,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 2,
       },
@@ -89,7 +89,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_fundamental_alfabetizacao: {
+  CICLO_ALFABETIZACAO: {
     label: "Kit Ensino Fundamental - Ciclo de Alfabetização (1º ao 3º ano)",
     materiais: [
       {
@@ -113,7 +113,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 4,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 2,
       },
@@ -123,7 +123,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 2,
       },
@@ -159,7 +159,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_fundamental_interdisciplinar: {
+  CICLO_INTERDISCIPLINAR: {
     label: "Kit Ensino Fundamental - Ciclo Interdisciplinar (4º ao 6º ano)",
     materiais: [
       {
@@ -183,7 +183,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 5,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -193,7 +193,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 2,
       },
@@ -239,7 +239,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_fundamental_autoral: {
+  CICLO_ALTORAL: {
     label: "Kit Ensino Fundamental - Ciclo Autoral (7º ao 9º ano)",
     materiais: [
       {
@@ -258,7 +258,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 3,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -268,7 +268,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 1,
       },
@@ -324,8 +324,8 @@ export const TIPO_ESCOLA_MATERIAIS = {
       },
     ],
   },
-  ensino_medio_eja_mova: {
-    label: "Kit Ensino Fundamental - Ensino Médio/EJA e MOVA",
+  MEDIO_EJA_MOVA: {
+    label: "Kit Ensino Médio/EJA e MOVA",
     materiais: [
       {
         label: "Apontador",
@@ -343,7 +343,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 3,
       },
       {
-        label: "Caderno de desenho 96 Fls.",
+        label: "Caderno desenho 96 Fls.",
         value: "caderno_desenho_96_fls",
         quantidade: 1,
       },
@@ -353,7 +353,7 @@ export const TIPO_ESCOLA_MATERIAIS = {
         quantidade: 1,
       },
       {
-        label: "Cola Branca",
+        label: "Cola branca",
         value: "cola_branca",
         quantidade: 1,
       },

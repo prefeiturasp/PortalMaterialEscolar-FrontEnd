@@ -15,7 +15,7 @@ export const formataMateriais = (materiais) => {
 
 export const validarFormulario = (values, materiais) => {
   let erro = false;
-  for (let [key, _] of Object.entries(values)) {
+  for (let [key] of Object.entries(values)) {
     if (
       key.includes("_check") &&
       values[key] &&
@@ -63,7 +63,7 @@ export const validarFormulario = (values, materiais) => {
 
 export const formataTabelaPrecos = (values, materiais) => {
   const ofertas_de_materiais = [];
-  for (let [key, _] of Object.entries(values)) {
+  for (let [key] of Object.entries(values)) {
     if (key.includes("_check") && values[key]) {
       ofertas_de_materiais.push({
         nome: materiais.find(

@@ -19,6 +19,7 @@ export const Select = (props) => {
     required,
     width,
     labelClassName,
+    primeiraOpcao,
   } = props;
   return (
     <div className="select">
@@ -53,7 +54,7 @@ export const Select = (props) => {
         required={required}
         style={width && { width: width - 12 }}
       >
-        <option value={null}>Selecione</option>
+        <option value={null}>{primeiraOpcao || "Selecione"}</option>
         {options.map((e, key) => {
           return (
             <option

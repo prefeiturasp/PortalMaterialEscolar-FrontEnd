@@ -166,11 +166,11 @@ export const PortalFornecedor = () => {
                   Quais itens compõem os kits de materiais escolares da rede
                   municipal de ensino?
                 </h2>
-                <KitMaterialEscolar tipoEscola="educacao_infantil" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_alfabetizacao" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_interdisciplinar" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_autoral" />
-                <KitMaterialEscolar tipoEscola="ensino_medio_eja_mova" />
+                <KitMaterialEscolar tipoEscola="EMEI" />
+                <KitMaterialEscolar tipoEscola="CICLO_ALFABETIZACAO" />
+                <KitMaterialEscolar tipoEscola="CICLO_INTERDISCIPLINAR" />
+                <KitMaterialEscolar tipoEscola="CICLO_ALTORAL" />
+                <KitMaterialEscolar tipoEscola="MEDIO_EJA_MOVA" />
               </div>
               <div className="col-lg-6 col-sm-12">
                 <img

@@ -11,14 +11,13 @@ import { getMateriais } from "services/tabelaPrecos.service";
 import { formatarParaMultiselect } from "helpers/helpers";
 import { toastWarn } from "components/Toast/dialogs";
 import { useHistory } from "react-router-dom";
-import "./style.scss";
 import Select from "components/Select";
 import { OPCOES_MATERIAIS, KITS } from "./constants";
 import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
+import "./style.scss";
 
 export const PortalFamilia = () => {
-  const [kits, setKits] = useState(null);
   const [materiais, setMateriais] = useState([]);
   const [materiaisSelecionados, setMateriaisSelecionados] = useState([]);
   const [latitude, setLatitude] = useState(null);
@@ -38,11 +37,15 @@ export const PortalFamilia = () => {
   const consultarEndereco = (values) => {
     if (!latitude || !longitude) {
       toastWarn("Selecione um dos resultados de endereço para buscar");
+    } else if (!values.tipo_busca) {
+      toastWarn("Selecione um tipo de busca");
     } else if (
       values.tipo_busca === "itens" &&
       materiaisSelecionados.length === 0
     ) {
       toastWarn("Selecione ao menos um material escolar");
+    } else if (values.tipo_busca === "kits" && !values.kit) {
+      toastWarn("Selecione um kit");
     } else {
       history.push({
         pathname: "/mapa-de-fornecedores",
@@ -50,6 +53,8 @@ export const PortalFamilia = () => {
           latitude: latitude,
           longitude: longitude,
           materiaisSelecionados: materiaisSelecionados,
+          tipoBusca: values.tipo_busca,
+          kit: values.kit,
           endereco: endereco.split(",")[0],
         },
       });
@@ -109,7 +114,7 @@ export const PortalFamilia = () => {
                     {values.tipo_busca === "itens" && (
                       <div className="field-uniforme col-sm-12 col-md-4">
                         <label
-                          htmlFor={"tipo_uniforme"}
+                          htmlFor={"material_escolar"}
                           className={`multiselect`}
                         >
                           Selecione etapa de ensino ou materiais escolares
@@ -196,13 +201,13 @@ export const PortalFamilia = () => {
                   Quais itens compõem os kits de materiais escolares da rede
                   municipal de ensino?
                 </h2>
-                <KitMaterialEscolar tipoEscola="bercario" />
-                <KitMaterialEscolar tipoEscola="mini_grupo" />
-                <KitMaterialEscolar tipoEscola="educacao_infantil" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_alfabetizacao" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_interdisciplinar" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_autoral" />
-                <KitMaterialEscolar tipoEscola="ensino_medio_eja_mova" />
+                <KitMaterialEscolar tipoEscola="BERCARIO" />
+                <KitMaterialEscolar tipoEscola="MINI_GRUPO" />
+                <KitMaterialEscolar tipoEscola="EMEI" />
+                <KitMaterialEscolar tipoEscola="CICLO_ALFABETIZACAO" />
+                <KitMaterialEscolar tipoEscola="CICLO_INTERDISCIPLINAR" />
+                <KitMaterialEscolar tipoEscola="CICLO_ALTORAL" />
+                <KitMaterialEscolar tipoEscola="MEDIO_EJA_MOVA" />
               </div>
               <div className="col-lg-6 col-sm-12">
                 <img
