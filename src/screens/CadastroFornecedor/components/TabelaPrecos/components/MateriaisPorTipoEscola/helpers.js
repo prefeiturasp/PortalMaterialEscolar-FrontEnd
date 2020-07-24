@@ -1,10 +1,14 @@
+import { getNameFromLabel } from "../../helpers";
+
 export const getTotal = (materiais, values) => {
   let total = 0.0;
-  materiais.forEach((material) => {
-    if (values[material.value]) {
+  materiais.forEach((materialKit) => {
+    if (values[getNameFromLabel(materialKit.material.nome)]) {
       total +=
-        material.quantidade *
-        parseFloat(values[material.value].replace(",", "."));
+        materialKit.unidades *
+        parseFloat(
+          values[getNameFromLabel(materialKit.material.nome)].replace(",", ".")
+        );
     }
   });
   return total.toFixed(2).toString().replace(".", ",");
