@@ -12,7 +12,7 @@ import { formatarParaMultiselect } from "helpers/helpers";
 import { toastWarn } from "components/Toast/dialogs";
 import { useHistory } from "react-router-dom";
 import Select from "components/Select";
-import { OPCOES_MATERIAIS, KITS } from "./constants";
+import { OPCOES_MATERIAIS } from "./constants";
 import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import "./style.scss";
@@ -144,14 +144,14 @@ export const PortalFamilia = () => {
                         />
                       </div>
                     )}
-                    {values.tipo_busca !== "itens" && (
+                    {values.tipo_busca !== "itens" && kits ? (
                       <div className="col-md-4 col-12">
                         <Field
                           component={Select}
                           labelClassName="multiselect"
                           name="kit"
                           label="Selecione etapa de ensino ou materiais escolares"
-                          options={KITS}
+                          options={kits.filter((kit) => kit.ativo)}
                           validate={required}
                           naoDesabilitarPrimeiraOpcao
                           disabled={
@@ -159,6 +159,10 @@ export const PortalFamilia = () => {
                             values.tipo_busca === "Selecione"
                           }
                         />
+                      </div>
+                    ) : (
+                      <div className="col-md-4 col-12 mt-3">
+                        Carregando kits...
                       </div>
                     )}
                   </div>

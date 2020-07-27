@@ -20,9 +20,10 @@ import { Paginacao } from "components/Paginacao";
 import Mapa from "components/Mapa";
 import { getMateriais } from "services/tabelaPrecos.service";
 import { formatarParaMultiselect, formatarParaSelect } from "helpers/helpers";
-import { KITS, OPCOES_MATERIAIS } from "../PortalFamilia/constants";
+import { OPCOES_MATERIAIS } from "../PortalFamilia/constants";
 import { toastWarn } from "components/Toast/dialogs";
 import { OnChange } from "react-final-form-listeners";
+import { getKits } from "services/kits.service";
 import "./style.scss";
 
 export const MapaFornecedores = (props) => {
@@ -37,6 +38,7 @@ export const MapaFornecedores = (props) => {
   const [materiaisState, setMateriaisState] = useState([]);
   const [tipoBusca, setTipoBusca] = useState(null);
   const [kit, setKit] = useState(null);
+  const [kits, setKits] = useState(null);
 
   const history = useHistory();
 
@@ -50,24 +52,31 @@ export const MapaFornecedores = (props) => {
         tipoBusca,
         kit,
       } = props.location.state;
-      getLojasCredenciadas2(latitude, longitude, {
-        tipo_busca: tipoBusca,
-        kit: kit,
-        materiais: materiaisSelecionados,
-      }).then((response) => {
-        setLatitude(latitude);
-        setLongitude(longitude);
-        setMateriaisState(materiaisSelecionados);
-        setEndereco(endereco);
-        setTipoBusca(tipoBusca);
-        setKit(kit);
-        setLojas(
-          acrescentaTotalMateriais(
-            sortByParam(response.data, "distancia"),
-            materiaisSelecionados,
-            kit
-          )
-        );
+      console.log(kit);
+      getKits().then((response) => {
+        if (response.status === HTTP_STATUS.OK) {
+          setKits(response.data);
+          getLojasCredenciadas2(latitude, longitude, {
+            tipo_busca: tipoBusca,
+            kit: kit,
+            materiais: materiaisSelecionados,
+          }).then((response2) => {
+            setLatitude(latitude);
+            setLongitude(longitude);
+            setMateriaisState(materiaisSelecionados);
+            setEndereco(endereco);
+            setTipoBusca(tipoBusca);
+            setKit(kit);
+            setLojas(
+              acrescentaTotalMateriais(
+                sortByParam(response2.data, "distancia"),
+                materiaisSelecionados,
+                response.data,
+                kit
+              )
+            );
+          });
+        }
       });
       getMateriais().then((response) => {
         if (response.status === HTTP_STATUS.OK) {
@@ -110,6 +119,7 @@ export const MapaFornecedores = (props) => {
           acrescentaTotalMateriais(
             sortByParam(response.data, "distancia"),
             materiaisState,
+            kits,
             values.kit
           )
         );
@@ -246,13 +256,13 @@ export const MapaFornecedores = (props) => {
                             />
                           </div>
                         )}
-                        {values.tipo_busca !== "itens" && (
+                        {values.tipo_busca !== "itens" && kits && (
                           <Field
                             component={Select}
                             labelClassName="multiselect"
                             name="kit"
                             label="Selecione etapa de ensino"
-                            options={KITS}
+                            options={kits.filter((kit) => kit.ativo)}
                             validate={required}
                             naoDesabilitarPrimeiraOpcao
                             disabled={
@@ -282,9 +292,8 @@ export const MapaFornecedores = (props) => {
                       </span>
                       credenciadas que vendem os seguintes itens{" "}
                       {tipoBusca === "kits" &&
-                        `do kit ${
-                          KITS.find((kit_) => kit_.uuid === kit).nome
-                        } `}
+                        kits &&
+                        `do ${kits.find((kit_) => kit_.uuid === kit).nome} `}
                       {tipoBusca === "itens" &&
                         ` de material escolar (${materiaisState.join(", ")}) `}
                       mais próximas da{" "}
@@ -314,7 +323,9 @@ export const MapaFornecedores = (props) => {
                             name="ordenar_por_item"
                             options={
                               tipoBusca === "kits"
-                                ? formatarParaSelect(getArrayMateriais(kit))
+                                ? formatarParaSelect(
+                                    getArrayMateriais(kits, kit)
+                                  )
                                 : formatarParaSelect(materiaisState)
                             }
                             disabled={values.ordenar_por !== "menor_preco_item"}
@@ -383,8 +394,12 @@ export const MapaFornecedores = (props) => {
                                         }`}
                                       >
                                         {tipoBusca === "kits"
-                                          ? `${getArrayMateriais(kit).length}/${
-                                              getArrayMateriais(kit).length
+                                          ? `${
+                                              getArrayMateriais(kits, kit)
+                                                .length
+                                            }/${
+                                              getArrayMateriais(kits, kit)
+                                                .length
                                             } - Kit Completo`
                                           : `${
                                               loja.proponente.ofertas_de_materiais.filter(
@@ -443,6 +458,7 @@ export const MapaFornecedores = (props) => {
                                                       materialEscolar.item
                                                     )
                                                   : getArrayMateriais(
+                                                      kits,
                                                       kit
                                                     ).includes(
                                                       materialEscolar.item

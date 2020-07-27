@@ -67,3 +67,7 @@ export const formatarParaSelect = (lista) => {
     };
   });
 };
+
+export const deepCopy = obj => {
+  return JSON.parse(JSON.stringify(obj));
+};
