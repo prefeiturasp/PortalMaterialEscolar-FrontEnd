@@ -1,9 +1,11 @@
 export const getNameFromLabel = (label) => {
   return label
-    .normalize("NFD")
-    .replace(/[\u0300-\u036fº.()]/g, "")
-    .replace(/ /g, "_")
-    .toLowerCase();
+    ? label
+        .normalize("NFD")
+        .replace(/[\u0300-\u036fº.()]/g, "")
+        .replace(/ /g, "_")
+        .toLowerCase()
+    : "undefined";
 };
 
 export const formataMateriais = (materiais) => {
@@ -41,9 +43,9 @@ export const validarFormulario = (values, materiais) => {
         materiais.find(
           (material) => material.name === key.replace("_check", "")
         ).nome
-      }: ${materiais.find(
-        (material) => material.name === key.replace("_check", "")
-      ).preco_maximo.replace(".", ",")}`;
+      }: ${materiais
+        .find((material) => material.name === key.replace("_check", ""))
+        .preco_maximo.replace(".", ",")}`;
       return erro;
     } else if (
       key.includes("_check") &&

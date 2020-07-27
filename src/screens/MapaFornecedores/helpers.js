@@ -1,14 +1,19 @@
-import { TIPO_ESCOLA_MATERIAIS } from "screens/CadastroFornecedor/components/TabelaPrecos/components/MateriaisPorTipoEscola/constants";
-
-export const getArrayMateriais = (kit) => {
+export const getArrayMateriais = (kits, kit) => {
   const materiais = [];
-  TIPO_ESCOLA_MATERIAIS[kit].materiais.forEach((material) => {
-    materiais.push(material.label);
-  });
+  kits
+    .find((kit_) => kit_.uuid === kit)
+    .materiais_do_kit.forEach((materialKit) => {
+      materiais.push(materialKit.material.nome);
+    });
   return materiais;
 };
 
-export const acrescentaTotalMateriais = (lojas, materiaisSelecionados, kit) => {
+export const acrescentaTotalMateriais = (
+  lojas,
+  materiaisSelecionados,
+  kits,
+  kit
+) => {
   let total = 0.0;
   let lojas_ = [];
   lojas.forEach((loja) => {
@@ -20,7 +25,7 @@ export const acrescentaTotalMateriais = (lojas, materiaisSelecionados, kit) => {
       );
     } else {
       ofertas = ofertas.filter((ofertaMaterial) =>
-        getArrayMateriais(kit).includes(ofertaMaterial.item)
+        getArrayMateriais(kits, kit).includes(ofertaMaterial.item)
       );
     }
     ofertas.forEach((uniforme) => {
