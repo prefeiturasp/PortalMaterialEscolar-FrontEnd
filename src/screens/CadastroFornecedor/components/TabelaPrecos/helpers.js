@@ -1,9 +1,11 @@
 export const getNameFromLabel = (label) => {
   return label
-    .normalize("NFD")
-    .replace(/[\u0300-\u036fº.()]/g, "")
-    .replace(/ /g, "_")
-    .toLowerCase();
+    ? label
+        .normalize("NFD")
+        .replace(/[\u0300-\u036fº.()]/g, "")
+        .replace(/ /g, "_")
+        .toLowerCase()
+    : "undefined";
 };
 
 export const formataMateriais = (materiais) => {
@@ -15,7 +17,7 @@ export const formataMateriais = (materiais) => {
 
 export const validarFormulario = (values, materiais) => {
   let erro = false;
-  for (let [key, _] of Object.entries(values)) {
+  for (let [key] of Object.entries(values)) {
     if (
       key.includes("_check") &&
       values[key] &&
@@ -41,9 +43,9 @@ export const validarFormulario = (values, materiais) => {
         materiais.find(
           (material) => material.name === key.replace("_check", "")
         ).nome
-      }: ${materiais.find(
-        (material) => material.name === key.replace("_check", "")
-      ).preco_maximo.replace(".", ",")}`;
+      }: ${materiais
+        .find((material) => material.name === key.replace("_check", ""))
+        .preco_maximo.replace(".", ",")}`;
       return erro;
     } else if (
       key.includes("_check") &&
@@ -63,7 +65,7 @@ export const validarFormulario = (values, materiais) => {
 
 export const formataTabelaPrecos = (values, materiais) => {
   const ofertas_de_materiais = [];
-  for (let [key, _] of Object.entries(values)) {
+  for (let [key] of Object.entries(values)) {
     if (key.includes("_check") && values[key]) {
       ofertas_de_materiais.push({
         nome: materiais.find(

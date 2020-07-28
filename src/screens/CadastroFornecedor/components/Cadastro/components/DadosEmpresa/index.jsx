@@ -117,7 +117,6 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             component={InputText}
             maxlength={20}
             label="Complemento"
-            maxlength={100}
             name="end_complemento"
             validate={somenteAlfanumericos}
             disabled={empresa}

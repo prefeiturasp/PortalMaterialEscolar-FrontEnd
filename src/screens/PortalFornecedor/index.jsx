@@ -7,12 +7,14 @@ import imgFachadaLoja from "assets/img/landing-loja-fundo-branco.jpg";
 import imgMateriais from "assets/img/materiais.svg";
 import Botao from "components/Botao";
 import { BUTTON_STYLE } from "components/Botao/constants";
-import { KitMaterialEscolar } from "./KitMaterialEscolar";
+import { KitMaterialEscolar } from "../../components/KitMaterialEscolar";
 import { getEdital } from "services/homeFornecedor.service";
 import { API_URL } from "config";
+import { getKits } from "services/kits.service";
 import "./style.scss";
 
 export const PortalFornecedor = () => {
+  const [kits, setKits] = useState(null);
   const [edital, setEdital] = useState(null);
 
   useEffect(() => {
@@ -20,6 +22,11 @@ export const PortalFornecedor = () => {
     getEdital().then((response) => {
       if (response.status === HTTP_STATUS.OK) {
         setEdital(API_URL.replace("api", "") + response.data);
+      }
+    });
+    getKits().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setKits(response.data);
       }
     });
   }, []);
@@ -166,11 +173,15 @@ export const PortalFornecedor = () => {
                   Quais itens compõem os kits de materiais escolares da rede
                   municipal de ensino?
                 </h2>
-                <KitMaterialEscolar tipoEscola="educacao_infantil" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_alfabetizacao" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_interdisciplinar" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_autoral" />
-                <KitMaterialEscolar tipoEscola="ensino_medio_eja_mova" />
+                {kits ? (
+                  kits
+                    .filter((kit) => kit.ativo)
+                    .map((kit) => {
+                      return <KitMaterialEscolar kit={kit} />;
+                    })
+                ) : (
+                  <div>Carregando kits...</div>
+                )}
               </div>
               <div className="col-lg-6 col-sm-12">
                 <img

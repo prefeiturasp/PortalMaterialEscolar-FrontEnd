@@ -1,4 +1,4 @@
-import React, { Fragment, useState, useEffect, useCallback } from "react";
+import React, { Fragment, useState, useEffect } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { ProdutoPreco } from "./components/ProdutoPreco";
@@ -16,6 +16,7 @@ import { OnChange } from "react-final-form-listeners";
 import { toastSuccess, toastError, toastWarn } from "components/Toast/dialogs";
 import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 import "./style.scss";
+import { getKits } from "services/kits.service";
 
 export const TabelaPrecos = ({
   form,
@@ -25,12 +26,18 @@ export const TabelaPrecos = ({
   empresa,
   setEmpresa,
 }) => {
+  const [kits, setKits] = useState(null);
   const [materiais, setMateriais] = useState(null);
 
   useEffect(() => {
     getMateriais().then((response) => {
       if (response.status === HTTP_STATUS.OK) {
         setMateriais(formataMateriais(response.data));
+      }
+    });
+    getKits().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setKits(response.data);
       }
     });
   }, []);
@@ -148,23 +155,15 @@ export const TabelaPrecos = ({
             })}
         </div>
       </div>
-      <MateriaisPorTipoEscola tipoEscola="educacao_infantil" values={values} />
-      <MateriaisPorTipoEscola
-        tipoEscola="ensino_fundamental_alfabetizacao"
-        values={values}
-      />
-      <MateriaisPorTipoEscola
-        tipoEscola="ensino_fundamental_interdisciplinar"
-        values={values}
-      />
-      <MateriaisPorTipoEscola
-        tipoEscola="ensino_fundamental_autoral"
-        values={values}
-      />
-      <MateriaisPorTipoEscola
-        tipoEscola="ensino_medio_eja_mova"
-        values={values}
-      />
+      {kits ? (
+        kits
+          .filter((kit) => kit.ativo)
+          .map((kit) => {
+            return <MateriaisPorTipoEscola kit={kit} values={values} />;
+          })
+      ) : (
+        <div>Carregando kits...</div>
+      )}
       <div className="row mt-5 mb-5">
         {empresa && empresa.status !== "INSCRITO" && (
           <Fragment>

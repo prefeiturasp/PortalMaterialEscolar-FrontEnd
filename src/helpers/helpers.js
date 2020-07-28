@@ -29,11 +29,11 @@ export async function readerFile(file) {
   return result_file;
 }
 
-export const getKey = obj => {
+export const getKey = (obj) => {
   return Object.keys(obj)[0];
 };
 
-export const getError = obj => {
+export const getError = (obj) => {
   let result = "Erro";
   if (!obj[getKey(obj)]) {
     return "Erro";
@@ -48,4 +48,26 @@ export const getError = obj => {
     else return obj[getKey(obj)][0];
   }
   return result;
+};
+
+export const formatarParaMultiselect = (lista) => {
+  return lista.map((element) => {
+    return {
+      value: element.nome,
+      label: element.nome,
+    };
+  });
+};
+
+export const formatarParaSelect = (lista) => {
+  return lista.map((element) => {
+    return {
+      nome: element,
+      uuid: element,
+    };
+  });
+};
+
+export const deepCopy = obj => {
+  return JSON.parse(JSON.stringify(obj));
 };
