@@ -213,9 +213,11 @@ export const PortalFamilia = () => {
                   municipal de ensino?
                 </h2>
                 {kits ? (
-                  kits.map((kit) => {
-                    return <KitMaterialEscolar kit={kit} />;
-                  })
+                  kits
+                    .filter((kit) => kit.ativo)
+                    .map((kit) => {
+                      return <KitMaterialEscolar kit={kit} />;
+                    })
                 ) : (
                   <div>Carregando kits...</div>
                 )}
