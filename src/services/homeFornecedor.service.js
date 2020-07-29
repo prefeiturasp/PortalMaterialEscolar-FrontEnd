@@ -22,8 +22,8 @@ export const getEdital = async () => {
     });
 };
 
-export const busca_url_instrucao_normativa = async () => {
-  const url = `${API_URL}/instrucao_normativa/`;
+export const getInstrucaoNormativa = async () => {
+  const url = `${API_URL}/instrucao-normativa/`;
   let status = 0;
   return fetch(url, {
     headers: {
