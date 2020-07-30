@@ -107,7 +107,9 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                       R${" "}
                       {values[getNameFromLabel(materialKit.material.nome)] &&
                       !isNaN(
-                        values[getNameFromLabel(materialKit.material.nome)]
+                        values[
+                          getNameFromLabel(materialKit.material.nome)
+                        ].replace(",", ".")
                       )
                         ? (
                             materialKit.unidades *
