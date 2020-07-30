@@ -25,6 +25,11 @@ div.materiais-por-tipo-escola {
         cursor: pointer;
       }
     }
+    div.text-warning {
+      font-size: 10px;
+      color: $red !important;
+      margin-right: 1.75em;
+    }
   }
   div.parte-expandida {
     font-size: 14px;
@@ -41,7 +46,7 @@ div.materiais-por-tipo-escola {
     }
     div.material {
       &.disabled {
-        color: $grayDisabled;
+        color: $grayLight;
       }
       label {
         display: inline-flex;

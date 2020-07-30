@@ -1,6 +1,7 @@
 import React, { useState } from "react";
 import { getTotal, getLabelTotalItens } from "./helpers";
 import { getNameFromLabel } from "../../helpers";
+import { Field } from "react-final-form";
 import "./style.scss";
 
 export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
@@ -10,45 +11,67 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
     <div className={`materiais-por-tipo-escola ${className || undefined}`}>
       <div className="acordiao">
         <div className="row">
-          <div className="col-6">{kit.nome}</div>
-          <div className="col-6 valor-total text-right">
-            <span
-              className={`mr-4 ${
-                kit.materiais_do_kit.filter(
-                  (materialKit) =>
-                    values[getNameFromLabel(materialKit.material.nome)]
-                ).length === kit.materiais_do_kit.length && "qtd-total"
-              } ${
-                kit.materiais_do_kit.filter(
-                  (materialKit) =>
-                    values[getNameFromLabel(materialKit.material.nome)]
-                ).length !== 0 &&
-                kit.materiais_do_kit.filter(
-                  (materialKit) =>
-                    values[getNameFromLabel(materialKit.material.nome)]
-                ).length < kit.materiais_do_kit.length &&
-                "qtd-parcial"
-              }`}
-            >
-              {`${
-                kit.materiais_do_kit.filter(
-                  (materialKit) =>
-                    values[getNameFromLabel(materialKit.material.nome)]
-                ).length
-              }/${kit.materiais_do_kit.length} ${getLabelTotalItens(
-                kit.materiais_do_kit.filter(
-                  (materialKit) =>
-                    values[getNameFromLabel(materialKit.material.nome)]
-                ).length,
-                kit.materiais_do_kit.length
-              )}`}
-            </span>
-            Valor total: R$ {getTotal(kit.materiais_do_kit, values)}{" "}
+          <div className="col-6">
+            <Field component="input" type="checkbox" name={kit.uuid} />
+            <span className="ml-2">{kit.nome}</span>
+          </div>
+          {values[kit.uuid] && (
+            <div className="col-6 valor-total text-right">
+              <span
+                className={`mr-4 ${
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length === kit.materiais_do_kit.length && "qtd-total"
+                } ${
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length !== 0 &&
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length < kit.materiais_do_kit.length &&
+                  "qtd-parcial"
+                }`}
+              >
+                {`${
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length
+                }/${kit.materiais_do_kit.length} ${getLabelTotalItens(
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length,
+                  kit.materiais_do_kit.length
+                )}`}
+              </span>
+              Valor total: R$ {getTotal(kit.materiais_do_kit, values)}{" "}
+              {values[kit.uuid] && (
+                <i
+                  onClick={() => setAtivo(!ativo)}
+                  className={`fa fa-chevron-${ativo ? "up" : "down"}`}
+                ></i>
+              )}
+              {parseFloat(
+                getTotal(kit.materiais_do_kit, values).replace(",", ".")
+              ) > parseFloat(kit.preco_maximo) && (
+                <div className="text-warning">
+                  Valor máximo do kit: R$ {kit.preco_maximo.replace(".", ",")}
+                </div>
+              )}
+            </div>
+          )}
+          {!values[kit.uuid] && (
             <i
               onClick={() => setAtivo(!ativo)}
-              className={`fa fa-chevron-${ativo ? "up" : "down"}`}
+              className={`col-6 text-right fa fa-chevron-${
+                ativo ? "up" : "down"
+              }`}
             ></i>
-          </div>
+          )}
         </div>
       </div>
       {ativo && (
@@ -64,28 +87,28 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                 <div className="col-6">
                   <div
                     className={`row material ${
-                      !values[getNameFromLabel(materialKit.material.nome)]
-                        ? "disabled"
-                        : undefined
+                      !values[kit.uuid] ? "disabled" : undefined
                     }`}
                   >
                     <div className="col-5">{materialKit.material.nome}</div>
                     <div className="col-5">
                       <label>
                         R${" "}
-                        <input
-                          value={
-                            values[getNameFromLabel(materialKit.material.nome)]
-                          }
+                        <Field
+                          component="input"
+                          name={getNameFromLabel(materialKit.material.nome)}
                           className="col-7"
-                          disabled
+                          disabled={!values[kit.uuid]}
                         />{" "}
                         x {materialKit.unidades.toString().padStart(2, "0")}
                       </label>
                     </div>
                     <div className="col-2 font-weight-bold text-right">
                       R${" "}
-                      {values[getNameFromLabel(materialKit.material.nome)]
+                      {values[getNameFromLabel(materialKit.material.nome)] &&
+                      !isNaN(
+                        values[getNameFromLabel(materialKit.material.nome)]
+                      )
                         ? (
                             materialKit.unidades *
                             parseFloat(
@@ -105,7 +128,7 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
             })}
           </div>
           <div className="subtitle pt-2">
-            * Itens desabilitados não foram marcados na lista de materiais.
+            * É obrigatório o fornecimento do kit completo.
           </div>
         </div>
       )}
