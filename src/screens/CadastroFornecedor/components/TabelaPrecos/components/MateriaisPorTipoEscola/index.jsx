@@ -11,12 +11,12 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
     <div className={`materiais-por-tipo-escola ${className || undefined}`}>
       <div className="acordiao">
         <div className="row">
-          <div className="col-6">
+          <div className="col-sm-6 col-12">
             <Field component="input" type="checkbox" name={kit.uuid} />
             <span className="ml-2">{kit.nome}</span>
           </div>
           {values[kit.uuid] && (
-            <div className="col-6 valor-total text-right">
+            <div className="col-sm-6 col-11 valor-total text-right">
               <span
                 className={`mr-4 ${
                   kit.materiais_do_kit.filter(
@@ -67,7 +67,7 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
           {!values[kit.uuid] && (
             <i
               onClick={() => setAtivo(!ativo)}
-              className={`col-6 text-right fa fa-chevron-${
+              className={`col-sm-6 col-12 text-right fa fa-chevron-${
                 ativo ? "up" : "down"
               }`}
             ></i>
@@ -84,14 +84,14 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
           <div className="row">
             {kit.materiais_do_kit.map((materialKit) => {
               return (
-                <div className="col-6">
+                <div className="col-sm-6 col-12">
                   <div
                     className={`row material ${
                       !values[kit.uuid] ? "disabled" : undefined
                     }`}
                   >
-                    <div className="col-5">{materialKit.material.nome}</div>
-                    <div className="col-5">
+                    <div className="col-sm-5 col-12">{materialKit.material.nome}</div>
+                    <div className="col-sm-5 col-9">
                       <label>
                         R${" "}
                         <Field
@@ -103,7 +103,7 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                         x {materialKit.unidades.toString().padStart(2, "0")}
                       </label>
                     </div>
-                    <div className="col-2 font-weight-bold text-right">
+                    <div className="col-sm-2 col-3 font-weight-bold text-right">
                       R${" "}
                       {values[getNameFromLabel(materialKit.material.nome)] &&
                       !isNaN(
