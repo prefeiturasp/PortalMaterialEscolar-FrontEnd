@@ -156,8 +156,8 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
       toastError(
         "É preciso anexar todos os arquivos obrigatórios para finalizar seu cadastro"
       );
-    } else if (empresa.ofertas_de_materiais.length === 0) {
-      toastError("É preciso fornecer ao menos um material escolar");
+    } else if (empresa.kits === 0) {
+      toastError("É preciso fornecer ao menos um kit");
     } else {
       concluirCadastro(empresa.uuid).then((response) => {
         if (response.status === HTTP_STATUS.OK) {

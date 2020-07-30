@@ -18,7 +18,7 @@ export const formataMateriais = (materiais) => {
 export const validarFormulario = (values, kits) => {
   let erro = false;
   if (kits.filter((kit) => values[kit.uuid]).length === 0) {
-    erro = "Deve fornecer ao menos um kit";
+    erro = "É necessário fornecer ao menos um kit";
     return erro;
   }
   kits
@@ -33,6 +33,23 @@ export const validarFormulario = (values, kits) => {
         erro = "É necessário fornecer todos os materiais de um kit";
         return erro;
       }
+      let total = 0.0;
+      kit.materiais_do_kit.forEach((materialDoKit) => {
+        total +=
+          parseFloat(
+            values[getNameFromLabel(materialDoKit.material.nome)].replace(
+              ",",
+              "."
+            )
+          ) * materialDoKit.unidades;
+        if (total > parseFloat(kit.preco_maximo)) {
+          erro = `Preço máximo do ${kit.nome}: R$ ${kit.preco_maximo.replace(
+            ".",
+            ","
+          )}`;
+          return erro;
+        }
+      });
     });
 
   return erro;

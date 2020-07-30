@@ -62,8 +62,11 @@ export const TabelaPrecos = ({
   const limparTabelaPrecos = () => {
     materiais &&
       materiais.forEach((material) => {
-        form.change(`${getNameFromLabel(material.nome)}_check`, false);
         form.change(getNameFromLabel(material.nome), undefined);
+      });
+    kits &&
+      kits.forEach((kit) => {
+        form.change(kit.uuid, undefined);
       });
   };
 

@@ -22,8 +22,10 @@ const getTabelaPrecosValues = (empresa) => {
   empresa.ofertas_de_materiais.forEach((oferta) => {
     const key = getNameFromLabel(oferta.material.nome);
     empresa[key] = oferta.preco.toString().replace(".", ",");
-    empresa[`${key}_check`] = true;
   });
+  empresa.kits.forEach(kit => {
+    empresa[kit.uuid] = true;
+  })
   return empresa;
 };
 
