@@ -72,6 +72,11 @@ export const MenuPrincipal = () => {
           ) && (
             <ul className="nav nav-tabs border-0">
               <li className="nav-item">
+                <Link className="nav-link text-secondary mb-1 pb-0" to="/">
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
                 <a
                   className="nav-link text-secondary mb-1 pb-0"
                   href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616"

@@ -11,6 +11,16 @@ div.materiais-por-tipo-escola {
     margin-top: 2em;
     div.valor-total {
       font-weight: bold;
+      @media screen and (min-width: 577px) {
+        text-align: right;
+        display: flex;
+        justify-content: flex-end;
+      }
+      @media screen and (max-width: 576px) {
+        i {
+          float: right;
+        }
+      }
       span {
         font-weight: normal;
         &.qtd-total {

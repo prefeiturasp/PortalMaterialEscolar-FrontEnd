@@ -64,8 +64,8 @@ export const PortalFornecedor = () => {
                 />
                 <a href="#conteudo">
                   <Botao
-                    className="col-4"
-                    texto="Saiba Mais"
+                    className="col-sm-4 col-12 fs-16"
+                    texto="Saiba mais"
                     style={BUTTON_STYLE.BLUE}
                   />
                 </a>
@@ -76,7 +76,7 @@ export const PortalFornecedor = () => {
         <div id="conteudo" className="w-100 home">
           <div className="container">
             <div className="row mt-5">
-              <div className="col-lg-6 mb-lg-0 mt-5">
+              <div className="col-lg-6 mb-lg-0">
                 <img
                   src={imgFachadaLoja}
                   alt="Fachada de uma lojinha de roupas"

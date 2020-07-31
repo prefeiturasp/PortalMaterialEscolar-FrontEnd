@@ -181,7 +181,7 @@ export const PortalFamilia = () => {
             )}
           />
         </div>
-        <div id="conteudo" className="w-100 home">
+        <div id="conteudo" className="w-100 home-familia">
           <div className="container">
             <div className="row mt-5">
               <div className="col-12">

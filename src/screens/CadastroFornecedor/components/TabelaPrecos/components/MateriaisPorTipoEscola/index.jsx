@@ -16,7 +16,7 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
             <span className="ml-2">{kit.nome}</span>
           </div>
           {values[kit.uuid] && (
-            <div className="col-sm-6 col-11 valor-total text-right">
+            <div className="col-sm-6 col-12 valor-total">
               <span
                 className={`mr-4 ${
                   kit.materiais_do_kit.filter(
@@ -48,20 +48,22 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                   kit.materiais_do_kit.length
                 )}`}
               </span>
-              Valor total: R$ {getTotal(kit.materiais_do_kit, values)}{" "}
-              {values[kit.uuid] && (
-                <i
-                  onClick={() => setAtivo(!ativo)}
-                  className={`fa fa-chevron-${ativo ? "up" : "down"}`}
-                ></i>
-              )}
-              {parseFloat(
-                getTotal(kit.materiais_do_kit, values).replace(",", ".")
-              ) > parseFloat(kit.preco_maximo) && (
-                <div className="text-warning">
-                  Valor máximo do kit: R$ {kit.preco_maximo.replace(".", ",")}
-                </div>
-              )}
+              <div className="get-total">
+                Valor total: R$ {getTotal(kit.materiais_do_kit, values)}{" "}
+                {values[kit.uuid] && (
+                  <i
+                    onClick={() => setAtivo(!ativo)}
+                    className={`fa fa-chevron-${ativo ? "up" : "down"}`}
+                  ></i>
+                )}
+                {parseFloat(
+                  getTotal(kit.materiais_do_kit, values).replace(",", ".")
+                ) > parseFloat(kit.preco_maximo) && (
+                  <div className="text-warning">
+                    Valor máximo do kit: R$ {kit.preco_maximo.replace(".", ",")}
+                  </div>
+                )}
+              </div>
             </div>
           )}
           {!values[kit.uuid] && (
@@ -90,7 +92,9 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                       !values[kit.uuid] ? "disabled" : undefined
                     }`}
                   >
-                    <div className="col-sm-5 col-12">{materialKit.material.nome}</div>
+                    <div className="col-sm-5 col-12">
+                      {materialKit.material.nome}
+                    </div>
                     <div className="col-sm-5 col-9">
                       <label>
                         R${" "}
