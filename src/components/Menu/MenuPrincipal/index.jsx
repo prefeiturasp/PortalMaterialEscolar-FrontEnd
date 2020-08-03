@@ -1,9 +1,15 @@
-import React from "react";
+import React, { useState } from "react";
 import logoEducacaoSP from "assets/img/educacao_sp.png";
 import { Link } from "react-router-dom";
+import { Modal, Button } from "react-bootstrap";
 import "./style.scss";
 
 export const MenuPrincipal = () => {
+  const [show, setShow] = useState(false);
+
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
+
   return (
     <div className="container">
       <div className="row mt-4 mb-4">
@@ -72,6 +78,11 @@ export const MenuPrincipal = () => {
           ) && (
             <ul className="nav nav-tabs border-0">
               <li className="nav-item">
+                <Link className="nav-link text-secondary mb-1 pb-0" to="/">
+                  Home
+                </Link>
+              </li>
+              <li className="nav-item">
                 <a
                   className="nav-link text-secondary mb-1 pb-0"
                   href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616"
@@ -79,9 +90,28 @@ export const MenuPrincipal = () => {
                   Avise sobre Problemas
                 </a>
               </li>
+              <li className="nav-item">
+                <p
+                  className="nav-link text-secondary mb-1 pb-0 c-pointer"
+                  onClick={handleShow}
+                >
+                  Dúvidas? Veja a lista com perguntas frequentes
+                </p>
+              </li>
             </ul>
           )}
         </div>
+        <Modal show={show} onHide={handleClose}>
+          <Modal.Header closeButton></Modal.Header>
+          <Modal.Body>
+            Em breve a lista de perguntas frequentes estará disponível
+          </Modal.Body>
+          <Modal.Footer>
+            <Button variant="secondary" onClick={handleClose}>
+              Fechar
+            </Button>
+          </Modal.Footer>
+        </Modal>
       </div>
     </div>
   );
