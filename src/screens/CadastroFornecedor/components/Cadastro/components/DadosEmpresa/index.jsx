@@ -200,7 +200,8 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             name="email"
             maxlength={255}
             type="text"
-            validate={composeValidators(validaEmail)}
+            validate={composeValidators(required, validaEmail)}
+            required
             disabled={empresa}
           />
         </div>
