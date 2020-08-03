@@ -14,7 +14,7 @@ import "./style.scss";
 
 export const Cadastro = ({ values, empresa, form, edital }) => {
   const copiarEndereco = (fields) => {
-    if (!values.copiar_endereco && values.end_cidade) {
+    if (!values.copiar_endereco && values.end_cidade && !empresa) {
       if (values.end_cidade !== "São Paulo") {
         toastError("Endereço não é do município de São Paulo");
       } else {

@@ -63,7 +63,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
           />
           <OnChange name="end_cep">
             {async (value, previous) => {
-              if (value.length === 9) {
+              if (value.length === 9 && !empresa) {
                 const response = await getEnderecoPorCEP(value);
                 if (response.status === HTTP_STATUS.OK) {
                   if (response.data.resultado === "0") {
