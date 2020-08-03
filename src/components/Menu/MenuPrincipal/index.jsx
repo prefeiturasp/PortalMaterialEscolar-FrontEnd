@@ -83,20 +83,20 @@ export const MenuPrincipal = () => {
                 </Link>
               </li>
               <li className="nav-item">
-                <p
-                  className="nav-link text-secondary mb-1 pb-0 c-pointer"
-                  onClick={handleShow}
-                >
-                  Dúvidas? Veja a lista com perguntas frequentes
-                </p>
-              </li>
-              <li className="nav-item">
                 <a
                   className="nav-link text-secondary mb-1 pb-0"
                   href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616"
                 >
                   Avise sobre Problemas
                 </a>
+              </li>
+              <li className="nav-item">
+                <p
+                  className="nav-link text-secondary mb-1 pb-0 c-pointer"
+                  onClick={handleShow}
+                >
+                  Dúvidas? Veja a lista com perguntas frequentes
+                </p>
               </li>
             </ul>
           )}
