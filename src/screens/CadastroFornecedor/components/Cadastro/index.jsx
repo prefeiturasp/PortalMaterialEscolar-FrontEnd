@@ -16,33 +16,36 @@ export const Cadastro = ({ values, empresa, form, edital }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const copiarEndereco = (fields) => {
-    console.log("opaaa");
     if (values.end_cidade && !empresa) {
       if (values.end_cidade !== "São Paulo") {
         setIsChecked(false);
         toastError("Endereço não é do município de São Paulo");
       } else {
         setIsChecked(!isChecked);
-        fields.update(0, {
-          ...fields.value[0],
-          endereco: values.end_logradouro,
-          cidade: values.end_cidade,
-          uf: values.end_uf,
-          bairro: values.end_bairro,
-          cep: values.end_cep,
-          numero: values.end_numero,
-          complemento: values.end_complemento,
-        });
+        if (!isChecked) {
+          fields.update(0, {
+            ...fields.value[0],
+            endereco: values.end_logradouro,
+            cidade: values.end_cidade,
+            uf: values.end_uf,
+            bairro: values.end_bairro,
+            cep: values.end_cep,
+            numero: values.end_numero,
+            complemento: values.end_complemento,
+          });
+        } else {
+          fields.update(0, {
+            ...fields.value[0],
+            endereco: "",
+            cidade: "",
+            uf: "",
+            bairro: "",
+            cep: "",
+            numero: "",
+            complemento: "",
+          });
+        }
       }
-    } else if (values.copiar_endereco) {
-      setIsChecked(false);
-      fields.value[0].endereco = "";
-      fields.value[0].cidade = "";
-      fields.value[0].uf = "";
-      fields.value[0].bairro = "";
-      fields.value[0].cep = "";
-      fields.value[0].numero = "";
-      fields.value[0].complemento = "";
     }
   };
 
