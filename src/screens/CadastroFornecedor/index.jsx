@@ -12,7 +12,11 @@ import {
   getProponente,
 } from "services/cadastro.service";
 import { toastSuccess, toastError } from "components/Toast/dialogs";
-import { formatarPayloadCadastro, formataEmpresa } from "./helpers";
+import {
+  formatarPayloadCadastro,
+  formataEmpresa,
+  validarCadastro,
+} from "./helpers";
 import { getError } from "helpers/helpers";
 import { API_URL } from "config";
 import { getEdital } from "services/homeFornecedor.service";
@@ -54,14 +58,19 @@ export const CadastroFornecedor = () => {
   }, []);
 
   const onSubmit = async (values) => {
-    const response = await cadastroFornecedorStep1(
-      formatarPayloadCadastro(values)
-    );
-    if (response.status === HTTP_STATUS.CREATED) {
-      toastSuccess("Cadastro enviado com sucesso!");
-      window.location.search += `?uuid=${response.data.uuid}`;
+    const erro = validarCadastro(values);
+    if (erro) {
+      toastError(erro);
     } else {
-      toastError(getError(response.data));
+      const response = await cadastroFornecedorStep1(
+        formatarPayloadCadastro(values)
+      );
+      if (response.status === HTTP_STATUS.CREATED) {
+        toastSuccess("Cadastro enviado com sucesso!");
+        window.location.search += `?uuid=${response.data.uuid}`;
+      } else {
+        toastError(getError(response.data));
+      }
     }
   };
 
