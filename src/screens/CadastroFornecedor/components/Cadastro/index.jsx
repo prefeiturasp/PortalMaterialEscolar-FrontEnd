@@ -1,4 +1,4 @@
-import React, { Fragment } from "react";
+import React, { useState, Fragment } from "react";
 import { DadosEmpresa } from "./components/DadosEmpresa";
 import { Field } from "react-final-form";
 import { FieldArray } from "react-final-form-arrays";
@@ -13,27 +13,39 @@ import { toastError } from "components/Toast/dialogs";
 import "./style.scss";
 
 export const Cadastro = ({ values, empresa, form, edital }) => {
+  const [isChecked, setIsChecked] = useState(false);
+
   const copiarEndereco = (fields) => {
-    if (!values.copiar_endereco && values.end_cidade) {
+    if (values.end_cidade && !empresa) {
       if (values.end_cidade !== "São Paulo") {
+        setIsChecked(false);
         toastError("Endereço não é do município de São Paulo");
       } else {
-        fields.value[0].endereco = values.end_logradouro;
-        fields.value[0].cidade = values.end_cidade;
-        fields.value[0].uf = values.end_uf;
-        fields.value[0].bairro = values.end_bairro;
-        fields.value[0].cep = values.end_cep;
-        fields.value[0].numero = values.end_numero;
-        fields.value[0].complemento = values.end_complemento;
+        setIsChecked(!isChecked);
+        if (!isChecked) {
+          fields.update(0, {
+            ...fields.value[0],
+            endereco: values.end_logradouro,
+            cidade: values.end_cidade,
+            uf: values.end_uf,
+            bairro: values.end_bairro,
+            cep: values.end_cep,
+            numero: values.end_numero,
+            complemento: values.end_complemento,
+          });
+        } else {
+          fields.update(0, {
+            ...fields.value[0],
+            endereco: "",
+            cidade: "",
+            uf: "",
+            bairro: "",
+            cep: "",
+            numero: "",
+            complemento: "",
+          });
+        }
       }
-    } else if (values.copiar_endereco) {
-      fields.value[0].endereco = "";
-      fields.value[0].cidade = "";
-      fields.value[0].uf = "";
-      fields.value[0].bairro = "";
-      fields.value[0].cep = "";
-      fields.value[0].numero = "";
-      fields.value[0].complemento = "";
     }
   };
 
@@ -57,6 +69,7 @@ export const Cadastro = ({ values, empresa, form, edital }) => {
                       name="copiar_endereco"
                       type="checkbox"
                       onClick={() => copiarEndereco(fields)}
+                      checked={isChecked}
                     />
                     Copiar endereço acima
                   </span>
