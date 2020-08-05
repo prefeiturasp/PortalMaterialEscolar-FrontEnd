@@ -84,7 +84,7 @@ export const MapaFornecedores = (props) => {
       setLojas(null);
       setPagina(1);
       getLojasCredenciadas2(latitude, longitude, {
-        kit: kit,
+        kit: values.kit,
       }).then((response) => {
         setLojas(
           acrescentaTotalMateriais(
