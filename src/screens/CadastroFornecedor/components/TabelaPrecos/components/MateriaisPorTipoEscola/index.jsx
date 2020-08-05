@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { getTotal, getLabelTotalItens } from "./helpers";
 import { getNameFromLabel } from "../../helpers";
 import { Field } from "react-final-form";
+import { OnChange } from "react-final-form-listeners";
 import "./style.scss";
 
 export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
@@ -13,6 +14,11 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
         <div className="row">
           <div className="col-sm-6 col-12">
             <Field component="input" type="checkbox" name={kit.uuid} />
+            <OnChange name={kit.uuid}>
+              {async (value, previous) => {
+                setAtivo(value);
+              }}
+            </OnChange>
             <span className="ml-2">{kit.nome}</span>
           </div>
           {values[kit.uuid] && (
