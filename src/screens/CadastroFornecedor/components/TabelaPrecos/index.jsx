@@ -83,7 +83,7 @@ export const TabelaPrecos = ({
         <LoadingCircle />
       )}
       <div className="row mt-5 mb-5">
-        {empresa && empresa.status !== "INSCRITO" && (
+        {empresa && empresa.status === "EM_PROCESSO" && (
           <Fragment>
             <div className="col-6">
               <Botao

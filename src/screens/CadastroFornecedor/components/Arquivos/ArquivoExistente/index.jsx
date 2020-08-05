@@ -10,7 +10,7 @@ export const ArquivoExistente = (props) => {
       <a target="blank" href={props.arquivo.arquivo || props.arquivo}>
         Visualizar arquivo
       </a>
-      {props.proponenteStatus !== "INSCRITO" && (
+      {props.proponenteStatus === "EM_PROCESSO" && (
         <span
           onClick={() =>
             props.lojaUuid

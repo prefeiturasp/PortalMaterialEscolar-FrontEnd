@@ -251,7 +251,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                     removeAnexo={removeAnexo}
                   />
                 </div>
-              ) : empresa && empresa.status === "INSCRITO" ? (
+              ) : empresa && empresa.status !== "EM_PROCESSO" ? (
                 <div className="no-file-end-signup pt-3">
                   <div className="label">{htmlTextToDiv(tipo)}</div>
                   <div>
@@ -311,7 +311,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
       </div>
       <div className="row">
         <div className="col-12 text-right mt-3 mb-3">
-          {empresa && empresa.status !== "INSCRITO" && (
+          {empresa && empresa.status === "EM_PROCESSO" && (
             <Botao
               type={BUTTON_TYPE.BUTTON}
               style={BUTTON_STYLE.BLUE}
