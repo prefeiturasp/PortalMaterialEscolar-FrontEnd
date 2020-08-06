@@ -8,28 +8,19 @@ export const getArrayMateriais = (kits, kit) => {
   return materiais;
 };
 
-export const acrescentaTotalMateriais = (
-  lojas,
-  materiaisSelecionados,
-  kits,
-  kit
-) => {
+export const acrescentaTotalMateriais = (lojas, kits, kit) => {
   let total = 0.0;
   let lojas_ = [];
   lojas.forEach((loja) => {
+    const kitObj = kits.find((kit_) => kit_.uuid === kit);
     total = 0.0;
-    let ofertas = loja.proponente.ofertas_de_materiais;
-    if (materiaisSelecionados.length > 0) {
-      ofertas = ofertas.filter((ofertaMaterial) =>
-        materiaisSelecionados.includes(ofertaMaterial.item)
-      );
-    } else {
-      ofertas = ofertas.filter((ofertaMaterial) =>
-        getArrayMateriais(kits, kit).includes(ofertaMaterial.item)
-      );
-    }
-    ofertas.forEach((uniforme) => {
-      total += parseFloat(uniforme.preco);
+    kitObj.materiais_do_kit.forEach((materialDoKit) => {
+      total +=
+        parseFloat(
+          loja.proponente.ofertas_de_materiais.find(
+            (oferta) => oferta.item === materialDoKit.material.nome
+          ).preco
+        ) * materialDoKit.unidades;
     });
     loja.total_materiais = total.toFixed(2).toString().replace(".", ",");
     if (loja.total_materiais !== "0,00") {
@@ -37,6 +28,14 @@ export const acrescentaTotalMateriais = (
     }
   });
   return lojas_;
+};
+
+export const encontrarUnidades = (kit, kits, materialEscolar) => {
+  const kitObj = kits.find((kit_) => kit_.uuid === kit);
+  const material = kitObj.materiais_do_kit.find(
+    (material_) => material_.material.nome === materialEscolar.item
+  );
+  return material.unidades;
 };
 
 export const sortByDistance = (lista) => {
