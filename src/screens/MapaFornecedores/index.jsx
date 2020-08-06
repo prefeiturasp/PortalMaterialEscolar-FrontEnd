@@ -221,9 +221,9 @@ export const MapaFornecedores = (props) => {
                       <span className="font-weight-bold">
                         {lojas && lojas.length} lojas{" "}
                       </span>
-                      credenciadas que vendem os seguintes itens{" "}
+                      credenciadas que vendem o{" "}
                       {kits &&
-                        `do ${kits.find((kit_) => kit_.uuid === kit).nome} `}
+                        `${kits.find((kit_) => kit_.uuid === kit).nome} `}
                       mais próximas da{" "}
                       <span className="font-weight-bold">{endereco}</span>.
                       <div className="row pt-3">
