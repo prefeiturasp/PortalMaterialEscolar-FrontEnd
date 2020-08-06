@@ -12,15 +12,19 @@ import Select from "components/Select";
 import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import { getKits } from "services/kits.service";
-import "./style.scss";
 import { LoadingCircle } from "components/LoadingCircle";
+import { Modal, Button } from "react-bootstrap";
+import "./style.scss";
 
 export const PortalFamilia = () => {
   const [kits, setKits] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [endereco, setEndereco] = useState(null);
+  const [show, setShow] = useState(false);
 
+  const handleClose = () => setShow(false);
+  const handleShow = () => setShow(true);
   const history = useHistory();
 
   useEffect(() => {
@@ -195,14 +199,24 @@ export const PortalFamilia = () => {
               <h3 className="mb-4">
                 Ainda com dúvidas? Veja lista com perguntas frequentes
               </h3>
-              <a
-                className="mb-0"
-                href="https://pedido-uniforme.sme.prefeitura.sp.gov.br"
+              <button
+                size="lg"
+                onClick={handleShow}
+                className="btn btn-light pl-4 pr-4"
               >
-                <button size="lg" className="btn btn-light pl-4 pr-4">
-                  <strong>Perguntas frequentes</strong>
-                </button>
-              </a>
+                <strong>Perguntas frequentes</strong>
+              </button>
+              <Modal show={show} onHide={handleClose}>
+                <Modal.Header closeButton></Modal.Header>
+                <Modal.Body>
+                  Em breve a lista de perguntas frequentes estará disponível
+                </Modal.Body>
+                <Modal.Footer>
+                  <Button variant="secondary" onClick={handleClose}>
+                    Fechar
+                  </Button>
+                </Modal.Footer>
+              </Modal>
             </div>
           </div>
         </div>
