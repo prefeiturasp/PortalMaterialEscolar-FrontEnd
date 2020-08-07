@@ -1,4 +1,4 @@
-import React from "react";
+import React, { Fragment, useState } from "react";
 import { Form, Field } from "react-final-form";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
@@ -10,10 +10,20 @@ import authService from "services/auth.service";
 import "./style.scss";
 
 export const Login = () => {
+  const [exibirResetSenha, setExibirResetSenha] = useState(true);
+
+  const resetarSenha = (values) => {
+    console.log(values);
+  };
+
   const onSubmit = (values) => {
     const { email, password } = values;
     if (email && password) {
-      authService.login(email, password);
+      authService.login(email, password).then((response) => {
+        if (!response.data.last_login) {
+          setExibirResetSenha(true);
+        }
+      });
     }
   };
 
@@ -36,32 +46,68 @@ export const Login = () => {
                 values,
               }) => (
                 <form onSubmit={handleSubmit}>
-                  <Field
-                    component={InputText}
-                    esconderAsterisco
-                    label="E-mail"
-                    name="email"
-                    placeholder={"Seu e-mail"}
-                    required
-                    type="text"
-                    validate={required}
-                  />
-                  <Field
-                    component={InputText}
-                    esconderAsterisco
-                    label="Senha"
-                    name="password"
-                    placeholder={"******"}
-                    required
-                    type="password"
-                    validate={required}
-                  />
-                  <Botao
-                    className="mt-3 col-12"
-                    style={BUTTON_STYLE.BLUE}
-                    texto="Acessar"
-                    type={BUTTON_TYPE.SUBMIT}
-                  />
+                  {!exibirResetSenha && (
+                    <Fragment>
+                      <Field
+                        component={InputText}
+                        esconderAsterisco
+                        label="E-mail"
+                        name="email"
+                        placeholder={"Seu e-mail"}
+                        required
+                        type="text"
+                        validate={required}
+                      />
+                      <Field
+                        component={InputText}
+                        esconderAsterisco
+                        label="Senha"
+                        name="password"
+                        placeholder={"******"}
+                        required
+                        type="password"
+                        validate={required}
+                      />
+                      <Botao
+                        className="mt-3 col-12"
+                        style={BUTTON_STYLE.BLUE}
+                        texto="Acessar"
+                        type={BUTTON_TYPE.SUBMIT}
+                      />
+                    </Fragment>
+                  )}
+                  {exibirResetSenha && (
+                    <Fragment>
+                      É necessário alterar sua senha para o primeiro acesso.
+                      <Field
+                        component={InputText}
+                        esconderAsterisco
+                        label="Senha"
+                        name="senha"
+                        placeholder={"******"}
+                        required
+                        type="password"
+                        validate={required}
+                      />
+                      <Field
+                        component={InputText}
+                        esconderAsterisco
+                        label="Confirmar senha"
+                        name="confirmar_senha"
+                        placeholder={"******"}
+                        required
+                        type="password"
+                        validate={required}
+                      />
+                      <Botao
+                        className="mt-3 col-12"
+                        style={BUTTON_STYLE.BLUE}
+                        texto="Resetar senha"
+                        type={BUTTON_TYPE.BUTTON}
+                        onClick={() => resetarSenha(values)}
+                      />
+                    </Fragment>
+                  )}
                   <p className="mt-2 text-center">
                     <Link
                       className="hyperlink"

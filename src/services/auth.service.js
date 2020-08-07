@@ -14,26 +14,26 @@ const login = async (email, password) => {
         Accept: "application/json",
       },
     });
-    console.log(response);
     const json = await response.json();
     const isValid = isValidResponse(json);
     if (isValid) {
       localStorage.setItem(TOKEN_ALIAS, json.token);
-      await fetch(`${API_URL}/usuarios/me/`, {
+      let status = 0;
+      return fetch(`${API_URL}/usuarios/me/`, {
         method: "GET",
         headers: {
           Authorization: `JWT ${json.token}`,
           "Content-Type": "application/json",
         },
-      }).then((result) => {
-        const response = result.json();
-        response.then((result) => {
-          localStorage.setItem("name", result.name);
-          localStorage.setItem("rf", result.username);
-          localStorage.setItem("nome_escola", result.nome_escola);
-          localStorage.setItem("perfil", result.perfil_usuario);
-          //window.location.href = `/${process.env.PUBLIC_URL}`;
-        });
+      }).then((res) => {
+        status = res.status;
+        return res.json();
+      })
+      .then((data) => {
+        return { data: data, status: status };
+      })
+      .catch((error) => {
+        return error;
       });
     } else {
       toastError("Login e/ou senha inválidos");
