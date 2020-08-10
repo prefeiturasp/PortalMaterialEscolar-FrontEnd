@@ -1,27 +1,47 @@
 import React, { Fragment, useState } from "react";
+import HTTP_STATUS from "http-status-codes";
 import { Form, Field } from "react-final-form";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
-import { Link } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { required } from "helpers/validators";
 import InputText from "components/Input/InputText";
 import logoSME from "assets/img/logo-sme.svg";
 import authService from "services/auth.service";
+import { atualizarSenha } from "services/perfil.service";
+import { toastSuccess, toastError } from "components/Toast/dialogs";
 import "./style.scss";
 
 export const Login = () => {
-  const [exibirResetSenha, setExibirResetSenha] = useState(true);
+  const [exibirResetSenha, setExibirResetSenha] = useState(false);
+  const [usuario, setUsuario] = useState(null);
+
+  const history = useHistory();
 
   const resetarSenha = (values) => {
-    console.log(values);
+    atualizarSenha(usuario.id, usuario.token, values).then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        toastSuccess("Senha atualizada com sucesso");
+        setTimeout(() => {
+          history.push("/");
+        }, 1500);
+      } else {
+        toastError("Houve um erro ao atualizar sua senha");
+      }
+    });
   };
 
   const onSubmit = (values) => {
     const { email, password } = values;
     if (email && password) {
       authService.login(email, password).then((response) => {
-        if (!response.data.last_login) {
-          setExibirResetSenha(true);
+        if (response.status === HTTP_STATUS.OK) {
+          setUsuario(response.data);
+          if (!response.data.last_login) {
+            setExibirResetSenha(true);
+          } else {
+            history.push("/");
+          }
         }
       });
     }
@@ -83,7 +103,7 @@ export const Login = () => {
                         component={InputText}
                         esconderAsterisco
                         label="Senha"
-                        name="senha"
+                        name="senha1"
                         placeholder={"******"}
                         required
                         type="password"
@@ -93,7 +113,7 @@ export const Login = () => {
                         component={InputText}
                         esconderAsterisco
                         label="Confirmar senha"
-                        name="confirmar_senha"
+                        name="senha2"
                         placeholder={"******"}
                         required
                         type="password"
