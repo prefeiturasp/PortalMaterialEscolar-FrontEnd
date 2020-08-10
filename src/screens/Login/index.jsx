@@ -23,7 +23,7 @@ export const Login = () => {
       if (response.status === HTTP_STATUS.OK) {
         toastSuccess("Senha atualizada com sucesso");
         setTimeout(() => {
-          history.push("/");
+          history.push("/adm-fornecedor");
         }, 1500);
       } else {
         toastError("Houve um erro ao atualizar sua senha");
@@ -40,7 +40,13 @@ export const Login = () => {
           if (!response.data.last_login) {
             setExibirResetSenha(true);
           } else {
-            history.push("/");
+            localStorage.setItem("status", response.data.proponente.status);
+            localStorage.setItem(
+              "razao_social",
+              response.data.proponente.razao_social
+            );
+            localStorage.setItem("cnpj", response.data.proponente.cnpj);
+            history.push("/adm-fornecedor");
           }
         }
       });
@@ -53,7 +59,7 @@ export const Login = () => {
       <div className="right-half">
         <div className="container my-auto">
           <div className="logo-sigpae">
-            Login - Fornecedores de Material Escolar
+            Login - Fornecedor de Materiais Escolares
           </div>
           <div className="form">
             <Form

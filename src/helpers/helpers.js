@@ -68,6 +68,23 @@ export const formatarParaSelect = (lista) => {
   });
 };
 
-export const deepCopy = obj => {
+export const deepCopy = (obj) => {
   return JSON.parse(JSON.stringify(obj));
+};
+
+const STATUS_DICT = {
+  EM_PROCESSO: "Em processo de credenciamento",
+  CREDENCIADO: "Credenciado",
+};
+
+export const getStatus = () => {
+  return STATUS_DICT[localStorage.getItem("status")];
+};
+
+export const getCNPJ = () => {
+  return localStorage.getItem("cnpj");
+};
+
+export const getRazaoSocial = () => {
+  return localStorage.getItem("razao_social");
 };
