@@ -4,6 +4,7 @@ import { PortalFornecedor } from "screens/PortalFornecedor";
 import { PortalFamilia } from "screens/PortalFamilia";
 import { FinalizadoComSucesso } from "screens/FinalizadoComSucesso";
 import { MapaFornecedores } from "screens/MapaFornecedores";
+import { Login } from "screens/Login";
 
 export const routes = [
   {
@@ -34,6 +35,11 @@ export const routes = [
   {
     path: "/mapa-de-fornecedores",
     component: MapaFornecedores,
+    exact: true,
+  },
+  {
+    path: "/login",
+    component: Login,
     exact: true,
   },
 ];
