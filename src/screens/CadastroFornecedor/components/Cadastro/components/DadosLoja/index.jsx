@@ -20,6 +20,7 @@ import { OnChange } from "react-final-form-listeners";
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 import formatString from "format-string-by-pattern";
+import authService from "services/auth.service";
 
 export const Loja = ({ loja, fields, index, empresa }) => {
   const [apiCEPfora, setApiCEPfora] = useState(false);
@@ -35,7 +36,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             required
             validate={composeValidators(required)}
             placeholder="Digite o Nome Fantasia da loja"
-            disabled={empresa}
+            disabled={!authService.isLoggedIn() && empresa}
           />
         </div>
       </div>
@@ -49,7 +50,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             required
             validate={composeValidators(required, validaCEP, validaRangeCEP)}
             placeholder="Digite o CEP"
-            disabled={empresa}
+            disabled={!authService.isLoggedIn() && empresa}
           />
           <OnChange name={`${loja}.cep`}>
             {async (value, previous) => {
@@ -92,7 +93,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             name={`${loja}.bairro`}
             required
             validate={required}
-            disabled={empresa}
+            disabled={!authService.isLoggedIn() && empresa}
           />
         </div>
       </div>
@@ -104,7 +105,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             name={`${loja}.endereco`}
             required
             validate={required}
-            disabled={!empresa || !apiCEPfora}
+            disabled={!authService.isLoggedIn() || empresa || !apiCEPfora}
           />
         </div>
         <div className="col-sm-2 col-12">
@@ -115,7 +116,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             name={`${loja}.numero`}
             required
             validate={composeValidators(required)}
-            disabled={empresa}
+            disabled={!authService.isLoggedIn() && empresa}
           />
         </div>
         <div className="col-sm-4 col-12">
@@ -124,7 +125,7 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             maxlength={20}
             label="Complemento"
             name={`${loja}.complemento`}
-            disabled={empresa}
+            disabled={!authService.isLoggedIn() && empresa}
           />
         </div>
       </div>
@@ -167,11 +168,11 @@ export const Loja = ({ loja, fields, index, empresa }) => {
             required
             type="text"
             validate={composeValidators(required, validaTelefoneOuCelular)}
-            disabled={empresa}
+            disabled={!authService.isLoggedIn() && empresa}
           />
         </div>
       </div>
-      {!empresa && (
+      {(!empresa || authService.isLoggedIn()) && (
         <div className="row mt-2">
           <div className="col-12 text-right">
             <Botao

@@ -66,3 +66,26 @@ export const concluirCadastro = async (uuid) => {
       return error;
     });
 };
+
+export const atualizaLojas = async (uuid, payload) => {
+  const url = `${API_URL}/proponentes/${uuid}/atualiza-lojas/`;
+  let status = 0;
+  return fetch(url, {
+    headers: {
+      "Accept-Language": "pt-br",
+      "Content-Type": "application/json",
+    },
+    method: "PATCH",
+    body: JSON.stringify(payload),
+  })
+    .then((res) => {
+      status = res.status;
+      return res.json();
+    })
+    .then((data) => {
+      return { data: data, status: status };
+    })
+    .catch((error) => {
+      return error;
+    });
+};

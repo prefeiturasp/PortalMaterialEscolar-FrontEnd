@@ -35,7 +35,7 @@ export default class PaginaHeaderSidebar extends Component {
           registro_funcional={registro_funcional}
           nome_instituicao={nome_instituicao}
         />
-        <div id="content-wrapper" className="pt-5">
+        <div id="content-wrapper">
           <div
             className={`content-wrapper-div ${toggled &&
               "toggled"} d-flex flex-column p-4 mt-5`}

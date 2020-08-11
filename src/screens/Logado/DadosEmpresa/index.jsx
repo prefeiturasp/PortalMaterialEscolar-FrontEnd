@@ -4,15 +4,20 @@ import { Form } from "react-final-form";
 import arrayMutators from "final-form-arrays";
 import { Cadastro } from "../../CadastroFornecedor/components/Cadastro";
 import PaginaHeaderSidebar from "components/PaginaHeaderSidebar";
-import { getProponente } from "services/cadastro.service";
+import { getProponente, atualizaLojas } from "services/cadastro.service";
 import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
-import { toastError } from "components/Toast/dialogs";
+import { toastError, toastSuccess } from "components/Toast/dialogs";
+import "./style.scss";
 
 export const DadosEmpresa = () => {
   const [empresa, setEmpresa] = useState(null);
 
   const onSubmit = (values) => {
-    console.log(values);
+    atualizaLojas(localStorage.getItem("uuid"), values).then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        toastSuccess("Loja(s) atualizada(s) com sucesso");
+      }
+    });
   };
 
   useEffect(() => {
@@ -30,7 +35,7 @@ export const DadosEmpresa = () => {
   }, []);
 
   return (
-    <div>
+    <div className="dados-empresa-logado">
       <PaginaHeaderSidebar>
         <Form
           onSubmit={onSubmit}

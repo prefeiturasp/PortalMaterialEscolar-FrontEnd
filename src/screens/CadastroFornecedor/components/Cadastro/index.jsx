@@ -11,6 +11,7 @@ import {
 } from "components/Botao/constants";
 import { toastError } from "components/Toast/dialogs";
 import "./style.scss";
+import authService from "services/auth.service";
 
 export const Cadastro = ({ values, empresa, form, edital }) => {
   const [isChecked, setIsChecked] = useState(false);
@@ -84,7 +85,7 @@ export const Cadastro = ({ values, empresa, form, edital }) => {
                   empresa={empresa}
                 />
               ))}
-              {!empresa && (
+              {(!empresa || authService.isLoggedIn()) && (
                 <Botao
                   style={BUTTON_STYLE.BLUE}
                   texto="Adicionar"
@@ -161,6 +162,17 @@ export const Cadastro = ({ values, empresa, form, edital }) => {
             </div>
           </div>
         </Fragment>
+      )}
+      {authService.isLoggedIn() && (
+        <div className="row mb-3">
+          <div className="col-12 text-right">
+            <Botao
+              style={BUTTON_STYLE.BLUE}
+              type={BUTTON_TYPE.SUBMIT}
+              texto="Atualizar"
+            />
+          </div>
+        </div>
       )}
     </Fragment>
   );
