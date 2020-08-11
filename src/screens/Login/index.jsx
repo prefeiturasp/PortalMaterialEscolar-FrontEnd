@@ -46,6 +46,7 @@ export const Login = () => {
               response.data.proponente.razao_social
             );
             localStorage.setItem("cnpj", response.data.proponente.cnpj);
+            localStorage.setItem("uuid", response.data.proponente.uuid);
             history.push("/adm-fornecedor");
           }
         }

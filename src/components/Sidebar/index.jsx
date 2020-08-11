@@ -1,9 +1,9 @@
 import React, { Component } from "react";
 import { version } from "../../../package.json";
-import { NavLink } from "react-router-dom";
+import { Link, NavLink } from "react-router-dom";
 import { getAPIVersion } from "services/home.service";
-import "./style.scss";
 import { getStatus, getRazaoSocial, getCNPJ } from "helpers/helpers";
+import "./style.scss";
 
 export class Sidebar extends Component {
   constructor(props) {
@@ -15,7 +15,7 @@ export class Sidebar extends Component {
 
   async componentDidMount() {
     const response = await getAPIVersion();
-    this.setState({ API_VERSION: response.data.API_Version });
+    this.setState({ API_VERSION: response.data });
   }
 
   render() {
@@ -69,6 +69,49 @@ export class Sidebar extends Component {
                 <i className="fas fa-list-alt" />
                 <span>Painel Gerencial</span>
               </NavLink>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link collapsed`}
+                href="#teste"
+                data-toggle="collapse"
+                data-target="#collapseConfig"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                <i className="fas fa-cog" />
+                <span>Cadastro</span>
+              </Link>
+              <div
+                id="collapseConfig"
+                className={`collapse`}
+                aria-labelledby="headingConfig"
+                data-parent="#accordionSidebar"
+              >
+                <div className="bg-white py-2 collapse-inner rounded">
+                  <NavLink
+                    activeClassName="active"
+                    className="collapse-item"
+                    to="/adm-fornecedor/dados-empresa"
+                  >
+                    Dados da empresa
+                  </NavLink>
+                  <NavLink
+                    activeClassName="active"
+                    className="collapse-item"
+                    to="/adm-fornecedor/tabela-precos"
+                  >
+                    Tabela de preços
+                  </NavLink>
+                  <NavLink
+                    activeClassName="active"
+                    className="collapse-item"
+                    to="/adm-fornecedor/anexos"
+                  >
+                    Anexos
+                  </NavLink>
+                </div>
+              </div>
             </li>
           </div>
           {!toggled && (
