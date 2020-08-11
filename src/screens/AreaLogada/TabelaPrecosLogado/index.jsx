@@ -1,23 +1,18 @@
 import React, { useEffect, useState } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Form } from "react-final-form";
-import arrayMutators from "final-form-arrays";
-import { Cadastro } from "../../CadastroFornecedor/components/Cadastro";
-import PaginaHeaderSidebar from "components/PaginaHeaderSidebar";
-import { getProponente, atualizaLojas } from "services/cadastro.service";
+import { getProponente } from "services/cadastro.service";
 import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
-import { toastError, toastSuccess } from "components/Toast/dialogs";
+import { toastError } from "components/Toast/dialogs";
+import { TabelaPrecos as TabelaPrecosComponente } from "screens/CadastroFornecedor/components/TabelaPrecos";
+import PaginaHeaderSidebar from "components/PaginaHeaderSidebar";
 import "./style.scss";
 
-export const DadosEmpresa = () => {
+export const TabelaPrecosLogado = () => {
   const [empresa, setEmpresa] = useState(null);
 
   const onSubmit = (values) => {
-    atualizaLojas(localStorage.getItem("uuid"), values).then((response) => {
-      if (response.status === HTTP_STATUS.OK) {
-        toastSuccess("Loja(s) atualizada(s) com sucesso");
-      }
-    });
+    console.log(values);
   };
 
   useEffect(() => {
@@ -35,20 +30,22 @@ export const DadosEmpresa = () => {
   }, []);
 
   return (
-    <div className="dados-empresa-logado">
+    <div className="tabela-precos-logado">
       <PaginaHeaderSidebar>
         <Form
           onSubmit={onSubmit}
-          mutators={{
-            ...arrayMutators,
-          }}
           initialValues={{
             ...empresa,
           }}
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
-              {" "}
-              <Cadastro values={values} empresa={empresa} form={form} />
+              <TabelaPrecosComponente
+                form={form}
+                empresa={empresa}
+                setEmpresa={setEmpresa}
+                values={values}
+                uuid={localStorage.getItem("uuid")}
+              />
             </form>
           )}
         />

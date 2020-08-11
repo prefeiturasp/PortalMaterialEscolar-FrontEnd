@@ -50,7 +50,7 @@ export const TabelaPrecos = ({
       if (response.status === HTTP_STATUS.OK) {
         setEmpresa(formataEmpresa(response.data));
         toastSuccess("Tabela de preços atualizada com sucesso");
-        setTab("arquivos");
+        setTab && setTab("arquivos");
       } else {
         toastError("Erro ao atualizar tabela de preços");
       }
