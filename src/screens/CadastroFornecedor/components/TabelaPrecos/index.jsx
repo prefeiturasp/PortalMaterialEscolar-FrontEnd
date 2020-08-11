@@ -72,7 +72,7 @@ export const TabelaPrecos = ({
 
   return (
     <div className={`tabela-precos ${!kits && "opaco"}`}>
-      <h2>Selecione os Kits que deseja fornecer:</h2>
+      <h2>Selecione os kits que deseja fornecer:</h2>
       {kits ? (
         kits
           .filter((kit) => kit.ativo)

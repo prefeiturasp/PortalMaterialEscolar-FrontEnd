@@ -80,7 +80,7 @@ export class Sidebar extends Component {
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
-                <i className="fas fa-cog" />
+                <i className="fas fa-user-edit" />
                 <span>Cadastro</span>
               </Link>
               <div
@@ -95,7 +95,7 @@ export class Sidebar extends Component {
                     className="collapse-item"
                     to="/adm-fornecedor/dados-empresa"
                   >
-                    Dados da empresa
+                    Dados da empresa e lojas
                   </NavLink>
                   <NavLink
                     activeClassName="active"
