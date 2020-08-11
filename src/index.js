@@ -5,7 +5,6 @@ import * as serviceWorker from "./serviceWorker";
 import { toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import "./index.css";
-import "./styles/sb-admin-2.css";
 
 toast.configure();
 

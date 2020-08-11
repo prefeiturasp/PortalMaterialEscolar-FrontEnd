@@ -4,6 +4,7 @@ import { Link, NavLink } from "react-router-dom";
 import { getAPIVersion } from "services/home.service";
 import { getStatus, getRazaoSocial, getCNPJ } from "helpers/helpers";
 import "./style.scss";
+import "./sb-admin-2.css";
 
 export class Sidebar extends Component {
   constructor(props) {
