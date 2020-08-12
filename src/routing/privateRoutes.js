@@ -2,6 +2,7 @@ import { PaginaInicialFornecedor } from "screens/AreaLogada/PaginaInicialFornece
 import { DadosEmpresaLogado } from "screens/AreaLogada/DadosEmpresaLogado";
 import { TabelaPrecosLogado } from "screens/AreaLogada/TabelaPrecosLogado";
 import { AnexosLogado } from "screens/AreaLogada/AnexosLogado";
+import { AlterarSenha } from "screens/AreaLogada/AlterarSenha";
 
 export const privateRoutes = [
   {
@@ -22,6 +23,11 @@ export const privateRoutes = [
   {
     path: "/adm-fornecedor/anexos",
     component: AnexosLogado,
+    exact: true,
+  },
+  {
+    path: "/adm-fornecedor/alterar-senha",
+    component: AlterarSenha,
     exact: true,
   },
 ];

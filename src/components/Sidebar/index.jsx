@@ -66,7 +66,7 @@ export class Sidebar extends Component {
           )}
           <div className="sidebar-wrapper div-submenu">
             <li className="nav-item">
-              <NavLink className={`nav-link collapsed`} to="/">
+              <NavLink className={`nav-link collapsed`} to="/adm-fornecedor">
                 <i className="fas fa-list-alt" />
                 <span>Painel Gerencial</span>
               </NavLink>
@@ -76,7 +76,7 @@ export class Sidebar extends Component {
                 className={`nav-link collapsed`}
                 href="#teste"
                 data-toggle="collapse"
-                data-target="#collapseConfig"
+                data-target="#collapseCadastro"
                 aria-expanded="false"
                 aria-controls="collapseTwo"
               >
@@ -84,7 +84,7 @@ export class Sidebar extends Component {
                 <span>Cadastro</span>
               </Link>
               <div
-                id="collapseConfig"
+                id="collapseCadastro"
                 className={`collapse`}
                 aria-labelledby="headingConfig"
                 data-parent="#accordionSidebar"
@@ -110,6 +110,35 @@ export class Sidebar extends Component {
                     to="/adm-fornecedor/anexos"
                   >
                     Anexos
+                  </NavLink>
+                </div>
+              </div>
+            </li>
+            <li className="nav-item">
+              <Link
+                className={`nav-link collapsed`}
+                href="#teste"
+                data-toggle="collapse"
+                data-target="#collapseConfig"
+                aria-expanded="false"
+                aria-controls="collapseTwo"
+              >
+                <i className="fas fa-cog" />
+                <span>Configurações</span>
+              </Link>
+              <div
+                id="collapseConfig"
+                className={`collapse`}
+                aria-labelledby="headingConfig"
+                data-parent="#accordionSidebar"
+              >
+                <div className="bg-white py-2 collapse-inner rounded">
+                  <NavLink
+                    activeClassName="active"
+                    className="collapse-item"
+                    to="/adm-fornecedor/alterar-senha"
+                  >
+                    Alterar senha
                   </NavLink>
                 </div>
               </div>

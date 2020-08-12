@@ -8,6 +8,7 @@ import { getProponente, atualizaLojas } from "services/cadastro.service";
 import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 import { toastError, toastSuccess } from "components/Toast/dialogs";
 import "./style.scss";
+import { LoadingCircle } from "components/LoadingCircle";
 
 export const DadosEmpresaLogado = () => {
   const [empresa, setEmpresa] = useState(null);
@@ -35,28 +36,31 @@ export const DadosEmpresaLogado = () => {
   }, []);
 
   return (
-    <div className="dados-empresa-logado">
+    <div className={`dados-empresa-logado`}>
+      {!empresa && <LoadingCircle />}
       <PaginaHeaderSidebar>
-        <Form
-          onSubmit={onSubmit}
-          mutators={{
-            ...arrayMutators,
-          }}
-          initialValues={{
-            ...empresa,
-          }}
-          render={({ handleSubmit, form, submitting, pristine, values }) => (
-            <form onSubmit={handleSubmit}>
-              {" "}
-              <Cadastro
-                values={values}
-                empresa={empresa}
-                form={form}
-                logado={true}
-              />
-            </form>
-          )}
-        />
+        <div className={`${!empresa ? "opaco" : undefined}`}>
+          <Form
+            onSubmit={onSubmit}
+            mutators={{
+              ...arrayMutators,
+            }}
+            initialValues={{
+              ...empresa,
+            }}
+            render={({ handleSubmit, form, submitting, pristine, values }) => (
+              <form onSubmit={handleSubmit}>
+                {" "}
+                <Cadastro
+                  values={values}
+                  empresa={empresa}
+                  form={form}
+                  logado={true}
+                />
+              </form>
+            )}
+          />
+        </div>
       </PaginaHeaderSidebar>
     </div>
   );
