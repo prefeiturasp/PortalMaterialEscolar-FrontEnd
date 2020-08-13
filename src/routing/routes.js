@@ -2,7 +2,7 @@ import { MegaPortal } from "screens/MegaPortal";
 import { CadastroFornecedor } from "../screens/CadastroFornecedor";
 import { PortalFornecedor } from "screens/PortalFornecedor";
 import { PortalFamilia } from "screens/PortalFamilia";
-import { FinalizadoComSucesso } from "screens/FinalizadoComSucesso";
+import { FinalizadoComSucesso } from "screens/AreaLogada/FinalizadoComSucesso";
 import { MapaFornecedores } from "screens/MapaFornecedores";
 import { Login } from "screens/Login";
 

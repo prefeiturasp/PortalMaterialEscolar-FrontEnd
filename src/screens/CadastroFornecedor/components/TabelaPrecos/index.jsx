@@ -23,6 +23,7 @@ export const TabelaPrecos = ({
   setTab,
   empresa,
   setEmpresa,
+  logado,
 }) => {
   const [kits, setKits] = useState(null);
   const [materiais, setMateriais] = useState(null);
@@ -42,7 +43,13 @@ export const TabelaPrecos = ({
 
   const enviarPrecos = async () => {
     const erro = validarFormulario(values, kits);
-    if (!erro) {
+    let continuar = true;
+    if (empresa.status === "CREDENCIADO") {
+      continuar = window.confirm(
+        "Você está com status CREDENCIADO. Ao alterar suas informações, seu status passará para PENDENTE para que suas informações sejam reavalidadas. Deseja prosseguir?"
+      );
+    }
+    if (continuar && !erro) {
       const response = await setTabelaPrecos(
         uuid,
         formataTabelaPrecos(values, kits)
@@ -83,7 +90,7 @@ export const TabelaPrecos = ({
         <LoadingCircle />
       )}
       <div className="row mt-5 mb-5">
-        {empresa && empresa.status === "EM_PROCESSO" && (
+        {((empresa && empresa.status === "EM_PROCESSO") || logado) && (
           <Fragment>
             <div className="col-6">
               <Botao

@@ -2,7 +2,7 @@ import React, { Component } from "react";
 import { version } from "../../../package.json";
 import { Link, NavLink } from "react-router-dom";
 import { getAPIVersion } from "services/home.service";
-import { getStatus, getRazaoSocial, getCNPJ } from "helpers/helpers";
+import { getRazaoSocial, getCNPJ } from "helpers/helpers";
 import "./style.scss";
 import "./sb-admin-2.css";
 
@@ -55,20 +55,11 @@ export class Sidebar extends Component {
               )}
             </div>
           </div>
-          {!toggled && (
-            <div className="sidebar-wrapper">
-              <div className="text-center mx-auto justify-content-center p-2">
-                <span className="text-bold text-white small">
-                  Status: {getStatus()}
-                </span>
-              </div>
-            </div>
-          )}
           <div className="sidebar-wrapper div-submenu">
             <li className="nav-item">
               <NavLink className={`nav-link collapsed`} to="/adm-fornecedor">
                 <i className="fas fa-list-alt" />
-                <span>Painel Gerencial</span>
+                <span>Avisos | Irregularidades</span>
               </NavLink>
             </li>
             <li className="nav-item">

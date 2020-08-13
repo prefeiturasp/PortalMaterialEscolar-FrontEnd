@@ -14,11 +14,20 @@ export const DadosEmpresaLogado = () => {
   const [empresa, setEmpresa] = useState(null);
 
   const onSubmit = (values) => {
-    atualizaLojas(localStorage.getItem("uuid"), values).then((response) => {
-      if (response.status === HTTP_STATUS.OK) {
-        toastSuccess("Loja(s) atualizada(s) com sucesso");
-      }
-    });
+    let continuar = true;
+    if (empresa.status === "CREDENCIADO") {
+      continuar = window.confirm(
+        "Você está com status CREDENCIADO. Ao alterar suas informações, seu status passará para PENDENTE para que suas informações sejam reavalidadas. Deseja prosseguir?"
+      );
+    }
+    if (continuar) {
+      atualizaLojas(localStorage.getItem("uuid"), values).then((response) => {
+        if (response.status === HTTP_STATUS.OK) {
+          toastSuccess("Loja(s) atualizada(s) com sucesso");
+          setEmpresa(formataEmpresa(response.data));
+        }
+      });
+    }
   };
 
   useEffect(() => {

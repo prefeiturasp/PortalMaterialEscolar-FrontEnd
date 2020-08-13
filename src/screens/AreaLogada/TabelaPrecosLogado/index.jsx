@@ -45,6 +45,7 @@ export const TabelaPrecosLogado = () => {
                 setEmpresa={setEmpresa}
                 values={values}
                 uuid={localStorage.getItem("uuid")}
+                logado={true}
               />
             </form>
           )}

@@ -73,12 +73,14 @@ export const deepCopy = (obj) => {
 };
 
 const STATUS_DICT = {
-  EM_PROCESSO: "Em processo de credenciamento",
+  INSCRITO: "Inscrição finalizada, em processo de credenciamento",
   CREDENCIADO: "Credenciado",
+  EM_PROCESSO: "Em processo de inscrição, finalize o seu cadastro",
+  PENDENTE: "Pendente validação de alteração",
 };
 
-export const getStatus = () => {
-  return STATUS_DICT[localStorage.getItem("status")];
+export const getStatus = (status) => {
+  return STATUS_DICT[status];
 };
 
 export const getCNPJ = () => {
