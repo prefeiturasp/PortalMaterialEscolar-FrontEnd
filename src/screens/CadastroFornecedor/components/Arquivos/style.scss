@@ -49,3 +49,11 @@ div.campos-permitidos {
   font-size: 12px;
   color: $gray;
 }
+
+div.data-validade {
+  label {
+    span {
+      color: $red;
+    }
+  }
+}

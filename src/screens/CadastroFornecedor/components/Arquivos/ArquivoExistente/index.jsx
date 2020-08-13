@@ -7,6 +7,12 @@ export const ArquivoExistente = (props) => {
     <div className="file-existent pt-3">
       <div className="label">{props.label}</div>
       <div className="success-message">Arquivo enviado com sucesso!</div>
+      {props.arquivo.data_validade && (
+        <div className="pb-3">
+          <strong>Data de validade: </strong>
+          {props.arquivo.data_validade.split("-").reverse().join("/")}
+        </div>
+      )}
       <a target="blank" href={props.arquivo.arquivo || props.arquivo}>
         Visualizar arquivo
       </a>
