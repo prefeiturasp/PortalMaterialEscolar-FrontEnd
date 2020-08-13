@@ -46,10 +46,10 @@ const login = async (email, password) => {
 
 const logout = () => {
   localStorage.removeItem(TOKEN_ALIAS);
-  localStorage.removeItem("name");
-  localStorage.removeItem("rf");
-  localStorage.removeItem("nome_escola");
-  localStorage.removeItem("perfil");
+  localStorage.removeItem("uuid");
+  localStorage.removeItem("status");
+  localStorage.removeItem("razao_social");
+  localStorage.removeItem("cnpj");
   window.location.href = process.env.PUBLIC_URL
     ? `/${process.env.PUBLIC_URL}/login`
     : "/login";
