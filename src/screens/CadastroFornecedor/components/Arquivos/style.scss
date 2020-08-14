@@ -57,3 +57,9 @@ div.data-validade {
     }
   }
 }
+
+.p-fileupload-choose {
+  input:disabled {
+    opacity: 0.5;
+  }
+}

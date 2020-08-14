@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import HTTP_STATUS from "http-status-codes";
+import moment from "moment";
 import { Field } from "react-final-form";
 import { FileUpload } from "components/Input/FileUpload";
 import { required } from "helpers/validators";
@@ -283,7 +284,11 @@ export const Arquivos = ({ empresa, setEmpresa, values }) => {
                     disabled={
                       algumUploadEmAndamento ||
                       (tipo.tem_data_validade &&
-                        !values[`data_validade_${key}`])
+                        (!values[`data_validade_${key}`] ||
+                          moment(values[`data_validade_${key}`]).diff(
+                            moment(),
+                            "days"
+                          ) < 9))
                     }
                     multiple={false}
                   />
@@ -292,7 +297,8 @@ export const Arquivos = ({ empresa, setEmpresa, values }) => {
                       <div>
                         <strong>
                           Insira a data de validade do documento para habilitar
-                          o botão de upload
+                          o botão de upload. <br /> Validade mínima: 10 dias
+                          corridos
                         </strong>
                       </div>
                     )}
@@ -308,6 +314,7 @@ export const Arquivos = ({ empresa, setEmpresa, values }) => {
                       <Field
                         component="input"
                         name={`data_validade_${key}`}
+                        min={moment().add(10, "days").format("YYYY-MM-DD")}
                         type="date"
                       />
                     </div>
