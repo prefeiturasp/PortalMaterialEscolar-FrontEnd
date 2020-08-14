@@ -1,5 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import HTTP_STATUS from "http-status-codes";
+import moment from "moment";
 import { Field } from "react-final-form";
 import { FileUpload } from "components/Input/FileUpload";
 import { required } from "helpers/validators";
@@ -19,7 +20,7 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "./style.scss";
 
-export const Arquivos = ({ empresa, setEmpresa }) => {
+export const Arquivos = ({ empresa, setEmpresa, values }) => {
   const [algumUploadEmAndamento, setAlgumUploadEmAndamento] = useState(false);
   const [tiposDocumentos, setTiposDocumentos] = useState(null);
   const [faltamArquivos, setFaltamArquivos] = useState(true);
@@ -120,11 +121,12 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
     }
   };
 
-  const uploadAnexo = async (e, tipo, key) => {
+  const uploadAnexo = async (e, tipo, key, values) => {
     const arquivoAnexo = {
       ...e[0],
       tipo_documento: tipo.id,
       proponente: empresa.uuid,
+      data_validade: values[`data_validade_${key}`],
     };
     let tiposDocumentos_ = tiposDocumentos;
     tiposDocumentos_[key].uploadEmAndamento = true;
@@ -270,7 +272,6 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                   <Field
                     component={FileUpload}
                     name={`arqs_${key}`}
-                    disabled={algumUploadEmAndamento}
                     id={`${key}`}
                     key={key}
                     accept=".pdf, .png, .jpg, .jpeg, .zip"
@@ -280,17 +281,48 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                     resetarFile={tipo.resetarFile}
                     required={tipo.obrigatorio}
                     validate={tipo.obrigatorio && required}
+                    disabled={
+                      algumUploadEmAndamento ||
+                      (tipo.tem_data_validade &&
+                        (!values[`data_validade_${key}`] ||
+                          moment(values[`data_validade_${key}`]).diff(
+                            moment(),
+                            "days"
+                          ) < 9))
+                    }
                     multiple={false}
                   />
                   <div className="campos-permitidos">
+                    {tipo.tem_data_validade && (
+                      <div>
+                        <strong>
+                          Insira a data de validade do documento para habilitar
+                          o botão de upload. <br /> Validade mínima: 10 dias
+                          corridos
+                        </strong>
+                      </div>
+                    )}
                     Formatos permitidos: .png, .jpg, .jpeg, .zip, .pdf
                     <br />
                     Tamanho máximo: 5 MB
                   </div>
+                  {tipo.tem_data_validade && (
+                    <div className="data-validade">
+                      <label className="pr-3">
+                        <span>* </span>Data de validade do documento:
+                      </label>
+                      <Field
+                        component="input"
+                        name={`data_validade_${key}`}
+                        min={moment().add(10, "days").format("YYYY-MM-DD")}
+                        type="date"
+                      />
+                    </div>
+                  )}
                   <OnChange name={`arqs_${key}`}>
                     {async (value, previous) => {
                       if (value.length > 0) {
-                        uploadAnexo(value, tipo, key);
+                        uploadAnexo(value, tipo, key, values);
                       }
                     }}
                   </OnChange>
@@ -301,6 +333,7 @@ export const Arquivos = ({ empresa, setEmpresa }) => {
                       <span className="blink">...</span>
                     </span>
                   )}
+                  <hr />
                 </div>
               );
             })
