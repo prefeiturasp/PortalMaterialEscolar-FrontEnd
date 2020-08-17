@@ -183,7 +183,7 @@ export const PortalFamilia = () => {
             defesa do consumidor.
           </div>
           <div className="text-center pt-3 pb-3">
-            <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616">
+            <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=666&a=710&servico=3798">
               <Botao
                 texto="Avise sobre problemas"
                 className="col-sm-3 col-12 fs-16"
