@@ -37,16 +37,16 @@ export const Login = () => {
       authService.login(email, password).then((response) => {
         if (response.status === HTTP_STATUS.OK) {
           setUsuario(response.data);
-          if (!response.data.last_login) {
-            setExibirResetSenha(true);
-          } else {
-            localStorage.setItem("status", response.data.proponente.status);
+          localStorage.setItem("status", response.data.proponente.status);
             localStorage.setItem(
               "razao_social",
               response.data.proponente.razao_social
             );
             localStorage.setItem("cnpj", response.data.proponente.cnpj);
             localStorage.setItem("uuid", response.data.proponente.uuid);
+          if (!response.data.last_login) {
+            setExibirResetSenha(true);
+          } else {
             history.push("/adm-fornecedor");
           }
         }
