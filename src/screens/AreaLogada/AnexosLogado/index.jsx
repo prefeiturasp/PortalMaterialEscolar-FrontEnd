@@ -41,7 +41,12 @@ export const AnexosLogado = () => {
           render={({ handleSubmit, form, submitting, pristine, values }) => (
             <form onSubmit={handleSubmit}>
               {empresa ? (
-                <Arquivos empresa={empresa} setEmpresa={setEmpresa} />
+                <Arquivos
+                  values={values}
+                  empresa={empresa}
+                  setEmpresa={setEmpresa}
+                  logado={true}
+                />
               ) : (
                 <LoadingCircle />
               )}

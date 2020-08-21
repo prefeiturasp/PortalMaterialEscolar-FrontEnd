@@ -20,7 +20,7 @@ import "primereact/resources/primereact.min.css";
 import "primereact/resources/themes/nova-light/theme.css";
 import "./style.scss";
 
-export const Arquivos = ({ empresa, setEmpresa, values }) => {
+export const Arquivos = ({ empresa, setEmpresa, values, logado }) => {
   const [algumUploadEmAndamento, setAlgumUploadEmAndamento] = useState(false);
   const [tiposDocumentos, setTiposDocumentos] = useState(null);
   const [faltamArquivos, setFaltamArquivos] = useState(true);
@@ -228,6 +228,7 @@ export const Arquivos = ({ empresa, setEmpresa, values }) => {
                     lojaUuid={loja.uuid}
                     proponenteStatus={empresa && empresa.status}
                     removeAnexo={deleteFachadaLoja}
+                    logado={logado}
                   />
                 </div>
               );
@@ -251,9 +252,10 @@ export const Arquivos = ({ empresa, setEmpresa, values }) => {
                     )}
                     proponenteStatus={empresa && empresa.status}
                     removeAnexo={removeAnexo}
+                    logado={logado}
                   />
                 </div>
-              ) : empresa && empresa.status !== "EM_PROCESSO" ? (
+              ) : (empresa && empresa.status !== "EM_PROCESSO" && !logado) ? (
                 <div className="no-file-end-signup pt-3">
                   <div className="label">{htmlTextToDiv(tipo)}</div>
                   <div>
