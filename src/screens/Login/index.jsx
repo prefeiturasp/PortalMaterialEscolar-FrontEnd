@@ -11,6 +11,7 @@ import authService from "services/auth.service";
 import { atualizarSenha } from "services/perfil.service";
 import { toastSuccess, toastError } from "components/Toast/dialogs";
 import "./style.scss";
+import { getError } from "helpers/helpers";
 
 export const Login = () => {
   const [exibirResetSenha, setExibirResetSenha] = useState(false);
@@ -18,39 +19,39 @@ export const Login = () => {
 
   const history = useHistory();
 
-  const resetarSenha = (values) => {
-    atualizarSenha(usuario.id, usuario.token, values).then((response) => {
-      if (response.status === HTTP_STATUS.OK) {
-        toastSuccess("Senha atualizada com sucesso");
-        setTimeout(() => {
-          history.push("/adm-fornecedor");
-        }, 1500);
-      } else {
-        toastError("Houve um erro ao atualizar sua senha");
-      }
-    });
-  };
-
   const onSubmit = (values) => {
-    const { email, password } = values;
-    if (email && password) {
-      authService.login(email, password).then((response) => {
+    if (values.senha1) {
+      atualizarSenha(usuario.id, usuario.token, values).then((response) => {
         if (response.status === HTTP_STATUS.OK) {
-          setUsuario(response.data);
-          localStorage.setItem("status", response.data.proponente.status);
+          toastSuccess("Senha atualizada com sucesso");
+          setTimeout(() => {
+            history.push("/adm-fornecedor");
+          }, 1500);
+        } else {
+          toastError(getError(response.data));
+        }
+      });
+    } else {
+      const { email, password } = values;
+      if (email && password) {
+        authService.login(email, password).then((response) => {
+          if (response.status === HTTP_STATUS.OK) {
+            setUsuario(response.data);
+            localStorage.setItem("status", response.data.proponente.status);
             localStorage.setItem(
               "razao_social",
               response.data.proponente.razao_social
             );
             localStorage.setItem("cnpj", response.data.proponente.cnpj);
             localStorage.setItem("uuid", response.data.proponente.uuid);
-          if (!response.data.last_login) {
-            setExibirResetSenha(true);
-          } else {
-            history.push("/adm-fornecedor");
+            if (!response.data.last_login) {
+              setExibirResetSenha(true);
+            } else {
+              history.push("/adm-fornecedor");
+            }
           }
-        }
-      });
+        });
+      }
     }
   };
 
@@ -115,6 +116,9 @@ export const Login = () => {
                         required
                         type="password"
                         validate={required}
+                        pattern="(?=.*\d)(?=.*[a-z]).{8,}"
+                        title="Pelo menos 8 caracteres, uma letra e um número"
+                        helpText="Pelo menos 8 caracteres, uma letra e um número"
                       />
                       <Field
                         component={InputText}
@@ -130,8 +134,7 @@ export const Login = () => {
                         className="mt-3 col-12"
                         style={BUTTON_STYLE.BLUE}
                         texto="Resetar senha"
-                        type={BUTTON_TYPE.BUTTON}
-                        onClick={() => resetarSenha(values)}
+                        type={BUTTON_TYPE.SUBMIT}
                       />
                     </Fragment>
                   )}

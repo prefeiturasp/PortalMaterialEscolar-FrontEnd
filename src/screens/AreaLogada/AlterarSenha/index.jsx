@@ -51,6 +51,9 @@ export const AlterarSenha = () => {
                 required
                 type="password"
                 validate={required}
+                pattern="(?=.*\d)(?=.*[a-z]).{8,}"
+                title="Pelo menos 8 caracteres, uma letra e um número"
+                helpText="Pelo menos 8 caracteres, uma letra e um número"
               />
               <Field
                 component={InputText}
