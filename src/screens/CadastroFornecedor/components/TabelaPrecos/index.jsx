@@ -23,6 +23,7 @@ export const TabelaPrecos = ({
   setTab,
   empresa,
   setEmpresa,
+  logado,
 }) => {
   const [kits, setKits] = useState(null);
   const [materiais, setMateriais] = useState(null);
@@ -42,7 +43,13 @@ export const TabelaPrecos = ({
 
   const enviarPrecos = async () => {
     const erro = validarFormulario(values, kits);
-    if (!erro) {
+    let continuar = true;
+    if (empresa.status === "CREDENCIADO") {
+      continuar = window.confirm(
+        "Você está com status CREDENCIADO. Ao alterar suas informações, seu status passará para PENDENTE para que suas informações sejam reavalidadas. Deseja prosseguir?"
+      );
+    }
+    if (continuar && !erro) {
       const response = await setTabelaPrecos(
         uuid,
         formataTabelaPrecos(values, kits)
@@ -50,7 +57,7 @@ export const TabelaPrecos = ({
       if (response.status === HTTP_STATUS.OK) {
         setEmpresa(formataEmpresa(response.data));
         toastSuccess("Tabela de preços atualizada com sucesso");
-        setTab("arquivos");
+        setTab && setTab("arquivos");
       } else {
         toastError("Erro ao atualizar tabela de preços");
       }
@@ -72,7 +79,7 @@ export const TabelaPrecos = ({
 
   return (
     <div className={`tabela-precos ${!kits && "opaco"}`}>
-      <h2>Selecione os Kits que deseja fornecer:</h2>
+      <h2>Selecione os kits que deseja fornecer:</h2>
       {kits ? (
         kits
           .filter((kit) => kit.ativo)
@@ -83,7 +90,7 @@ export const TabelaPrecos = ({
         <LoadingCircle />
       )}
       <div className="row mt-5 mb-5">
-        {empresa && empresa.status === "EM_PROCESSO" && (
+        {((empresa && empresa.status === "EM_PROCESSO") || logado) && (
           <Fragment>
             <div className="col-6">
               <Botao

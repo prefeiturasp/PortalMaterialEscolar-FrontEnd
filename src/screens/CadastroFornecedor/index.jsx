@@ -126,7 +126,11 @@ export const CadastroFornecedor = () => {
                       />
                     )}
                     {tab === "arquivos" && (
-                      <Arquivos empresa={empresa} setEmpresa={setEmpresa} />
+                      <Arquivos
+                        empresa={empresa}
+                        setEmpresa={setEmpresa}
+                        values={values}
+                      />
                     )}
                   </form>
                 )}

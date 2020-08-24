@@ -85,7 +85,7 @@ export const MenuPrincipal = () => {
               <li className="nav-item">
                 <a
                   className="nav-link text-secondary mb-1 pb-0"
-                  href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?servico=3616"
+                  href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=666&a=710&servico=3798"
                 >
                   Avise sobre Problemas
                 </a>

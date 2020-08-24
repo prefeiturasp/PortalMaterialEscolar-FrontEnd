@@ -12,7 +12,7 @@ import {
 import { toastError } from "components/Toast/dialogs";
 import "./style.scss";
 
-export const Cadastro = ({ values, empresa, form, edital }) => {
+export const Cadastro = ({ values, empresa, form, edital, logado }) => {
   const [isChecked, setIsChecked] = useState(false);
 
   const copiarEndereco = (fields) => {
@@ -82,9 +82,10 @@ export const Cadastro = ({ values, empresa, form, edital }) => {
                   fields={fields}
                   index={index}
                   empresa={empresa}
+                  logado={logado}
                 />
               ))}
-              {!empresa && (
+              {(!empresa || logado) && (
                 <Botao
                   style={BUTTON_STYLE.BLUE}
                   texto="Adicionar"
@@ -161,6 +162,17 @@ export const Cadastro = ({ values, empresa, form, edital }) => {
             </div>
           </div>
         </Fragment>
+      )}
+      {logado && (
+        <div className="row mb-3">
+          <div className="col-12 text-right">
+            <Botao
+              style={BUTTON_STYLE.BLUE}
+              type={BUTTON_TYPE.SUBMIT}
+              texto="Atualizar"
+            />
+          </div>
+        </div>
       )}
     </Fragment>
   );
