@@ -1,5 +1,5 @@
 import { API_URL } from "../config";
-import { AUTH_TOKEN } from "./constants";
+import { getToken } from "./auth.service";
 
 export const atualizarSenha = (uuid, confirmationKey, payLoad) => {
   const url = `${API_URL}/usuarios/atualizar-senha/${uuid}/${confirmationKey}/`;
@@ -27,7 +27,10 @@ export const atualizarSenhaLogado = (uuid, payLoad) => {
   return fetch(url, {
     method: "POST",
     body: JSON.stringify(payLoad),
-    headers: AUTH_TOKEN,
+    headers: {
+      Authorization: `JWT ${getToken()}`,
+      "Content-Type": "application/json",
+    },
   })
     .then((res) => {
       status = res.status;
