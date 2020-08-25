@@ -71,6 +71,14 @@ export const MenuPrincipal = () => {
                   Cadastre sua Loja
                 </Link>
               </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/fornecedor/login"
+                >
+                  Área restrita
+                </Link>
+              </li>
             </ul>
           )}
           {["/familia", "/mapa-de-fornecedores"].includes(
