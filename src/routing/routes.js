@@ -38,7 +38,7 @@ export const routes = [
     exact: true,
   },
   {
-    path: "/login",
+    path: "/fornecedor/login",
     component: Login,
     exact: true,
   },
