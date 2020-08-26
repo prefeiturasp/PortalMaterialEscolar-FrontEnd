@@ -228,7 +228,6 @@ export const Arquivos = ({ empresa, setEmpresa, values, logado }) => {
                     lojaUuid={loja.uuid}
                     proponenteStatus={empresa && empresa.status}
                     removeAnexo={deleteFachadaLoja}
-                    logado={logado}
                   />
                 </div>
               );
@@ -242,20 +241,21 @@ export const Arquivos = ({ empresa, setEmpresa, values, logado }) => {
             tiposDocumentos.map((tipo, key) => {
               return empresa &&
                 empresa.arquivos_anexos.find(
-                  (arquivo) => arquivo.tipo_documento === tipo.id
+                  (arquivo) => arquivo.tipo_documento.id === tipo.id
                 ) ? (
                 <div>
                   <ArquivoExistente
                     label={htmlTextToDiv(tipo)}
                     arquivo={empresa.arquivos_anexos.find(
-                      (arquivo) => arquivo.tipo_documento === tipo.id
+                      (arquivo) => arquivo.tipo_documento.id === tipo.id
                     )}
                     proponenteStatus={empresa && empresa.status}
                     removeAnexo={removeAnexo}
                     logado={logado}
                   />
+                  <hr />
                 </div>
-              ) : (empresa && empresa.status !== "EM_PROCESSO" && !logado) ? (
+              ) : empresa && empresa.status !== "EM_PROCESSO" && !logado ? (
                 <div className="no-file-end-signup pt-3">
                   <div className="label">{htmlTextToDiv(tipo)}</div>
                   <div>
