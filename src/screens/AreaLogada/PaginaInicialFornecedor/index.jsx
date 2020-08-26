@@ -45,6 +45,53 @@ export const PaginaInicialFornecedor = () => {
                   </div>
                 </div>
               </div>
+              <div className="col-6">
+                <div className="card avisos">
+                  <div className="card-body">
+                    <h2>Irregularidades nos anexos</h2>
+                    {empresa.arquivos_anexos.filter(
+                      (arquivo) => arquivo.status === "REPROVADO"
+                    ).length === 0 && (
+                      <div>Não há irregularidades nos documentos anexos.</div>
+                    )}
+                    {empresa.arquivos_anexos.filter(
+                      (arquivo) => arquivo.status === "REPROVADO"
+                    ).length > 0 &&
+                      empresa.arquivos_anexos
+                        .filter((arquivo) =>
+                          ["REPROVADO", "VENCIDO"].includes(arquivo.status)
+                        )
+                        .map((arquivo) => {
+                          return (
+                            <div className="arquivos-irregulares mb-3">
+                              <div className="doc-nome">
+                                <span>Documento:</span>{" "}
+                                {arquivo.tipo_documento.nome}
+                              </div>
+                              <div className="doc-status">
+                                <span>Status:</span> {arquivo.status}
+                              </div>
+                              {arquivo.status === "VENCIDO" && (
+                                <div className="doc-data">
+                                  <span>Vencido em:</span>{" "}
+                                  {arquivo.data_validade
+                                    ? arquivo.data_validade
+                                        .split("-")
+                                        .reverse()
+                                        .join("/")
+                                    : "Sem data de validade"}
+                                </div>
+                              )}
+                              <div className="doc-justificativa">
+                                <span>Justificativa:</span>{" "}
+                                {arquivo.justificativa || "Sem justificativa"}
+                              </div>
+                            </div>
+                          );
+                        })}
+                  </div>
+                </div>
+              </div>
             </div>
           </div>
         ) : (
