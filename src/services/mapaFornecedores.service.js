@@ -1,16 +1,15 @@
 import { API_URL } from "../config";
 
 export const getLojasCredenciadas = async (latitude, longitude, payload) => {
-  const url = `${API_URL}/lojas-credenciadas/?latitude=${latitude}&longitude=${longitude}`;
+  const url = `${API_URL}/lojas-credenciadas/lojas/?latitude=${latitude}&longitude=${longitude}`;
   let status = 0;
   return fetch(url, {
     headers: {
       "Accept-Language": "pt-br",
       "Content-Type": "application/json",
     },
-    method: "GET",
-    //method: "POST",
-    //body: JSON.stringify(payload),
+    method: "POST",
+    body: JSON.stringify(payload),
   })
     .then((res) => {
       status = res.status;
@@ -24,17 +23,15 @@ export const getLojasCredenciadas = async (latitude, longitude, payload) => {
     });
 };
 
-export const getLojasCredenciadas2 = async (latitude, longitude, payload) => {
-  const url = `${API_URL}/lojas-credenciadas/lojas/?latitude=${latitude}&longitude=${longitude}`;
+export const getLojasCredenciadasSemLatLong = () => {
+  const url = `${API_URL}/lojas-credenciadas/`;
   let status = 0;
   return fetch(url, {
     headers: {
       "Accept-Language": "pt-br",
       "Content-Type": "application/json",
     },
-    //method: "GET",
-    method: "POST",
-    body: JSON.stringify(payload),
+    method: "GET",
   })
     .then((res) => {
       status = res.status;
