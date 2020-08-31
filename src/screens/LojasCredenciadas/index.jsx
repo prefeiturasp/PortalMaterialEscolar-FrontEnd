@@ -1,9 +1,14 @@
 import React, { useState, useEffect } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
-import { getLojasCredenciadasSemLatLong } from "services/mapaFornecedores.service";
-import "./style.scss";
+import {
+  getPDFLojasCredenciadas,
+  getLojasCredenciadasSemLatLong,
+} from "services/mapaFornecedores.service";
 import { LoadingCircle } from "components/LoadingCircle";
+import Botao from "components/Botao";
+import { BUTTON_STYLE, BUTTON_ICON } from "components/Botao/constants";
+import "./style.scss";
 
 export const LojasCredenciadas = () => {
   const [lojas, setLojas] = useState(null);
@@ -27,7 +32,21 @@ export const LojasCredenciadas = () => {
     <PaginaComCabecalhoRodape>
       <div className="lojas-credenciadas">
         <div className="container">
-          <h1>Lojas credenciadas</h1>
+          <div className="row">
+            <div className="col-8">
+              <h1>Lojas credenciadas</h1>
+            </div>
+            {lojas && lojas.length > 0 && (
+              <div className="col-4 text-right">
+                <Botao
+                  texto="Baixar PDF"
+                  icon={BUTTON_ICON.FILE_PDF}
+                  style={BUTTON_STYLE.BLUE}
+                  onClick={() => getPDFLojasCredenciadas()}
+                />
+              </div>
+            )}
+          </div>
           {!lojas && !erroAPI && <LoadingCircle />}
           <div className="card mb-5">
             <div className="card-body">
