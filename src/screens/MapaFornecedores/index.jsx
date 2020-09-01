@@ -6,7 +6,7 @@ import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
 import { LoadingCircle } from "components/LoadingCircle";
 import { AutoComplete } from "components/Input/AutoComplete";
 import { required } from "helpers/validators";
-import { getLojasCredenciadas2 } from "services/mapaFornecedores.service";
+import { getLojasCredenciadas } from "services/mapaFornecedores.service";
 import {
   sortByParam,
   acrescentaTotalMateriais,
@@ -42,7 +42,7 @@ export const MapaFornecedores = (props) => {
       getKits().then((response) => {
         if (response.status === HTTP_STATUS.OK) {
           setKits(response.data);
-          getLojasCredenciadas2(latitude, longitude, {
+          getLojasCredenciadas(latitude, longitude, {
             kit: kit,
           }).then((response2) => {
             setLatitude(latitude);
@@ -83,7 +83,7 @@ export const MapaFornecedores = (props) => {
       setConsultarNovamente(false);
       setLojas(null);
       setPagina(1);
-      getLojasCredenciadas2(latitude, longitude, {
+      getLojasCredenciadas(latitude, longitude, {
         kit: values.kit,
       }).then((response) => {
         setLojas(
