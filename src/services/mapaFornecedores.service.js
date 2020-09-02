@@ -1,16 +1,17 @@
 import { API_URL } from "../config";
+import Axios from "axios";
+import { toastError } from "components/Toast/dialogs";
 
 export const getLojasCredenciadas = async (latitude, longitude, payload) => {
-  const url = `${API_URL}/lojas-credenciadas/?latitude=${latitude}&longitude=${longitude}`;
+  const url = `${API_URL}/lojas-credenciadas/lojas/?latitude=${latitude}&longitude=${longitude}`;
   let status = 0;
   return fetch(url, {
     headers: {
       "Accept-Language": "pt-br",
       "Content-Type": "application/json",
     },
-    method: "GET",
-    //method: "POST",
-    //body: JSON.stringify(payload),
+    method: "POST",
+    body: JSON.stringify(payload),
   })
     .then((res) => {
       status = res.status;
@@ -24,17 +25,15 @@ export const getLojasCredenciadas = async (latitude, longitude, payload) => {
     });
 };
 
-export const getLojasCredenciadas2 = async (latitude, longitude, payload) => {
-  const url = `${API_URL}/lojas-credenciadas/lojas/?latitude=${latitude}&longitude=${longitude}`;
+export const getLojasCredenciadasSemLatLong = () => {
+  const url = `${API_URL}/lojas-credenciadas/`;
   let status = 0;
   return fetch(url, {
     headers: {
       "Accept-Language": "pt-br",
       "Content-Type": "application/json",
     },
-    //method: "GET",
-    method: "POST",
-    body: JSON.stringify(payload),
+    method: "GET",
   })
     .then((res) => {
       status = res.status;
@@ -45,5 +44,24 @@ export const getLojasCredenciadas2 = async (latitude, longitude, payload) => {
     })
     .catch((error) => {
       return error;
+    });
+};
+
+export const getPDFLojasCredenciadas = () => {
+  Axios({
+    url: `${API_URL}/lojas-credenciadas/pdf-lojas-credenciadas/`,
+    method: "GET",
+    responseType: "blob",
+  })
+    .then((response) => {
+      const url = window.URL.createObjectURL(new Blob([response.data]));
+      const link = document.createElement("a");
+      link.href = url;
+      link.setAttribute("download", "lojas-credenciadas.pdf");
+      document.body.appendChild(link);
+      link.click();
+    })
+    .catch(() => {
+      toastError("Erro ao baixar PDF. Tente novamente mais tarde");
     });
 };

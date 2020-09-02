@@ -5,6 +5,7 @@ import { PortalFamilia } from "screens/PortalFamilia";
 import { FinalizadoComSucesso } from "screens/AreaLogada/FinalizadoComSucesso";
 import { MapaFornecedores } from "screens/MapaFornecedores";
 import { Login } from "screens/Login";
+import { LojasCredenciadas } from "screens/LojasCredenciadas";
 
 export const routes = [
   {
@@ -40,6 +41,11 @@ export const routes = [
   {
     path: "/fornecedor/login",
     component: Login,
+    exact: true,
+  },
+  {
+    path: "/fornecedor/lojas-credenciadas",
+    component: LojasCredenciadas,
     exact: true,
   },
 ];

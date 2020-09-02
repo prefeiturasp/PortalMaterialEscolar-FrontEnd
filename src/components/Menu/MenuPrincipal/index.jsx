@@ -38,13 +38,20 @@ export const MenuPrincipal = () => {
                   Área de estudantes/famílias
                 </Link>
               </li>
-
               <li className="nav-item">
                 <Link
                   className="nav-link text-secondary mb-1 pb-0"
                   to="/fornecedor"
                 >
                   Área de fornecedores
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/fornecedor/lojas-credenciadas"
+                >
+                  Lojas credenciadas
                 </Link>
               </li>
             </ul>
@@ -69,6 +76,14 @@ export const MenuPrincipal = () => {
                   to="/fornecedor/cadastro"
                 >
                   Cadastre sua Loja
+                </Link>
+              </li>
+              <li className="nav-item">
+                <Link
+                  className="nav-link text-secondary mb-1 pb-0"
+                  to="/fornecedor/login"
+                >
+                  Área restrita
                 </Link>
               </li>
             </ul>

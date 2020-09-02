@@ -17,7 +17,7 @@ export const DadosEmpresaLogado = () => {
     let continuar = true;
     if (empresa.status === "CREDENCIADO") {
       continuar = window.confirm(
-        "Você está com status CREDENCIADO. Ao alterar suas informações, seu status passará para PENDENTE para que suas informações sejam reavalidadas. Deseja prosseguir?"
+        "Você está com status CREDENCIADO. Ao alterar suas informações, seu status passará para ALTERADO para que suas informações sejam reavalidadas. Deseja prosseguir?"
       );
     }
     if (continuar) {
