@@ -22,7 +22,8 @@ export const ArquivoExistente = (props) => {
             Visualizar arquivo
           </a>
           {(["EM_PROCESSO"].includes(props.proponenteStatus) ||
-            (props.arquivo.status === "REPROVADO" && props.logado)) && (
+            (["REPROVADO", "VENCIDO"].includes(props.arquivo.status) &&
+              props.logado)) && (
             <span
               onClick={() =>
                 props.lojaUuid
@@ -37,10 +38,25 @@ export const ArquivoExistente = (props) => {
         </div>
         {props.arquivo.data_validade && (
           <div className="col-4">
-            <strong>Documento vence em: </strong>
-            {moment(props.arquivo.data_validade).diff(moment(), "days") +
-              1}{" "}
-            dias
+            {moment(props.arquivo.data_validade).diff(moment(), "days") + 1 >=
+              0 && (
+              <div>
+                <strong>Documento vence em: </strong>
+                {moment(props.arquivo.data_validade).diff(moment(), "days") +
+                  1}{" "}
+                dias
+              </div>
+            )}
+            {moment(props.arquivo.data_validade).diff(moment(), "days") + 1 <
+              0 && (
+              <div>
+                <strong>Documento vencido a: </strong>
+                {Math.abs(
+                  moment(props.arquivo.data_validade).diff(moment(), "days") + 1
+                )}{" "}
+                dias
+              </div>
+            )}
           </div>
         )}
       </div>
