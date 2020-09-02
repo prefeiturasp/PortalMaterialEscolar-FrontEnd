@@ -2,6 +2,7 @@ div.pagina-inicial {
   .card {
     &.avisos {
       height: 65vh;
+      overflow-y: auto;
     }
   }
 }
