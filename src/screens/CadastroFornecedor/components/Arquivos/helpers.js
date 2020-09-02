@@ -4,7 +4,7 @@ export const verificarSeFaltamArquivos = (empresa, tiposDocumentos) => {
     if (
       tipoDocumento.obrigatorio &&
       !empresa.arquivos_anexos.find(
-        (arquivo) => arquivo.tipo_documento === tipoDocumento.id
+        (arquivo) => arquivo.tipo_documento.id === tipoDocumento.id
       )
     )
       aindaFaltaDocumentoObrigatorio = true;
