@@ -241,7 +241,9 @@ export const Arquivos = ({ empresa, setEmpresa, values, logado }) => {
             tiposDocumentos.map((tipo, key) => {
               return empresa &&
                 empresa.arquivos_anexos.find(
-                  (arquivo) => arquivo.tipo_documento.id === tipo.id
+                  (arquivo) =>
+                    arquivo.tipo_documento.id === tipo.id &&
+                    !["REPROVADO", "VENCIDO"].includes(arquivo.status)
                 ) ? (
                 <div>
                   <ArquivoExistente
@@ -294,40 +296,136 @@ export const Arquivos = ({ empresa, setEmpresa, values, logado }) => {
                     }
                     multiple={false}
                   />
-                  <div className="campos-permitidos">
-                    {tipo.tem_data_validade && (
-                      <div>
-                        <strong>
-                          Insira a data de validade do documento para habilitar
-                          o botão de upload. <br /> Validade mínima: 10 dias
-                          corridos
-                        </strong>
+                  <div className="row">
+                    <div className="col-6">
+                      <div className="campos-permitidos">
+                        {tipo.tem_data_validade && (
+                          <div>
+                            <strong>
+                              Insira a data de validade do documento para
+                              habilitar o botão de upload. <br /> Validade
+                              mínima: 10 dias corridos
+                            </strong>
+                          </div>
+                        )}
+                        Formatos permitidos: .png, .jpg, .jpeg, .zip, .pdf
+                        <br />
+                        Tamanho máximo: 5 MB
                       </div>
-                    )}
-                    Formatos permitidos: .png, .jpg, .jpeg, .zip, .pdf
-                    <br />
-                    Tamanho máximo: 5 MB
-                  </div>
-                  {tipo.tem_data_validade && (
-                    <div className="data-validade">
-                      <label className="pr-3">
-                        <span>* </span>Data de validade do documento:
-                      </label>
-                      <Field
-                        component="input"
-                        name={`data_validade_${key}`}
-                        min={moment().add(10, "days").format("YYYY-MM-DD")}
-                        type="date"
-                      />
+                      {tipo.tem_data_validade && (
+                        <div className="data-validade">
+                          <label className="pr-3">
+                            <span>* </span>Data de validade do documento:
+                          </label>
+                          <Field
+                            component="input"
+                            name={`data_validade_${key}`}
+                            min={moment().add(10, "days").format("YYYY-MM-DD")}
+                            type="date"
+                          />
+                        </div>
+                      )}
+                      <OnChange name={`arqs_${key}`}>
+                        {async (value, previous) => {
+                          if (value.length > 0) {
+                            uploadAnexo(value, tipo, key, values);
+                          }
+                        }}
+                      </OnChange>
                     </div>
-                  )}
-                  <OnChange name={`arqs_${key}`}>
-                    {async (value, previous) => {
-                      if (value.length > 0) {
-                        uploadAnexo(value, tipo, key, values);
-                      }
-                    }}
-                  </OnChange>
+                    {empresa.arquivos_anexos.find(
+                      (arquivo) => arquivo.tipo_documento.id === tipo.id
+                    ) &&
+                      ["REPROVADO", "VENCIDO"].includes(
+                        empresa.arquivos_anexos.find(
+                          (arquivo) => arquivo.tipo_documento.id === tipo.id
+                        ).status
+                      ) && (
+                        <div className="col-6">
+                          <div>
+                            <div className="font-weight-bold">
+                              Por favor, atualize o documento.
+                            </div>
+                            <span className="font-weight-bold">Status: </span>
+                            {
+                              empresa.arquivos_anexos.find(
+                                (arquivo) =>
+                                  arquivo.tipo_documento.id === tipo.id
+                              ).status
+                            }
+                          </div>
+                          <div>
+                            <span className="font-weight-bold">
+                              Justificativa:{" "}
+                            </span>
+                            {empresa.arquivos_anexos.find(
+                              (arquivo) => arquivo.tipo_documento.id === tipo.id
+                            ).justificativa || "Sem justificativa"}
+                          </div>
+                          {empresa.arquivos_anexos.find(
+                            (arquivo) => arquivo.tipo_documento.id === tipo.id
+                          ).data_validade && (
+                            <div>
+                              {moment(
+                                empresa.arquivos_anexos.find(
+                                  (arquivo) =>
+                                    arquivo.tipo_documento.id === tipo.id
+                                ).data_validade
+                              ).diff(moment(), "days") +
+                                1 >=
+                                0 && (
+                                <div>
+                                  <strong>Documento vence em: </strong>
+                                  {moment(
+                                    empresa.arquivos_anexos.find(
+                                      (arquivo) =>
+                                        arquivo.tipo_documento.id === tipo.id
+                                    ).data_validade
+                                  ).diff(moment(), "days") + 1}{" "}
+                                  dias
+                                </div>
+                              )}
+                              {moment(
+                                empresa.arquivos_anexos.find(
+                                  (arquivo) =>
+                                    arquivo.tipo_documento.id === tipo.id
+                                ).data_validade
+                              ).diff(moment(), "days") +
+                                1 <
+                                0 && (
+                                <div>
+                                  <strong>Documento vencido a: </strong>
+                                  {Math.abs(
+                                    moment(
+                                      empresa.arquivos_anexos.find(
+                                        (arquivo) =>
+                                          arquivo.tipo_documento.id === tipo.id
+                                      ).data_validade
+                                    ).diff(moment(), "days") + 1
+                                  )}{" "}
+                                  dias
+                                </div>
+                              )}
+                            </div>
+                          )}
+                          <a
+                            target="blank"
+                            href={
+                              empresa.arquivos_anexos.find(
+                                (arquivo) =>
+                                  arquivo.tipo_documento.id === tipo.id
+                              ).arquivo.arquivo ||
+                              empresa.arquivos_anexos.find(
+                                (arquivo) =>
+                                  arquivo.tipo_documento.id === tipo.id
+                              ).arquivo
+                            }
+                          >
+                            Visualizar arquivo
+                          </a>
+                        </div>
+                      )}
+                  </div>
                   {tipo.uploadEmAndamento && (
                     <span className="font-weight-bold">
                       {`Upload de documento em andamento. `}
