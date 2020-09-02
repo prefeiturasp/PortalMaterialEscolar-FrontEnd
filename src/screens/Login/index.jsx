@@ -138,7 +138,7 @@ export const Login = () => {
                       />
                     </Fragment>
                   )}
-                  <p className="mt-2 text-center">
+                  {/*<p className="mt-2 text-center">
                     <Link
                       className="hyperlink"
                       to="#"
@@ -151,7 +151,7 @@ export const Login = () => {
                     >
                       Esqueci minha senha
                     </Link>
-                  </p>
+                    </p>*/}
                 </form>
               )}
             />
