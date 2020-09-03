@@ -3,7 +3,7 @@ import HTTP_STATUS from "http-status-codes";
 import { Form, Field } from "react-final-form";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
-import { useHistory } from "react-router-dom";
+import { Link, useHistory } from "react-router-dom";
 import { required } from "helpers/validators";
 import InputText from "components/Input/InputText";
 import logoSME from "assets/img/logo-sme.svg";
@@ -138,20 +138,18 @@ export const Login = () => {
                       />
                     </Fragment>
                   )}
-                  {/*<p className="mt-2 text-center">
+                  <p className="mt-2 text-center">
                     <Link
                       className="hyperlink"
                       to="#"
                       data-cy="esqueci-senha"
                       onClick={() =>
-                        this.setState({
-                          componenteAtivo: "esqueci_senha",
-                        })
+                        history.push("/fornecedor/esqueci-minha-senha")
                       }
                     >
                       Esqueci minha senha
                     </Link>
-                    </p>*/}
+                  </p>
                 </form>
               )}
             />

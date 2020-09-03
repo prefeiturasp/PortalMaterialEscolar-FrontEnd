@@ -6,6 +6,8 @@ import { FinalizadoComSucesso } from "screens/AreaLogada/FinalizadoComSucesso";
 import { MapaFornecedores } from "screens/MapaFornecedores";
 import { Login } from "screens/Login";
 import { LojasCredenciadas } from "screens/LojasCredenciadas";
+import { EsqueciMinhaSenha } from "screens/EsqueciMinhaSenha";
+import { RecuperarSenha } from "screens/RecuperarSenha";
 
 export const routes = [
   {
@@ -41,6 +43,16 @@ export const routes = [
   {
     path: "/fornecedor/login",
     component: Login,
+    exact: true,
+  },
+  {
+    path: "/fornecedor/esqueci-minha-senha",
+    component: EsqueciMinhaSenha,
+    exact: true,
+  },
+  {
+    path: "/fornecedor/recuperar-senha",
+    component: RecuperarSenha,
     exact: true,
   },
   {
