@@ -3,7 +3,7 @@ import HTTP_STATUS from "http-status-codes";
 import { Form, Field } from "react-final-form";
 import Botao from "components/Botao";
 import { BUTTON_STYLE, BUTTON_TYPE } from "components/Botao/constants";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import { required } from "helpers/validators";
 import InputText from "components/Input/InputText";
 import logoSME from "assets/img/logo-sme.svg";

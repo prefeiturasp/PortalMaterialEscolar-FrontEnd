@@ -49,13 +49,13 @@ export const PaginaInicialFornecedor = () => {
                 <div className="card avisos">
                   <div className="card-body">
                     <h2>Irregularidades nos anexos</h2>
-                    {empresa.arquivos_anexos.filter(
-                      (arquivo) => arquivo.status === "REPROVADO"
+                    {empresa.arquivos_anexos.filter((arquivo) =>
+                      ["REPROVADO", "VENCIDO"].includes(arquivo.status)
                     ).length === 0 && (
                       <div>Não há irregularidades nos documentos anexos.</div>
                     )}
-                    {empresa.arquivos_anexos.filter(
-                      (arquivo) => arquivo.status === "REPROVADO"
+                    {empresa.arquivos_anexos.filter((arquivo) =>
+                      ["REPROVADO", "VENCIDO"].includes(arquivo.status)
                     ).length > 0 &&
                       empresa.arquivos_anexos
                         .filter((arquivo) =>
