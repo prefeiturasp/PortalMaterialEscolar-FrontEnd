@@ -43,3 +43,22 @@ export const atualizarSenhaLogado = (uuid, payLoad) => {
       return error;
     });
 };
+
+export const recuperaSenha = (email) => {
+  const url = `${API_URL}/usuarios/recuperar-senha/${email}/`;
+  let status = 0;
+  return fetch(url, {
+    method: "GET",
+    headers: { "Content-Type": "application/json" },
+  })
+    .then((res) => {
+      status = res.status;
+      return res.json();
+    })
+    .then((data) => {
+      return { data: data, status: status };
+    })
+    .catch((error) => {
+      return console.log(error);
+    });
+};
