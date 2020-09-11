@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Field } from "react-final-form";
 import { OnChange } from "react-final-form-listeners";
@@ -20,6 +20,11 @@ import { ESTADOS } from "../../constants";
 import Select from "components/Select";
 
 export const DadosEmpresa = ({ empresa, form, values }) => {
+  const [
+    APIForaDoArOuCEPNaoEncontrado,
+    setAPIForaDoArOuCEPNaoEncontrado,
+  ] = useState(false);
+
   return (
     <div>
       <h2>Dados da Empresa</h2>
@@ -63,16 +68,18 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
           />
           <OnChange name="end_cep">
             {async (value, previous) => {
-              if (value.length === 9) {
+              if (value.length === 9 && !empresa) {
                 const response = await getEnderecoPorCEP(value);
                 if (response.status === HTTP_STATUS.OK) {
                   if (response.data.resultado === "0") {
                     toastError("CEP não encontrado");
+                    setAPIForaDoArOuCEPNaoEncontrado(true);
                     form.change("end_logradouro", "");
                     form.change("end_uf", "");
                     form.change("end_cidade", "");
                     form.change("end_bairro", "");
                   } else {
+                    setAPIForaDoArOuCEPNaoEncontrado(false);
                     form.change(
                       "end_logradouro",
                       response.data.tipo_logradouro +
@@ -83,6 +90,8 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
                     form.change("end_cidade", response.data.cidade);
                     form.change("end_bairro", response.data.bairro);
                   }
+                } else {
+                  setAPIForaDoArOuCEPNaoEncontrado(true);
                 }
               }
             }}
@@ -96,7 +105,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             maxlength={100}
             required
             validate={required}
-            disabled={empresa}
+            disabled={empresa || !APIForaDoArOuCEPNaoEncontrado}
           />
         </div>
       </div>
@@ -109,7 +118,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             maxlength={100}
             required
             validate={required}
-            disabled={empresa}
+            disabled={empresa || !APIForaDoArOuCEPNaoEncontrado}
           />
         </div>
         <div className="col-sm-4 col-12">
@@ -117,7 +126,6 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             component={InputText}
             maxlength={20}
             label="Complemento"
-            maxlength={100}
             name="end_complemento"
             validate={somenteAlfanumericos}
             disabled={empresa}
@@ -144,7 +152,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             name="end_cidade"
             required
             validate={required}
-            disabled={empresa}
+            disabled={empresa || !APIForaDoArOuCEPNaoEncontrado}
           />
         </div>
         <div className="col-sm-2 col-12">
@@ -156,7 +164,7 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             required
             validate={required}
             naoDesabilitarPrimeiraOpcao
-            disabled={empresa}
+            disabled={empresa || !APIForaDoArOuCEPNaoEncontrado}
           />
         </div>
       </div>
@@ -201,7 +209,8 @@ export const DadosEmpresa = ({ empresa, form, values }) => {
             name="email"
             maxlength={255}
             type="text"
-            validate={composeValidators(validaEmail)}
+            validate={composeValidators(required, validaEmail)}
+            required
             disabled={empresa}
           />
         </div>

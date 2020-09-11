@@ -18,6 +18,8 @@ export const Select = (props) => {
     options,
     required,
     width,
+    labelClassName,
+    primeiraOpcao,
   } = props;
   return (
     <div className="select">
@@ -27,7 +29,11 @@ export const Select = (props) => {
             *
           </span>
         ),
-        <label key={1} htmlFor={name} className="col-form-label">
+        <label
+          key={1}
+          htmlFor={name}
+          className={`${labelClassName || undefined} col-form-label`}
+        >
           {label}
         </label>,
       ]}
@@ -48,7 +54,7 @@ export const Select = (props) => {
         required={required}
         style={width && { width: width - 12 }}
       >
-        <option value={null}>Selecione</option>
+        <option value={null}>{primeiraOpcao || "Selecione"}</option>
         {options.map((e, key) => {
           return (
             <option

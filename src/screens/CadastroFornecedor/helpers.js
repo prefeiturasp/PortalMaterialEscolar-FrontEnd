@@ -5,6 +5,23 @@ export const formatarPayloadCadastro = (payload) => {
   return payload;
 };
 
+export const validarCadastro = (payload) => {
+  let lojas = [];
+  let erro = false;
+  payload.lojas.forEach((loja) => {
+    if (
+      lojas.find(
+        (loja_) => loja_.cep === loja.cep && loja_.numero === loja.numero
+      ) !== undefined
+    ) {
+      erro = "Não são permitidas duas lojas com mesmo CEP e número";
+    } else {
+      lojas.push(loja);
+    }
+  });
+  return erro;
+};
+
 const addCidadeEstadoSP = (empresa) => {
   empresa.lojas.map((loja) => {
     loja.cidade = "São Paulo";
@@ -22,7 +39,9 @@ const getTabelaPrecosValues = (empresa) => {
   empresa.ofertas_de_materiais.forEach((oferta) => {
     const key = getNameFromLabel(oferta.material.nome);
     empresa[key] = oferta.preco.toString().replace(".", ",");
-    empresa[`${key}_check`] = true;
+  });
+  empresa.kits.forEach((kit) => {
+    empresa[kit.uuid] = true;
   });
   return empresa;
 };

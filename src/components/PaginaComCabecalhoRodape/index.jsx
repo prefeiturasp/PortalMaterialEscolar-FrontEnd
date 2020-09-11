@@ -14,7 +14,7 @@ export const PaginaComCabecalhoRodape = ({ children }) => {
     getAPIVersion().then((response) => {
       setApiVersion(response.data);
     });
-  });
+  }, []);
 
   const handleFonte = () => {
     setAlterarFonte(!alterarFonte);

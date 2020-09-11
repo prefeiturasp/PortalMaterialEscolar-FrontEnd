@@ -1,56 +1,85 @@
 import React, { useState } from "react";
-import "./style.scss";
-import { TIPO_ESCOLA_MATERIAIS } from "./constants";
 import { getTotal, getLabelTotalItens } from "./helpers";
+import { getNameFromLabel } from "../../helpers";
+import { Field } from "react-final-form";
+import { OnChange } from "react-final-form-listeners";
+import "./style.scss";
 
-export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
+export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
   const [ativo, setAtivo] = useState(false);
 
   return (
     <div className={`materiais-por-tipo-escola ${className || undefined}`}>
       <div className="acordiao">
         <div className="row">
-          <div className="col-6">
-            {TIPO_ESCOLA_MATERIAIS[tipoEscola].label}{" "}
+          <div className="col-sm-6 col-12">
+            <Field component="input" type="checkbox" name={kit.uuid} />
+            <OnChange name={kit.uuid}>
+              {async (value, previous) => {
+                setAtivo(value);
+              }}
+            </OnChange>
+            <span className="ml-2">{kit.nome}</span>
           </div>
-          <div className="col-6 valor-total text-right">
-            <span
-              className={`mr-4 ${
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                  (material) => values[material.value]
-                ).length ===
-                  TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length &&
-                "qtd-total"
-              } ${
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                  (material) => values[material.value]
-                ).length !== 0 &&
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                  (material) => values[material.value]
-                ).length < TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length &&
-                "qtd-parcial"
-              }`}
-            >
-              {`${
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                  (material) => values[material.value]
-                ).length
-              }/${
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length
-              } ${getLabelTotalItens(
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.filter(
-                  (material) => values[material.value]
-                ).length,
-                TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.length
-              )}`}
-            </span>
-            Valor total: R${" "}
-            {getTotal(TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais, values)}{" "}
+          {values[kit.uuid] && (
+            <div className="col-sm-6 col-12 valor-total">
+              <span
+                className={`mr-4 ${
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length === kit.materiais_do_kit.length && "qtd-total"
+                } ${
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length !== 0 &&
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length < kit.materiais_do_kit.length &&
+                  "qtd-parcial"
+                }`}
+              >
+                {`${
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length
+                }/${kit.materiais_do_kit.length} ${getLabelTotalItens(
+                  kit.materiais_do_kit.filter(
+                    (materialKit) =>
+                      values[getNameFromLabel(materialKit.material.nome)]
+                  ).length,
+                  kit.materiais_do_kit.length
+                )}`}
+              </span>
+              <div className="get-total">
+                Valor total: R$ {getTotal(kit.materiais_do_kit, values)}{" "}
+                {values[kit.uuid] && (
+                  <i
+                    onClick={() => setAtivo(!ativo)}
+                    className={`fa fa-chevron-${ativo ? "up" : "down"}`}
+                  ></i>
+                )}
+                {parseFloat(
+                  getTotal(kit.materiais_do_kit, values).replace(",", ".")
+                ) > parseFloat(kit.preco_maximo) && (
+                  <div className="text-warning">
+                    Valor máximo do kit: R$ {kit.preco_maximo.replace(".", ",")}
+                  </div>
+                )}
+              </div>
+            </div>
+          )}
+          {!values[kit.uuid] && (
             <i
               onClick={() => setAtivo(!ativo)}
-              className={`fa fa-chevron-${ativo ? "up" : "down"}`}
+              className={`col-sm-6 col-12 text-right fa fa-chevron-${
+                ativo ? "up" : "down"
+              }`}
             ></i>
-          </div>
+          )}
         </div>
       </div>
       {ativo && (
@@ -61,32 +90,44 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
             <hr />
           </div>
           <div className="row">
-            {TIPO_ESCOLA_MATERIAIS[tipoEscola].materiais.map((material) => {
+            {kit.materiais_do_kit.map((materialKit) => {
               return (
-                <div className="col-6">
+                <div className="col-sm-6 col-12">
                   <div
                     className={`row material ${
-                      !values[material.value] ? "disabled" : undefined
+                      !values[kit.uuid] ? "disabled" : undefined
                     }`}
                   >
-                    <div className="col-5">{material.label}</div>
-                    <div className="col-5">
+                    <div className="col-sm-5 col-12">
+                      {materialKit.material.nome}
+                    </div>
+                    <div className="col-sm-5 col-9">
                       <label>
                         R${" "}
-                        <input
-                          value={values[material.value]}
+                        <Field
+                          component="input"
+                          name={getNameFromLabel(materialKit.material.nome)}
                           className="col-7"
-                          disabled
+                          disabled={!values[kit.uuid]}
                         />{" "}
-                        x {material.quantidade.toString().padStart(2, "0")}
+                        x {materialKit.unidades.toString().padStart(2, "0")}
                       </label>
                     </div>
-                    <div className="col-2 font-weight-bold text-right">
+                    <div className="col-sm-2 col-3 font-weight-bold text-right">
                       R${" "}
-                      {values[material.value]
+                      {values[getNameFromLabel(materialKit.material.nome)] &&
+                      !isNaN(
+                        values[
+                          getNameFromLabel(materialKit.material.nome)
+                        ].replace(",", ".")
+                      )
                         ? (
-                            material.quantidade *
-                            parseFloat(values[material.value].replace(",", "."))
+                            materialKit.unidades *
+                            parseFloat(
+                              values[
+                                getNameFromLabel(materialKit.material.nome)
+                              ].replace(",", ".")
+                            )
                           )
                             .toFixed(2)
                             .toString()
@@ -99,7 +140,7 @@ export const MateriaisPorTipoEscola = ({ tipoEscola, values, className }) => {
             })}
           </div>
           <div className="subtitle pt-2">
-            * Itens desabilitados não foram marcados na lista de materiais.
+            * É obrigatório o fornecimento do kit completo.
           </div>
         </div>
       )}

@@ -7,19 +7,35 @@ import imgFachadaLoja from "assets/img/landing-loja-fundo-branco.jpg";
 import imgMateriais from "assets/img/materiais.svg";
 import Botao from "components/Botao";
 import { BUTTON_STYLE } from "components/Botao/constants";
-import { KitMaterialEscolar } from "./KitMaterialEscolar";
-import { getEdital } from "services/homeFornecedor.service";
+import { KitMaterialEscolar } from "../../components/KitMaterialEscolar";
+import {
+  getEdital,
+  getInstrucaoNormativa,
+} from "services/homeFornecedor.service";
 import { API_URL } from "config";
+import { getKits } from "services/kits.service";
 import "./style.scss";
 
 export const PortalFornecedor = () => {
+  const [kits, setKits] = useState(null);
   const [edital, setEdital] = useState(null);
+  const [instrucaoNormativa, setInstrucaoNormativa] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
     getEdital().then((response) => {
       if (response.status === HTTP_STATUS.OK) {
         setEdital(API_URL.replace("api", "") + response.data);
+      }
+    });
+    getKits().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setKits(response.data);
+      }
+    });
+    getInstrucaoNormativa().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setInstrucaoNormativa(API_URL.replace("api", "") + response.data);
       }
     });
   }, []);
@@ -48,8 +64,8 @@ export const PortalFornecedor = () => {
                 />
                 <a href="#conteudo">
                   <Botao
-                    className="col-4"
-                    texto="Saiba Mais"
+                    className="col-sm-4 col-12 fs-16"
+                    texto="Saiba mais"
                     style={BUTTON_STYLE.BLUE}
                   />
                 </a>
@@ -60,7 +76,7 @@ export const PortalFornecedor = () => {
         <div id="conteudo" className="w-100 home">
           <div className="container">
             <div className="row mt-5">
-              <div className="col-lg-6 mb-lg-0 mt-5">
+              <div className="col-lg-6 mb-lg-0">
                 <img
                   src={imgFachadaLoja}
                   alt="Fachada de uma lojinha de roupas"
@@ -76,13 +92,6 @@ export const PortalFornecedor = () => {
                     Para ser credenciado, o comerciante deve:
                   </p>
                   <ul className="lista-home ml-0 pl-0 mb-2">
-                    <li>
-                      <strong className="fonte-17">
-                        Concordar com a taxa máxima de 0,8% a ser cobrada sobre
-                        o valor de cada transação realizada pela operadora do
-                        “meio de pagamento”;
-                      </strong>
-                    </li>
                     <li>
                       <strong className="fonte-17">
                         Estar ciente que o prazo para recebimento do pagamento é
@@ -112,7 +121,9 @@ export const PortalFornecedor = () => {
                       Possuir stand de vendas ou loja física na cidade de São
                       Paulo;
                     </li>
-                    <li>Fornecer os itens pelo valor máximo determinado;</li>
+                    <li>
+                      Fornecer os kits pelos valores máximos determinados;
+                    </li>
                     <li>Emitir Nota Fiscal Eletrônica;</li>
                     <li>
                       Comprometer-se em fornecer os itens com a qualidade
@@ -127,11 +138,11 @@ export const PortalFornecedor = () => {
                   <p>
                     <a
                       className="links-intrucoes"
-                      href={"/"}
+                      href={instrucaoNormativa}
                       target="_blank"
                       rel="noopener noreferrer"
                     >
-                      <strong>instrução normativa</strong>
+                      <strong>[Link Instrução Normativa]</strong>
                     </a>
                   </p>
                   <p>
@@ -166,11 +177,15 @@ export const PortalFornecedor = () => {
                   Quais itens compõem os kits de materiais escolares da rede
                   municipal de ensino?
                 </h2>
-                <KitMaterialEscolar tipoEscola="educacao_infantil" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_alfabetizacao" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_interdisciplinar" />
-                <KitMaterialEscolar tipoEscola="ensino_fundamental_autoral" />
-                <KitMaterialEscolar tipoEscola="ensino_medio_eja_mova" />
+                {kits ? (
+                  kits
+                    .filter((kit) => kit.ativo)
+                    .map((kit) => {
+                      return <KitMaterialEscolar kit={kit} />;
+                    })
+                ) : (
+                  <div>Carregando kits...</div>
+                )}
               </div>
               <div className="col-lg-6 col-sm-12">
                 <img

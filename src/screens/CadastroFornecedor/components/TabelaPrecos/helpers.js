@@ -1,9 +1,11 @@
 export const getNameFromLabel = (label) => {
   return label
-    .normalize("NFD")
-    .replace(/[\u0300-\u036fº.()]/g, "")
-    .replace(/ /g, "_")
-    .toLowerCase();
+    ? label
+        .normalize("NFD")
+        .replace(/[\u0300-\u036fº.()]/g, "")
+        .replace(/ /g, "_")
+        .toLowerCase()
+    : "undefined";
 };
 
 export const formataMateriais = (materiais) => {
@@ -13,66 +15,72 @@ export const formataMateriais = (materiais) => {
   });
 };
 
-export const validarFormulario = (values, materiais) => {
+export const validarFormulario = (values, kits) => {
   let erro = false;
-  for (let [key, _] of Object.entries(values)) {
-    if (
-      key.includes("_check") &&
-      values[key] &&
-      !values[key.replace("_check", "")]
-    ) {
-      erro = `Campo ${
-        materiais.find(
-          (material) => material.name === key.replace("_check", "")
-        ).nome
-      } não possui valor`;
-      return erro;
-    } else if (
-      key.includes("_check") &&
-      values[key.replace("_check", "")] &&
-      parseFloat(values[key.replace("_check", "")].replace(",", ".")) >
-        parseFloat(
-          materiais.find(
-            (material) => material.name === key.replace("_check", "")
-          ).preco_maximo
-        )
-    ) {
-      erro = `Valor máximo do campo ${
-        materiais.find(
-          (material) => material.name === key.replace("_check", "")
-        ).nome
-      }: ${materiais.find(
-        (material) => material.name === key.replace("_check", "")
-      ).preco_maximo.replace(".", ",")}`;
-      return erro;
-    } else if (
-      key.includes("_check") &&
-      values[key.replace("_check", "")] &&
-      parseFloat(values[key.replace("_check", "")].replace(",", ".")) === 0
-    ) {
-      erro = `Valor do campo ${
-        materiais.find(
-          (material) => material.name === key.replace("_check", "")
-        ).nome
-      } não pode ser R$ 0,00`;
-      return erro;
-    }
+  if (kits.filter((kit) => values[kit.uuid]).length === 0) {
+    erro = "É necessário fornecer ao menos um kit";
+    return erro;
   }
+  kits
+    .filter((kit) => values[kit.uuid])
+    .forEach((kit) => {
+      if (
+        kit.materiais_do_kit.filter(
+          (materialDoKit) =>
+            !values[getNameFromLabel(materialDoKit.material.nome)]
+        ).length > 0
+      ) {
+        erro = "É necessário fornecer todos os materiais de um kit";
+        return erro;
+      }
+      let total = 0.0;
+      kit.materiais_do_kit.forEach((materialDoKit) => {
+        total +=
+          parseFloat(
+            values[getNameFromLabel(materialDoKit.material.nome)].replace(
+              ",",
+              "."
+            )
+          ) * materialDoKit.unidades;
+        if (total > parseFloat(kit.preco_maximo)) {
+          erro = `Preço máximo do ${kit.nome}: R$ ${kit.preco_maximo.replace(
+            ".",
+            ","
+          )}`;
+          return erro;
+        }
+      });
+    });
+
   return erro;
 };
 
-export const formataTabelaPrecos = (values, materiais) => {
+export const formataTabelaPrecos = (values, kits) => {
   const ofertas_de_materiais = [];
-  for (let [key, _] of Object.entries(values)) {
-    if (key.includes("_check") && values[key]) {
-      ofertas_de_materiais.push({
-        nome: materiais.find(
-          (material) => material.name === key.replace("_check", "")
-        ).nome,
-        valor: parseFloat(values[key.replace("_check", "")].replace(",", ".")),
+  const kits_ = [];
+  kits
+    .filter((kit) => values[kit.uuid])
+    .forEach((kit) => {
+      kits_.push(kit.uuid);
+      kit.materiais_do_kit.forEach((materialDoKit) => {
+        if (
+          !ofertas_de_materiais.find(
+            (oferta) => oferta.nome === materialDoKit.material.nome
+          )
+        ) {
+          ofertas_de_materiais.push({
+            nome: materialDoKit.material.nome,
+            valor: parseFloat(
+              values[getNameFromLabel(materialDoKit.material.nome)].replace(
+                ",",
+                "."
+              )
+            ),
+          });
+        }
       });
-    }
-  }
+    });
   values.ofertas_de_materiais = ofertas_de_materiais;
+  values.kits = kits_;
   return values;
 };
