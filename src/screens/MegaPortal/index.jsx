@@ -20,8 +20,14 @@ export const MegaPortal = () => {
                   lojas credenciadas, oferecendo mais qualidade e agilidade.
                 </h1>
                 <p>
-                  Em 2020, os kits de materiais escolares continuarão com a mesma
-                  composição, mas, com inovações na forma de fornecimento.
+                  Em 2021, os kits de materiais escolares terão inovações na
+                  forma de fornecimento.
+                </p>
+                <p>
+                  Com o Programa Auxílio Material Escolar para estudantes
+                  matriculados na Rede Pública do Município de São Paulo, as
+                  famílias receberão o auxílio financeiro para adquirir os itens
+                  que compõem o kit nos estabelecimentos credenciados.
                 </p>
               </div>
               <img
@@ -77,9 +83,7 @@ export const MegaPortal = () => {
                 className="img-fluid rounded"
               />
               <div className="pt-5">
-                <h2 className="cor-azul mb-4 fs-29">
-                  Área de Fornecedores
-                </h2>
+                <h2 className="cor-azul mb-4 fs-29">Área de Fornecedores</h2>
                 <div className="justify-content-lg-end justify-content-center">
                   Venha contribuir com o fornecimento dos materiais escolares
                   para as crianças e estudantes da cidade de São Paulo
