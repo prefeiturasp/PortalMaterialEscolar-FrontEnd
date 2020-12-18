@@ -19,7 +19,7 @@ export const Tabs = ({ tab, setTab, uuid }) => {
             tab === "tabela-precos" ? "active" : uuid ? "enabled" : "inactive"
           }`}
         >
-          Tabela de Preço
+          Fornecimento
         </div>
         <div
           onClick={() => uuid && setTab("arquivos")}
