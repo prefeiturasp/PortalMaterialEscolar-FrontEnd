@@ -24,7 +24,7 @@ import "./style.scss";
 
 export const CadastroFornecedor = () => {
   const [empresa, setEmpresa] = useState(null);
-  const [tab, setTab] = useState("tabela-precos");
+  const [tab, setTab] = useState("cadastro");
   const [uuid, setUuid] = useState(null);
   const [erroAPI, setErroAPI] = useState(false);
   const [edital, setEdital] = useState(null);
