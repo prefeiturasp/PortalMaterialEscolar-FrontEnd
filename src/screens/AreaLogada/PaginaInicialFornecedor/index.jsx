@@ -5,8 +5,8 @@ import { getProponente } from "services/cadastro.service";
 import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 import { toastError } from "components/Toast/dialogs";
 import { LoadingCircle } from "components/LoadingCircle";
-import "./style.scss";
 import { getStatus } from "helpers/helpers";
+import "./style.scss";
 
 export const PaginaInicialFornecedor = () => {
   const [empresa, setEmpresa] = useState(null);
