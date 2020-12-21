@@ -173,7 +173,7 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
         <div className="col-12">
           <Field
             component={InputText}
-            maxlength={20}
+            maxlength={255}
             label="Site"
             name={`${loja}.site`}
             disabled={!logado && empresa}
