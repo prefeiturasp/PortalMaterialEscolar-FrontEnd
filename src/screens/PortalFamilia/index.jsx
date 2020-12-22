@@ -199,13 +199,14 @@ export const PortalFamilia = () => {
               <h3 className="mb-4">
                 Ainda com dúvidas? Veja lista com perguntas frequentes
               </h3>
-              <button
-                size="lg"
-                onClick={handleShow}
-                className="btn btn-light pl-4 pr-4"
-              >
-                <strong>Perguntas frequentes</strong>
-              </button>
+              <a href="https://educacao.sme.prefeitura.sp.gov.br/duvidas-frequentes-das-familias-sobre-o-material-escolar/">
+                <button
+                  size="lg"
+                  className="btn btn-light pl-4 pr-4"
+                >
+                  <strong>Perguntas frequentes</strong>
+                </button>
+              </a>
               <Modal show={show} onHide={handleClose}>
                 <Modal.Header closeButton></Modal.Header>
                 <Modal.Body>
