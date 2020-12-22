@@ -106,12 +106,12 @@ export const MenuPrincipal = () => {
                 </a>
               </li>
               <li className="nav-item">
-                <p
-                  className="nav-link text-secondary mb-1 pb-0 c-pointer"
-                  onClick={handleShow}
+                <a
+                  href="https://educacao.sme.prefeitura.sp.gov.br/duvidas-frequentes-das-familias-sobre-o-material-escolar/"
+                  className="nav-link text-secondary mb-1 pb-0"
                 >
                   Dúvidas? Veja a lista com perguntas frequentes
-                </p>
+                </a>
               </li>
             </ul>
           )}
