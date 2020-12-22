@@ -309,6 +309,12 @@ export const MapaFornecedores = (props) => {
                                                 <strong>E-mail: </strong>
                                                 {loja.email}
                                               </div>
+                                              {loja.site && (
+                                                <div className="col-12">
+                                                  <strong>Site: </strong>
+                                                  <a href={loja.site}>{loja.site}</a>
+                                                </div>
+                                              )}
                                             </div>
                                           </div>
                                         </div>

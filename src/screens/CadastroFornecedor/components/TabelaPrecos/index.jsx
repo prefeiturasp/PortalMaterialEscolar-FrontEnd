@@ -15,6 +15,7 @@ import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
 import "./style.scss";
 import { getKits } from "services/kits.service";
 import { LoadingCircle } from "components/LoadingCircle";
+import { getError } from "helpers/helpers";
 
 export const TabelaPrecos = ({
   form,
@@ -50,16 +51,25 @@ export const TabelaPrecos = ({
       );
     }
     if (continuar && !erro) {
-      const response = await setTabelaPrecos(
-        uuid,
-        formataTabelaPrecos(values, kits)
-      );
-      if (response.status === HTTP_STATUS.OK) {
-        setEmpresa(formataEmpresa(response.data));
-        toastSuccess("Tabela de preços atualizada com sucesso");
-        setTab && setTab("arquivos");
-      } else {
-        toastError("Erro ao atualizar tabela de preços");
+      const newValues = formataTabelaPrecos(values, kits);
+      let continuar2 = true;
+      if (newValues.kits.length !== kits.length) {
+        continuar2 = window.confirm(
+          "Você não optou pelo fornecimento de alguns itens em determinadas modalidades. Deseja finalizar seu cadastro mesmo assim?"
+        );
+      }
+      if (continuar2) {
+        const response = await setTabelaPrecos(
+          uuid,
+          formataTabelaPrecos(values, kits)
+        );
+        if (response.status === HTTP_STATUS.OK) {
+          setEmpresa(formataEmpresa(response.data));
+          toastSuccess("Tabela de preços atualizada com sucesso");
+          setTab && setTab("arquivos");
+        } else {
+          toastError(getError(response.data));
+        }
       }
     } else {
       toastWarn(erro);
@@ -79,7 +89,7 @@ export const TabelaPrecos = ({
 
   return (
     <div className={`tabela-precos ${!kits && "opaco"}`}>
-      <h2>Selecione os kits que deseja fornecer:</h2>
+      <h2>Indique o(s) preço(s) no(s) item(ns) que deseja fornecer:</h2>
       {kits ? (
         kits
           .filter((kit) => kit.ativo)

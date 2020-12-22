@@ -92,12 +92,6 @@ export const PortalFornecedor = () => {
                     Para ser credenciado, o comerciante deve:
                   </p>
                   <ul className="lista-home ml-0 pl-0 mb-2">
-                    <li>
-                      <strong className="fonte-17">
-                        Estar ciente que o prazo para recebimento do pagamento é
-                        de até 10 (dez) dias úteis;
-                      </strong>
-                    </li>
                     <li>Ser pessoa jurídica;</li>
                     <li>
                       Possuir toda a documentação válida conforme as condições
@@ -120,9 +114,6 @@ export const PortalFornecedor = () => {
                     <li>
                       Possuir stand de vendas ou loja física na cidade de São
                       Paulo;
-                    </li>
-                    <li>
-                      Fornecer os kits pelos valores máximos determinados;
                     </li>
                     <li>Emitir Nota Fiscal Eletrônica;</li>
                     <li>
