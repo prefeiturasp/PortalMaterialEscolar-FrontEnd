@@ -71,9 +71,9 @@ export const PortalFamilia = () => {
             Encontre a loja credenciada mais próxima de você
           </div>
           <div className="subtitle">
-            Para encontrar as lojas fornecedoras dos uniformes mais próximas a
-            você, basta informar <br /> abaixo seu endereço e quais itens do
-            uniforme você procura.
+            Para encontrar as lojas fornecedoras do material escolar mais
+            próximas a você, basta informar <br /> abaixo seu endereço e quais
+            itens ou kits completos do material escolar você procura.
           </div>
           <Form
             onSubmit={onSubmit}
@@ -200,10 +200,7 @@ export const PortalFamilia = () => {
                 Ainda com dúvidas? Veja lista com perguntas frequentes
               </h3>
               <a href="https://educacao.sme.prefeitura.sp.gov.br/duvidas-frequentes-das-familias-sobre-o-material-escolar/">
-                <button
-                  size="lg"
-                  className="btn btn-light pl-4 pr-4"
-                >
+                <button size="lg" className="btn btn-light pl-4 pr-4">
                   <strong>Perguntas frequentes</strong>
                 </button>
               </a>
