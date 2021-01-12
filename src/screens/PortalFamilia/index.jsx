@@ -1,14 +1,18 @@
 import React, { useEffect, useState } from "react";
 import HTTP_STATUS from "http-status-codes";
 import { Form, Field } from "react-final-form";
+import StatefulMultiSelect from "@khanacademy/react-multi-select";
 import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
 import { required } from "helpers/validators";
 import { KitMaterialEscolar } from "components/KitMaterialEscolar";
 import { AutoComplete } from "components/Input/AutoComplete";
 import imgMateriais from "assets/img/materiais.svg";
+import { getMateriais } from "services/tabelaPrecos.service";
+import { formatarParaMultiselect } from "helpers/helpers";
 import { toastWarn } from "components/Toast/dialogs";
 import { useHistory } from "react-router-dom";
 import Select from "components/Select";
+import { OPCOES_MATERIAIS } from "./constants";
 import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import { getKits } from "services/kits.service";
@@ -18,6 +22,8 @@ import "./style.scss";
 
 export const PortalFamilia = () => {
   const [kits, setKits] = useState(null);
+  const [materiais, setMateriais] = useState([]);
+  const [materiaisSelecionados, setMateriaisSelecionados] = useState([]);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [endereco, setEndereco] = useState(null);
@@ -33,6 +39,11 @@ export const PortalFamilia = () => {
         setKits(response.data);
       }
     });
+    getMateriais().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setMateriais(formatarParaMultiselect(response.data));
+      }
+    });
   }, []);
 
   const consultarEndereco = (values) => {
@@ -46,6 +57,7 @@ export const PortalFamilia = () => {
         state: {
           latitude: latitude,
           longitude: longitude,
+          materiaisSelecionados: materiaisSelecionados,
           kit: values.kit,
           endereco: endereco.split(",")[0],
         },
@@ -81,7 +93,7 @@ export const PortalFamilia = () => {
               <form>
                 <div className="container">
                   <div className="row pt-5">
-                    <div className="field-endereco col-sm-4 offset-sm-2 col-12">
+                    <div className="field-endereco col-sm-12 col-md-4">
                       <Field
                         component={AutoComplete}
                         label="Escreva o logradouro e número que você quer consultar *"
@@ -92,7 +104,44 @@ export const PortalFamilia = () => {
                         handleChange={handleAddressChange}
                       />
                     </div>
-                    {kits ? (
+                    <div className="col-md-4 col-12">
+                      <Field
+                        component={Select}
+                        labelClassName="multiselect"
+                        name="tipo_busca"
+                        label="Busque kit completo ou itens avulsos*"
+                        options={OPCOES_MATERIAIS}
+                        validate={required}
+                        naoDesabilitarPrimeiraOpcao
+                      />
+                    </div>
+                    {values.tipo_busca === "itens" && (
+                      <div className="field-uniforme col-sm-12 col-md-4">
+                        <label
+                          htmlFor={"tipo_uniforme"}
+                          className={`multiselect`}
+                        >
+                          Selecione materiais escolares
+                        </label>
+                        <Field
+                          component={StatefulMultiSelect}
+                          name="material_escolar"
+                          selected={materiaisSelecionados}
+                          options={materiais}
+                          onSelectedChanged={(values) =>
+                            setMateriaisSelecionados(values)
+                          }
+                          disableSearch={true}
+                          overrideStrings={{
+                            selectSomeItems: "Selecione",
+                            allItemsAreSelected:
+                              "Todos os itens estão selecionados",
+                            selectAll: "Todos",
+                          }}
+                        />
+                      </div>
+                    )}
+                    {values.tipo_busca == "kits" && kits && (
                       <div className="col-sm-4 col-12">
                         <Field
                           component={Select}
@@ -102,10 +151,12 @@ export const PortalFamilia = () => {
                           options={kits.filter((kit) => kit.ativo)}
                           validate={required}
                           naoDesabilitarPrimeiraOpcao
+                          disabled={
+                            !values.tipo_busca ||
+                            values.tipo_busca === "Selecione"
+                          }
                         />
                       </div>
-                    ) : (
-                      <LoadingCircle />
                     )}
                   </div>
                   <div className="btn-consultar text-center">
@@ -176,7 +227,7 @@ export const PortalFamilia = () => {
             Problemas na compra do material escolar?
           </h2>
           <div className="justify-content-lg-end justify-content-center">
-            Em caso de problemas como possíveis falhas na confecção das peças,
+            Em caso de problemas como possíveis falhas nos produtos,
             entre em contato com a loja onde produto foi adquirido. Para
             situações sem solução direta com o lojista, informe à Prefeitura nos
             Canais de Atendimento do SP 156 ou recorra a qualquer órgão de
