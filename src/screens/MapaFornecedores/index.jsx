@@ -70,7 +70,7 @@ export const MapaFornecedores = (props) => {
 
   const onSelectChanged = (form, value) => {
     if (value !== "menor_preco_item") setLojas(sortByParam(lojas, value));
-    if (["distancia", "nome_fantasia", "total_materiais"].includes(value))
+    if (["distancia", "nome_fantasia"].includes(value))
       form.change("ordenar_por_item", null);
   };
 
@@ -275,8 +275,7 @@ export const MapaFornecedores = (props) => {
                                         <div className="col-10">
                                           {loja.nome_fantasia.toUpperCase()}
                                           <div className="clique-mensagem">
-                                            Clique no + para dados de contato e
-                                            preço
+                                            Clique no + para dados de contato
                                           </div>
                                         </div>
                                       </div>
@@ -321,12 +320,9 @@ export const MapaFornecedores = (props) => {
                                         <table className="tabela-precos">
                                           <thead>
                                             <tr className="row">
-                                              <th className="col-6">Item</th>
-                                              <th className="col-2">
+                                              <th className="col-7">Item</th>
+                                              <th className="col-5">
                                                 Unidades
-                                              </th>
-                                              <th className="col-4">
-                                                Valor unidade (R$)
                                               </th>
                                             </tr>
                                           </thead>
@@ -341,33 +337,19 @@ export const MapaFornecedores = (props) => {
                                               .map((materialEscolar, key) => {
                                                 return (
                                                   <tr className="row" key={key}>
-                                                    <td className="col-6">
+                                                    <td className="col-7">
                                                       {materialEscolar.item}
                                                     </td>
-                                                    <td className="col-2">
+                                                    <td className="col-5">
                                                       {encontrarUnidades(
                                                         kit,
                                                         kits,
                                                         materialEscolar
                                                       )}
                                                     </td>
-                                                    <td className="col-4">
-                                                      {materialEscolar.preco.replace(
-                                                        ".",
-                                                        ","
-                                                      )}
-                                                    </td>
                                                   </tr>
                                                 );
                                               })}
-                                            <tr className="row valor-total">
-                                              <td className="col-8">
-                                                Valor do Kit (R$)
-                                              </td>
-                                              <td className="col-4">
-                                                {loja.total_materiais}
-                                              </td>
-                                            </tr>
                                           </tbody>
                                         </table>
                                       </Fragment>
