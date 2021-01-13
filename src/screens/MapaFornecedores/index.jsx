@@ -18,6 +18,8 @@ import { ORDENAR_OPCOES_KIT } from "./constants";
 import { QUANTIDADE_POR_PAGINA } from "components/Paginacao/constants";
 import { Paginacao } from "components/Paginacao";
 import Mapa from "components/Mapa";
+import { getMateriais } from "services/tabelaPrecos.service";
+import { formatarParaMultiselect, formatarParaSelect } from "helpers/helpers";
 import { toastWarn } from "components/Toast/dialogs";
 import { OnChange } from "react-final-form-listeners";
 import { getKits } from "services/kits.service";
@@ -25,12 +27,15 @@ import "./style.scss";
 
 export const MapaFornecedores = (props) => {
   const [lojas, setLojas] = useState(null);
+  const [materiais, setMateriais] = useState(null);
   const [consultarNovamente, setConsultarNovamente] = useState(false);
   const [endereco, setEndereco] = useState(null);
   const [latitude, setLatitude] = useState(null);
   const [longitude, setLongitude] = useState(null);
   const [pagina, setPagina] = useState(1);
   const [lojaHover, setLojaHover] = useState(null);
+  const [materiaisState, setMateriaisState] = useState([]);
+  const [tipoBusca, setTipoBusca] = useState(null);
   const [kit, setKit] = useState(null);
   const [kits, setKits] = useState(null);
 
@@ -38,25 +43,35 @@ export const MapaFornecedores = (props) => {
 
   useEffect(() => {
     if (props.location && props.location.state) {
-      const { latitude, longitude, endereco, kit } = props.location.state;
+      const { latitude, longitude, endereco, materiaisSelecionados, kit, tipoBusca } = props.location.state;
       getKits().then((response) => {
         if (response.status === HTTP_STATUS.OK) {
           setKits(response.data);
           getLojasCredenciadas(latitude, longitude, {
+            tipo_busca: tipoBusca,
             kit: kit,
+            materiais: materiaisSelecionados,
           }).then((response2) => {
             setLatitude(latitude);
             setLongitude(longitude);
             setEndereco(endereco);
+            setMateriaisState(materiaisSelecionados);
+            setTipoBusca(tipoBusca);
             setKit(kit);
             setLojas(
-              acrescentaTotalMateriais(
-                sortByParam(response2.data, "distancia"),
-                response.data,
-                kit
-              )
+              // acrescentaTotalMateriais(
+              sortByParam(response2.data, "distancia"),
+                // materiaisSelecionados,
+              response.data,
+                // kit
+              // )
             );
           });
+        }
+      });
+      getMateriais().then((response) => {
+        if (response.status === HTTP_STATUS.OK) {
+          setMateriais(formatarParaMultiselect(response.data));
         }
       });
     }
@@ -70,7 +85,7 @@ export const MapaFornecedores = (props) => {
 
   const onSelectChanged = (form, value) => {
     if (value !== "menor_preco_item") setLojas(sortByParam(lojas, value));
-    if (["distancia", "nome_fantasia"].includes(value))
+    if (["distancia", "nome_fantasia", "total_materiais"].includes(value))
       form.change("ordenar_por_item", null);
   };
 
@@ -80,11 +95,14 @@ export const MapaFornecedores = (props) => {
     } else {
       form.change("endereco", "");
       setKit(values.kit);
+      setTipoBusca(values.tipo_busca);
       setConsultarNovamente(false);
       setLojas(null);
       setPagina(1);
       getLojasCredenciadas(latitude, longitude, {
         kit: values.kit,
+        tipo_busca: tipoBusca,
+        materiais: materiaisState,
       }).then((response) => {
         setLojas(
           acrescentaTotalMateriais(
@@ -222,8 +240,11 @@ export const MapaFornecedores = (props) => {
                         {lojas && lojas.length} lojas{" "}
                       </span>
                       credenciadas que vendem o{" "}
-                      {kits &&
-                        `${kits.find((kit_) => kit_.uuid === kit).nome} `}
+                      {tipoBusca === "kits" &&
+                        kits &&
+                        `do ${kits.find((kit_) => kit_.uuid === kit).nome} `}
+                      {tipoBusca === "itens" &&
+                        ` de material escolar (${materiaisState.join(", ")}) `}
                       mais próximas da{" "}
                       <span className="font-weight-bold">{endereco}</span>.
                       <div className="row pt-3">
@@ -280,16 +301,18 @@ export const MapaFornecedores = (props) => {
                                         </div>
                                       </div>
                                     </div>
-                                    <div className="badges col-sm-5 col-12 my-auto">
-                                      <span
-                                        className={`badge-fornecimento completo`}
-                                      >
-                                        {`${
-                                          kits.find((kit_) => kit_.uuid === kit)
-                                            .nome
-                                        }`}
-                                      </span>
-                                    </div>
+                                    {tipoBusca === "kits" && 
+                                      <div className="badges col-sm-5 col-12 my-auto">
+                                        <span
+                                          className={`badge-fornecimento completo`}
+                                        >
+                                          {`${
+                                            kits.find((kit_) => kit_.uuid === kit)
+                                              .nome
+                                          }`}
+                                        </span>
+                                      </div>
+                                    }
                                     {loja.ativo && (
                                       <Fragment>
                                         <div className="row">
@@ -321,25 +344,34 @@ export const MapaFornecedores = (props) => {
                                           <thead>
                                             <tr className="row">
                                               <th className="col-7">Item</th>
+                                              {tipoBusca === "kits" && 
                                               <th className="col-5">
                                                 Unidades
                                               </th>
+                                              }
                                             </tr>
                                           </thead>
                                           <tbody>
                                             {loja.proponente.ofertas_de_materiais
                                               .filter((materialEscolar) =>
-                                                getArrayMateriais(
-                                                  kits,
-                                                  kit
-                                                ).includes(materialEscolar.item)
-                                              )
+                                                materiaisState.length > 0
+                                                ? materiaisState.includes(
+                                                    materialEscolar.item
+                                                  )
+                                                : getArrayMateriais(
+                                                    kits,
+                                                    kit
+                                                  ).includes(
+                                                    materialEscolar.item
+                                                  )
+                                            )
                                               .map((materialEscolar, key) => {
                                                 return (
                                                   <tr className="row" key={key}>
                                                     <td className="col-7">
                                                       {materialEscolar.item}
                                                     </td>
+                                                    {tipoBusca === "kits" &&
                                                     <td className="col-5">
                                                       {encontrarUnidades(
                                                         kit,
@@ -347,6 +379,7 @@ export const MapaFornecedores = (props) => {
                                                         materialEscolar
                                                       )}
                                                     </td>
+                                                    }
                                                   </tr>
                                                 );
                                               })}

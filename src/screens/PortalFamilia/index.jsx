@@ -49,8 +49,14 @@ export const PortalFamilia = () => {
   const consultarEndereco = (values) => {
     if (!latitude || !longitude) {
       toastWarn("Selecione um dos resultados de endereço para buscar");
-    } else if (!values.kit) {
+    } else if (values.tipo_busca === 'kits' &&
+      values.kit.length === 0) {
       toastWarn("Selecione um kit");
+    } else if (
+      values.tipo_busca === "itens" &&
+      materiaisSelecionados.length === 0
+    ) {
+      toastWarn("Selecione ao menos um material escolar");
     } else {
       history.push({
         pathname: "/mapa-de-fornecedores",
@@ -58,6 +64,7 @@ export const PortalFamilia = () => {
           latitude: latitude,
           longitude: longitude,
           materiaisSelecionados: materiaisSelecionados,
+          tipoBusca: values.tipo_busca,
           kit: values.kit,
           endereco: endereco.split(",")[0],
         },
