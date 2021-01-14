@@ -6,10 +6,10 @@ import { PaginaComCabecalhoRodape } from "components/PaginaComCabecalhoRodape";
 import { LoadingCircle } from "components/LoadingCircle";
 import { AutoComplete } from "components/Input/AutoComplete";
 import { required } from "helpers/validators";
+import StatefulMultiSelect from "@khanacademy/react-multi-select";
 import { getLojasCredenciadas } from "services/mapaFornecedores.service";
 import {
   sortByParam,
-  acrescentaTotalMateriais,
   getArrayMateriais,
   encontrarUnidades,
 } from "./helpers";
@@ -20,6 +20,7 @@ import { Paginacao } from "components/Paginacao";
 import Mapa from "components/Mapa";
 import { getMateriais } from "services/tabelaPrecos.service";
 import { formatarParaMultiselect, formatarParaSelect } from "helpers/helpers";
+import { OPCOES_MATERIAIS } from "../PortalFamilia/constants";
 import { toastWarn } from "components/Toast/dialogs";
 import { OnChange } from "react-final-form-listeners";
 import { getKits } from "services/kits.service";
@@ -59,12 +60,8 @@ export const MapaFornecedores = (props) => {
             setTipoBusca(tipoBusca);
             setKit(kit);
             setLojas(
-              // acrescentaTotalMateriais(
               sortByParam(response2.data, "distancia"),
-                // materiaisSelecionados,
-              response.data,
-                // kit
-              // )
+              response.data
             );
           });
         }
@@ -90,8 +87,13 @@ export const MapaFornecedores = (props) => {
   };
 
   const getLojasNovoEndereco = (form, values) => {
-    if (!values.kit) {
+    if (values.tipo_busca === 'kits' && values.kit === 'Selecione'){
       toastWarn("Selecione um kit");
+    } else if (
+      values.tipo_busca === "itens" &&
+      materiaisState.length === 0
+    ) {
+      toastWarn("Selecione ao menos um material escolar");
     } else {
       form.change("endereco", "");
       setKit(values.kit);
@@ -105,11 +107,7 @@ export const MapaFornecedores = (props) => {
         materiais: materiaisState,
       }).then((response) => {
         setLojas(
-          acrescentaTotalMateriais(
-            sortByParam(response.data, "distancia"),
-            kits,
-            values.kit
-          )
+          sortByParam(response.data, "distancia")
         );
       });
     }
@@ -209,7 +207,42 @@ export const MapaFornecedores = (props) => {
                             />
                           </div>
                         </div>
-                        {kits && (
+                        <Field
+                          component={Select}
+                          labelClassName="multiselect"
+                          name="tipo_busca"
+                          label="Busque kit completo ou itens avulsos*"
+                          options={OPCOES_MATERIAIS}
+                          validate={required}
+                          naoDesabilitarPrimeiraOpcao
+                        />
+                        {values.tipo_busca === "itens" && (
+                          <div className="field-uniforme">
+                            <label
+                              htmlFor={"material_escolar"}
+                              className={`multiselect`}
+                            >
+                              Selecione itens do material escolar*
+                            </label>
+                            <Field
+                              component={StatefulMultiSelect}
+                              name="material_escolar"
+                              selected={materiaisState}
+                              options={materiais}
+                              onSelectedChanged={(values) =>
+                                setMateriaisState(values)
+                              }
+                              overrideStrings={{
+                                selectSomeItems: "Selecione",
+                                allItemsAreSelected:
+                                  "Todos os itens estão selecionados",
+                                selectAll: "Todos",
+                              }}
+                              disableSearch={true}
+                            />
+                          </div>
+                        )}
+                        {values.tipo_busca === "kits" && kits && (
                           <Field
                             component={Select}
                             labelClassName="multiselect"
@@ -218,6 +251,10 @@ export const MapaFornecedores = (props) => {
                             options={kits.filter((kit) => kit.ativo)}
                             validate={required}
                             naoDesabilitarPrimeiraOpcao
+                            disabled={
+                              !values.tipo_busca ||
+                              values.tipo_busca === "Selecione"
+                            }
                           />
                         )}
                         <div className="btn-consultar text-center pt-3">
@@ -226,6 +263,10 @@ export const MapaFornecedores = (props) => {
                             className="btn btn-light pl-4 pr-4"
                             type="button"
                             onClick={() => getLojasNovoEndereco(form, values)}
+                            disabled={
+                              !values.tipo_busca ||
+                              values.tipo_busca === "Selecione"
+                            }
                           >
                             <strong>Consultar</strong>
                           </button>
@@ -368,7 +409,7 @@ export const MapaFornecedores = (props) => {
                                               .map((materialEscolar, key) => {
                                                 return (
                                                   <tr className="row" key={key}>
-                                                    <td className="col-7">
+                                                    <td className={tipoBusca === "kits"?"col-7":"col-12"}>
                                                       {materialEscolar.item}
                                                     </td>
                                                     {tipoBusca === "kits" &&
