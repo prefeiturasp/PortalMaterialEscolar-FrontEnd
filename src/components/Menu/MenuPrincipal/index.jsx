@@ -65,7 +65,7 @@ export const MenuPrincipal = () => {
               <li className="nav-item">
                 <Link
                   className="nav-link text-secondary mb-1 pb-0"
-                  to="/fornecedor"
+                  to="/"
                 >
                   Home
                 </Link>

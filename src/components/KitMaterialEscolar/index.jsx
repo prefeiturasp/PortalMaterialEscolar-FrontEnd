@@ -20,6 +20,7 @@ export const KitMaterialEscolar = ({ kit }) => {
       {ativo && (
         <div className="parte-expandida">
           <div className="title">
+            Valor do auxílio: R${kit.preco_maximo.toString().replace(".", ",")} <br/>
             Itens previstos no kit:
             <hr />
           </div>
