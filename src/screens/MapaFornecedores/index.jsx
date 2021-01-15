@@ -11,7 +11,6 @@ import { getLojasCredenciadas } from "services/mapaFornecedores.service";
 import {
   sortByParam,
   getArrayMateriais,
-  encontrarUnidades,
 } from "./helpers";
 import Select from "components/Select";
 import { ORDENAR_OPCOES_KIT } from "./constants";
@@ -95,6 +94,9 @@ export const MapaFornecedores = (props) => {
     ) {
       toastWarn("Selecione ao menos um material escolar");
     } else {
+      if (values.tipo_busca === 'kits'){
+        setMateriaisState([])
+      }
       form.change("endereco", "");
       setKit(values.kit);
       setTipoBusca(values.tipo_busca);
