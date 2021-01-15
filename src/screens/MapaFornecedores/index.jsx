@@ -283,9 +283,9 @@ export const MapaFornecedores = (props) => {
                       credenciadas que vendem o{" "}
                       {tipoBusca === "kits" &&
                         kits &&
-                        `do ${kits.find((kit_) => kit_.uuid === kit).nome} `}
+                        `${kits.find((kit_) => kit_.uuid === kit).nome} `}
                       {tipoBusca === "itens" &&
-                        ` de material escolar (${materiaisState.join(", ")}) `}
+                        `material escolar (${materiaisState.join(", ")}) `}
                       mais próximas da{" "}
                       <span className="font-weight-bold">{endereco}</span>.
                       <div className="row pt-3">
@@ -385,11 +385,6 @@ export const MapaFornecedores = (props) => {
                                           <thead>
                                             <tr className="row">
                                               <th className="col-7">Item</th>
-                                              {tipoBusca === "kits" && 
-                                              <th className="col-5">
-                                                Unidades
-                                              </th>
-                                              }
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -409,18 +404,9 @@ export const MapaFornecedores = (props) => {
                                               .map((materialEscolar, key) => {
                                                 return (
                                                   <tr className="row" key={key}>
-                                                    <td className={tipoBusca === "kits"?"col-7":"col-12"}>
+                                                    <td className="col-12">
                                                       {materialEscolar.item}
                                                     </td>
-                                                    {tipoBusca === "kits" &&
-                                                    <td className="col-5">
-                                                      {encontrarUnidades(
-                                                        kit,
-                                                        kits,
-                                                        materialEscolar
-                                                      )}
-                                                    </td>
-                                                    }
                                                   </tr>
                                                 );
                                               })}
