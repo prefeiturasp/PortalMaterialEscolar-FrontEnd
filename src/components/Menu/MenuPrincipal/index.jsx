@@ -118,7 +118,7 @@ export const MenuPrincipal = () => {
                   href={process.env.REACT_APP_ATUALIZACAO_CADASTRAL_URL}
                   className="nav-link text-secondary mb-1 pb-0"
                 >
-                  Atualização do cadastro de responsável
+                  Atualize seu cadastro
                 </a>
               </li>
             </ul>
