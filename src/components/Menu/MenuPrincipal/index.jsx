@@ -121,6 +121,14 @@ export const MenuPrincipal = () => {
                   Atualização do cadastro de responsável
                 </a>
               </li>
+              <li className="nav-item">
+                <a
+                  href={process.env.REACT_APP_API_URL}
+                  className="nav-link text-secondary mb-1 pb-0"
+                >
+                  teste
+                </a>
+              </li>
             </ul>
           )}
         </div>
