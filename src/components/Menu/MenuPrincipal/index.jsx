@@ -113,6 +113,14 @@ export const MenuPrincipal = () => {
                   Dúvidas? Veja a lista com perguntas frequentes
                 </a>
               </li>
+              <li className="nav-item">
+                <a
+                  href={process.env.REACT_APP_ATUALIZACAO_CADASTRAL_URL}
+                  className="nav-link text-secondary mb-1 pb-0"
+                >
+                  Atualize seu cadastro
+                </a>
+              </li>
             </ul>
           )}
         </div>
