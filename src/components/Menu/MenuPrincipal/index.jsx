@@ -2,7 +2,7 @@ import React, { useState } from "react";
 import logoEducacaoSP from "assets/img/educacao_sp.png";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
-import { API_URL } from "config";
+import { ATUALIZACAO_CADASTRAL_URL } from "config";
 import "./style.scss";
 
 export const MenuPrincipal = () => {
@@ -116,26 +116,10 @@ export const MenuPrincipal = () => {
               </li>
               <li className="nav-item">
                 <a
-                  href={process.env.API_URL}
+                  href={ATUALIZACAO_CADASTRAL_URL}
                   className="nav-link text-secondary mb-1 pb-0"
                 >
                   Atualize seu cadastro
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href={process.env.REACT_APP_API_URL}
-                  className="nav-link text-secondary mb-1 pb-0"
-                >
-                  teste
-                </a>
-              </li>
-              <li className="nav-item">
-                <a
-                  href={API_URL}
-                  className="nav-link text-secondary mb-1 pb-0"
-                >
-                  teste2
                 </a>
               </li>
             </ul>
