@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import logoEducacaoSP from "assets/img/educacao_sp.png";
 import { Link } from "react-router-dom";
 import { Modal, Button } from "react-bootstrap";
+import { ATUALIZACAO_CADASTRAL_URL } from "config";
 import "./style.scss";
 
 export const MenuPrincipal = () => {
@@ -111,6 +112,14 @@ export const MenuPrincipal = () => {
                   className="nav-link text-secondary mb-1 pb-0"
                 >
                   Dúvidas? Veja a lista com perguntas frequentes
+                </a>
+              </li>
+              <li className="nav-item">
+                <a
+                  href={ATUALIZACAO_CADASTRAL_URL}
+                  className="nav-link text-secondary mb-1 pb-0"
+                >
+                  Atualize seu cadastro
                 </a>
               </li>
             </ul>
