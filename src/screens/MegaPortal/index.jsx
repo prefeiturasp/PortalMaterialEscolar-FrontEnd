@@ -13,22 +13,18 @@ export const MegaPortal = () => {
         <div className="w-100 material-escolar position-relative">
           <div className="container">
             <div className="conteudo">
-              <div className="div-banner col-lg-8 col-sm-12 col-xl-6">
-                <h1>
-                  Para atendermos as preferências dos estudantes e famílias,
-                  agora os kits de materiais escolares estarão disponíveis em
-                  lojas credenciadas, oferecendo mais qualidade e agilidade.
-                </h1>
+              <div className="div-banner col-lg-8 col-sm-12 col-xl-5">
+                <h3>
+                Agora os responsáveis pelos estudantes já podem acessar o crédito diretamente no 
+                aplicativo e realizar a compra do material escolar.
+                </h3>
                 <p>
-                  Em 2021, os kits de materiais escolares terão inovações na
-                  forma de fornecimento.
+                  Basta seguir os passos: <br/>
                 </p>
-                <p>
-                  Com o Programa Auxílio Material Escolar para estudantes
-                  matriculados na Rede Pública do Município de São Paulo, as
-                  famílias receberão o auxílio financeiro para adquirir os itens
-                  que compõem o kit nos estabelecimentos credenciados.
-                </p>
+                <ol>
+                  <li>Os dados do(a) responsável devem estar completos no cadastro do(a) estudante. Se não estiverem, é possível fazer a <a href="https://atualizacaocadastral.sme.prefeitura.sp.gov.br" target="blank">atualização cadastral online</a> ou diretamente na secretaria da escola. </li>
+                  <li>Aguarde o e-mail da empresa BluPay com as informações e senha para instalar o aplicativo e realizar a compra do material escolar nas lojas credenciadas.</li>
+                </ol>
               </div>
               <img
                 src={imgDesenhoCriancas}
