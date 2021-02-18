@@ -11,7 +11,7 @@
   }
   .material-escolar {
     @media screen and (min-width: 992px) {
-      background: url("../../assets/img/desenho-alunos.svg"), #c4c4c4;
+      background: url("../../assets/img/desenho-alunos-esmaecido.png"), #c4c4c4;
       background-position: right;
       background-repeat: no-repeat;
       background-color: #daeeff;
@@ -44,11 +44,16 @@
       margin: 0 auto;
       z-index: 1;
       position: absolute;
-      top: 50%;
+      top: 45%;
       transform: translateY(-50%);
       h1 {
         font-size: 36px;
         font-weight: bold;
+      }
+      li {
+        font-size: 15px;
+        line-height: 26px;
+        font-style: normal;
       }
       p {
         font-size: 20px;
