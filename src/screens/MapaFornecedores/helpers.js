@@ -9,6 +9,10 @@ export const getArrayMateriais = (kits, kit) => {
 };
 
 export const acrescentaTotalMateriais = (lojas, kits, kit) => {
+  if (kit === undefined) {
+    return lojas
+  }
+  
   let total = 0.0;
   let lojas_ = [];
   lojas.forEach((loja) => {
