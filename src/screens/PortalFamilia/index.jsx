@@ -18,6 +18,10 @@ import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import { getKits } from "services/kits.service";
 import { LoadingCircle } from "components/LoadingCircle";
 import { Modal, Button } from "react-bootstrap";
+import {
+  getEspecificacoes,
+} from "services/homeFamilia.service";
+import { API_URL } from "config";
 import "./style.scss";
 
 export const PortalFamilia = () => {
@@ -28,6 +32,7 @@ export const PortalFamilia = () => {
   const [longitude, setLongitude] = useState(null);
   const [endereco, setEndereco] = useState(null);
   const [show, setShow] = useState(false);
+  const [especificacoesItens, setEspecificacoesItens] = useState(null);
 
   const handleClose = () => setShow(false);
   const handleShow = () => setShow(true);
@@ -42,6 +47,11 @@ export const PortalFamilia = () => {
     getMateriais().then((response) => {
       if (response.status === HTTP_STATUS.OK) {
         setMateriais(formatarParaMultiselect(response.data));
+      }
+    });
+    getEspecificacoes().then((response) => {
+      if (response.status === HTTP_STATUS.OK) {
+        setEspecificacoesItens(API_URL.replace("api", "") + response.data);
       }
     });
   }, []);
@@ -218,6 +228,17 @@ export const PortalFamilia = () => {
                 ) : (
                   <div>Carregando kits...</div>
                 )}
+                <div className="mt-4">
+                  <span className="especificacoes"><strong>ESPECIFICAÇÕES DOS ITENS </strong></span>
+                  <a
+                      className="especificacoes"
+                      href={especificacoesItens}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                    >
+                      <strong>(acesse aqui)</strong>
+                    </a>
+                </div>
               </div>
               <div className="col-lg-6 col-sm-12">
                 <img
