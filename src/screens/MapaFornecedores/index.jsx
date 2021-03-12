@@ -9,6 +9,8 @@ import { required } from "helpers/validators";
 import StatefulMultiSelect from "@khanacademy/react-multi-select";
 import { getLojasCredenciadas } from "services/mapaFornecedores.service";
 import {
+  acrescentaTotalMateriais,
+  encontrarUnidades,
   sortByParam,
   getArrayMateriais,
 } from "./helpers";
@@ -59,8 +61,11 @@ export const MapaFornecedores = (props) => {
             setTipoBusca(tipoBusca);
             setKit(kit);
             setLojas(
-              sortByParam(response2.data, "distancia"),
-              response.data
+              acrescentaTotalMateriais(
+                sortByParam(response2.data, "distancia"),
+                response.data,
+                kit
+              )
             );
           });
         }
@@ -294,7 +299,7 @@ export const MapaFornecedores = (props) => {
                         <div className="col-sm-5 col-12">
                           <Field
                             component={Select}
-                            options={ORDENAR_OPCOES_KIT}
+                            options={tipoBusca === "kits" ? ORDENAR_OPCOES_KIT : ORDENAR_OPCOES_KIT.filter(o => o.uuid !== 'total_materiais')}
                             name="ordenar_por"
                             naoDesabilitarPrimeiraOpcao
                             primeiraOpcao="Ordenar por"
@@ -339,7 +344,8 @@ export const MapaFornecedores = (props) => {
                                         <div className="col-10">
                                           {loja.nome_fantasia.toUpperCase()}
                                           <div className="clique-mensagem">
-                                            Clique no + para dados de contato
+                                            Clique no + para dados de contato e 
+                                            preço
                                           </div>
                                         </div>
                                       </div>
@@ -386,7 +392,15 @@ export const MapaFornecedores = (props) => {
                                         <table className="tabela-precos">
                                           <thead>
                                             <tr className="row">
-                                              <th className="col-7">Item</th>
+                                              <th className="col-6">Item</th>
+                                              {tipoBusca === "kits" && 
+                                                <th className="col-2">
+                                                  Unidades
+                                                </th>
+                                              }
+                                              <th className={tipoBusca === "kits"? "col-4": "col-6"}>
+                                                Valor unidade (R$)
+                                              </th>
                                             </tr>
                                           </thead>
                                           <tbody>
@@ -406,12 +420,35 @@ export const MapaFornecedores = (props) => {
                                               .map((materialEscolar, key) => {
                                                 return (
                                                   <tr className="row" key={key}>
-                                                    <td className="col-12">
+                                                    <td className="col-6">
                                                       {materialEscolar.item}
+                                                    </td>
+                                                    {tipoBusca === "kits" &&
+                                                      <td className="col-2">
+                                                        {encontrarUnidades(
+                                                          kit,
+                                                          kits,
+                                                          materialEscolar
+                                                        )}
+                                                      </td>
+                                                    }
+                                                    <td className={tipoBusca === "kits"? "col-4": "col-6"}>
+                                                      {materialEscolar.preco.replace(
+                                                        ".",
+                                                        ","
+                                                      )}
                                                     </td>
                                                   </tr>
                                                 );
                                               })}
+                                            {tipoBusca === "kits" && <tr className="row valor-total">
+                                              <td className="col-6">
+                                                Valor do Kit (R$)
+                                              </td>
+                                              <td className="col-6">
+                                                {loja.total_materiais}
+                                              </td>
+                                            </tr>}
                                           </tbody>
                                         </table>
                                       </Fragment>
