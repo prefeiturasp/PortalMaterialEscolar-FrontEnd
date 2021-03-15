@@ -89,7 +89,7 @@ export const TabelaPrecos = ({
 
   return (
     <div className={`tabela-precos ${!kits && "opaco"}`}>
-      <h2>Indique o(s) preço(s) no(s) item(ns) que deseja fornecer:</h2>
+      <h2>Selecione o(s) kit(s) que deseja fornecer</h2>
       {kits ? (
         kits
           .filter((kit) => kit.ativo)
