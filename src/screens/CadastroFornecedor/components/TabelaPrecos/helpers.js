@@ -17,20 +17,35 @@ export const formataMateriais = (materiais) => {
 
 export const validarFormulario = (values, kits) => {
   let erro = false;
+  if (kits.filter((kit) => values[kit.uuid]).length === 0) {
+    erro = "É necessário fornecer ao menos um kit";
+    return erro;
+  }
+
   kits
-    .filter((kit) => kit.ativo)
+    .filter((kit) => values[kit.uuid])
     .forEach((kit) => {
+      if (
+        kit.materiais_do_kit.filter(
+          (materialDoKit) =>
+            !values[getNameFromLabel(materialDoKit.material.nome)]
+        ).length > 0
+      ) {
+        erro = "É necessário fornecer todos os materiais de um kit";
+        return erro;
+      }
+
       let total = 0.0;
       kit.materiais_do_kit.forEach((materialDoKit) => {
-        if (values[getNameFromLabel(materialDoKit.material.nome)]) {
-          total +=
-            parseFloat(
-              values[getNameFromLabel(materialDoKit.material.nome)].replace(
-                ",",
-                "."
-              )
-            ) * materialDoKit.unidades;
-        }
+        total +=
+          parseFloat(
+            values[getNameFromLabel(materialDoKit.material.nome)].replace(
+              ",",
+              "."
+            )
+          ) * materialDoKit.unidades;
+
+
         if (total > parseFloat(kit.preco_maximo)) {
           erro = `Preço máximo do ${kit.nome}: R$ ${kit.preco_maximo.replace(
             ".",
@@ -47,21 +62,15 @@ export const validarFormulario = (values, kits) => {
 export const formataTabelaPrecos = (values, kits) => {
   const ofertas_de_materiais = [];
   const kits_ = [];
-  kits.forEach((kit) => {
-    if (
-      kit.materiais_do_kit.filter(
-        (materialDoKit) =>
-          !values[getNameFromLabel(materialDoKit.material.nome)]
-      ).length === 0
-    ) {
-      kits_.push(kit.uuid);
-    }
+  kits
+  .filter((kit) => values[kit.uuid])
+  .forEach((kit) => {
+    kits_.push(kit.uuid);
     kit.materiais_do_kit.forEach((materialDoKit) => {
       if (
         !ofertas_de_materiais.find(
           (oferta) => oferta.nome === materialDoKit.material.nome
-        ) &&
-        values[getNameFromLabel(materialDoKit.material.nome)]
+        )
       ) {
         ofertas_de_materiais.push({
           nome: materialDoKit.material.nome,
