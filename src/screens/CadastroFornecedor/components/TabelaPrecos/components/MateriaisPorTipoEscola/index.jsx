@@ -2,19 +2,26 @@ import React, { useState } from "react";
 import { getTotal, getLabelTotalItens } from "./helpers";
 import { getNameFromLabel } from "../../helpers";
 import { Field } from "react-final-form";
+import { OnChange } from "react-final-form-listeners";
 import "./style.scss";
 
 export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
-  const [ativo, setAtivo] = useState(true);
+  const [ativo, setAtivo] = useState(false);
 
   return (
     <div className={`materiais-por-tipo-escola ${className || undefined}`}>
       <div className="acordiao">
         <div className="row">
           <div className="col-sm-6 col-12">
+            <Field component="input" type="checkbox" name={kit.uuid} />
+            <OnChange name={kit.uuid}>
+              {async (value, previous) => {
+                setAtivo(value);
+              }}
+            </OnChange>
             <span className="ml-2">{kit.nome}</span>
           </div>
-          {
+          {values[kit.uuid] && (
             <div className="col-sm-6 col-12 valor-total">
               <span
                 className={`mr-4 ${
@@ -49,12 +56,12 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
               </span>
               <div className="get-total">
                 Valor total: R$ {getTotal(kit.materiais_do_kit, values)}{" "}
-                {
+                {values[kit.uuid] && (
                   <i
                     onClick={() => setAtivo(!ativo)}
                     className={`fa fa-chevron-${ativo ? "up" : "down"}`}
                   ></i>
-                }
+                )}
                 {parseFloat(
                   getTotal(kit.materiais_do_kit, values).replace(",", ".")
                 ) > parseFloat(kit.preco_maximo) && (
@@ -64,7 +71,15 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                 )}
               </div>
             </div>
-          }
+          )}
+          {!values[kit.uuid] && (
+            <i
+              onClick={() => setAtivo(!ativo)}
+              className={`col-sm-6 col-12 text-right fa fa-chevron-${
+                ativo ? "up" : "down"
+              }`}
+            ></i>
+          )}
         </div>
       </div>
       {ativo && (
@@ -78,7 +93,10 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
             {kit.materiais_do_kit.map((materialKit) => {
               return (
                 <div className="col-sm-6 col-12">
-                  <div className={`row material`}>
+                    <div className={`row material ${
+                      !values[kit.uuid] ? "disabled" : undefined
+                    }`}
+                    >
                     <div className="col-sm-5 col-12">
                       {materialKit.material.nome}
                     </div>
@@ -89,6 +107,7 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                           component="input"
                           name={getNameFromLabel(materialKit.material.nome)}
                           className="col-7"
+                          disabled={!values[kit.uuid]}
                         />{" "}
                         x {materialKit.unidades.toString().padStart(2, "0")}
                       </label>
@@ -118,6 +137,9 @@ export const MateriaisPorTipoEscola = ({ kit, values, className }) => {
                 </div>
               );
             })}
+          </div>
+          <div className="subtitle pt-2">
+            * É obrigatório o fornecimento do kit completo.
           </div>
         </div>
       )}
