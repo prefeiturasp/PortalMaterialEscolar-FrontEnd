@@ -250,6 +250,31 @@ export const PortalFamilia = () => {
             </div>
           </div>
         </div>
+        <div className="container">
+          <div className="row mt-4">
+          <div className="col-lg-6">
+            <div className="embed-responsive embed-responsive-16by9">
+                <iframe
+                  title="Vídeo sobre o Portal do Material Escolar"
+                  src="https://www.youtube.com/embed/K8uOAEAKR68"
+                  frameBorder="0"
+                  allow="accelerometer; autoplay; encrypted-media; gyroscope; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+            </div>
+          </div>
+          <div className="col-lg-6 mb-lg-0">
+          <h2 className="cor-azul mb-4">Ajude a Prefeitura a garantir a qualidade do material escolar</h2>
+            <div className="justify-content-lg-end justify-content-center">
+              As lojas credenciadas para a venda do material escolar 
+              precisam atender as especificações técnicas estabelecidas
+              pela Secretaria Municipal de Educação. Assista o vídeo ao 
+              lado e saiba o que observar no momento da compra, para adquirir
+              itens de qualidade.
+            </div>
+          </div>
+          </div>
+        </div>
         <div className="container mt-3">
           <h2 className="cor-azul mb-4">
             Problemas na compra do material escolar?
