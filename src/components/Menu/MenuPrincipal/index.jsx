@@ -14,7 +14,9 @@ export const MenuPrincipal = () => {
   return (
     <div className="container">
       <div className="row mt-4 mb-4">
-        <div className="col-lg-3 col-sm-12 d-flex justify-content-lg-start justify-content-center align-items-end mb-4 mb-lg-0">
+        <div className={`${["/familia", "/mapa-de-fornecedores"].includes(
+            window.location.pathname
+          ) ? "col-lg-2": "col-lg-3"} col-sm-12 d-flex justify-content-lg-start justify-content-center align-items-end mb-4 mb-lg-0`}>
           <h1 className="m-0">
             <a href="https://educacao.sme.prefeitura.sp.gov.br/">
               <img
@@ -27,7 +29,9 @@ export const MenuPrincipal = () => {
         </div>
         <div
           id="menu-principal"
-          className="col-lg-9 col-sm-12 links-menu d-flex flex-wrap  align-items-end justify-content-lg-end justify-content-start pr-lg-0 mb-xs-4"
+          className={`${["/familia", "/mapa-de-fornecedores"].includes(
+            window.location.pathname
+          ) ? "col-lg-10": "col-lg-9"} col-sm-12 links-menu d-flex flex-wrap  align-items-end justify-content-lg-end justify-content-start pr-lg-0 mb-xs-4`}
         >
           {window.location.pathname === "/" && (
             <ul className="nav nav-tabs border-0">
@@ -93,7 +97,7 @@ export const MenuPrincipal = () => {
             window.location.pathname
           ) && (
             <ul className="nav nav-tabs border-0">
-              <li className="nav-item">
+              <li className="nav-item mr-0">
                 <Link className="nav-link text-secondary mb-1 pb-0" to="/">
                   Home
                 </Link>
@@ -122,6 +126,14 @@ export const MenuPrincipal = () => {
                   Atualize seu cadastro
                 </a>
               </li>
+              <li className="nav-item">
+                  <a
+                    className="nav-link text-secondary mb-1 pb-0"
+                    href="https://forms.office.com/r/5mHMRCTvna"
+                  >
+                    Avalie sua compra
+                  </a>
+                </li>
             </ul>
           )}
         </div>
