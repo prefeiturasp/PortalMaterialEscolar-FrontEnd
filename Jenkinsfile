@@ -31,12 +31,7 @@ pipeline {
             }
         }
 
-        stage('Build') {
-          steps {
-                sh 'npm run-script build'
-                
-            }
-        }
+        
 
         stage('AnaliseCodigo') {
 	      when { branch 'homolog' }
