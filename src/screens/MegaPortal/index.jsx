@@ -22,7 +22,7 @@ export const MegaPortal = () => {
                   Basta seguir os passos: <br/>
                 </p>
                 <ol>
-                  <li>Os dados do(a) responsável devem estar completos no cadastro do(a) estudante. Se não estiverem, é possível fazer a <a href="https://atualizacaocadastral.sme.prefeitura.sp.gov.br" target="blank">atualização cadastral online</a> ou diretamente na secretaria da escola. </li>
+                  <li>Os dados do(a) responsável estejam completos no cadastro do(a) estudante. Para isso, é possível consultar a situação cadastral na página <a href="https://consulteseucadastro.sme.prefeitura.sp.gov.br" target="blank">consulteseucadastro.sme.prefeitura.sp.gov.br</a> e em caso de ajustes, o(a) responsável deverá solicitar a atualização para a DRE ou escola, conforme o caso.</li>
                   <li>Aguarde o e-mail da BluPay com as informações e senha para instalar o aplicativo e realizar a compra do material escolar nas lojas credenciadas.</li>
                 </ol>
               </div>
