@@ -4,6 +4,7 @@ import { PaginaComCabecalhoRodape } from "../../components/PaginaComCabecalhoRod
 import imgDesenhoCriancas from "assets/img/desenho-alunos-mobile.svg";
 import imgFamilia from "assets/img/landing-familia.png";
 import imgLoja from "assets/img/landing-loja.jpg";
+import { CONSULTA_CADASTRO_URL } from "config";
 import "./style.scss";
 
 export const MegaPortal = () => {
@@ -22,7 +23,7 @@ export const MegaPortal = () => {
                   Basta seguir os passos: <br/>
                 </p>
                 <ol>
-                  <li>Os dados do(a) responsável devem estar completos no cadastro do(a) estudante. Se não estiverem, é possível fazer a <a href="https://atualizacaocadastral.sme.prefeitura.sp.gov.br" target="blank">atualização cadastral online</a> ou diretamente na secretaria da escola. </li>
+                  <li>Os dados do(a) responsável estejam completos no cadastro do(a) estudante. Para isso, é possível consultar a situação cadastral na página <a href={CONSULTA_CADASTRO_URL} target="blank">consulteseucadastro.sme.prefeitura.sp.gov.br</a> e em caso de ajustes, o(a) responsável deverá solicitar a atualização para a DRE ou escola, conforme o caso.</li>
                   <li>Aguarde o e-mail da BluPay com as informações e senha para instalar o aplicativo e realizar a compra do material escolar nas lojas credenciadas.</li>
                 </ol>
               </div>
@@ -64,11 +65,19 @@ export const MegaPortal = () => {
                 <Link to="/familia">
                   <button
                     size="lg"
-                    className="btn btn-primary col-12 pl-4 pr-4"
+                    className="btn btn-primary col-12 pl-4 pr-4 mb-2"
                   >
                     <strong>Estudantes/famílias</strong>
                   </button>
                 </Link>
+                <a href={CONSULTA_CADASTRO_URL} target="blank">
+                  <button
+                    size="lg"
+                    className="btn btn-primary col-12 pl-4 pr-4"
+                  >
+                    <strong>Consulta de Cadastro</strong>
+                  </button>
+                </a>
               </div>
             </div>
             <div className="area-fabricantes col-12 offset-sm-2 col-sm-5">
