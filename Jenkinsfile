@@ -29,9 +29,7 @@ pipeline {
                 checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/checkstyle-jshint.xml', unHealthy: ''
                 
             }
-        }
-
-        
+        }        
 
         stage('AnaliseCodigo') {
 	      when { branch 'homolog' }
@@ -42,24 +40,18 @@ pipeline {
                 -Dsonar.sources=.'
             }
           }
-        }
-
-        
+        }        
 
         stage('Build') {
           when { anyOf { branch 'master'; branch 'main'; branch "story/*"; branch 'develop'; branch 'release'; branch 'homolog';  } } 
           steps {
             script {
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/materialescolar-frontend"
-              //imagename2 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-outra"
               dockerImage1 = docker.build(imagename1, "-f Dockerfile .")
-              //dockerImage2 = docker.build(imagename2, "-f Dockerfile_outro .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
-              //dockerImage2.push()
               }
               sh "docker rmi $imagename1"
-              //sh "docker rmi $imagename2"
             }
           }
         }
@@ -70,21 +62,16 @@ pipeline {
                 script{
                     if ( env.branchname == 'main' ||  env.branchname == 'master' || env.branchname == 'homolog' || env.branchname == 'release' ) {
                         sendTelegram("🤩 [Deploy ${env.branchname}] Job Name: ${JOB_NAME} \nBuild: ${BUILD_DISPLAY_NAME} \nMe aprove! \nLog: \n${env.BUILD_URL}")
-                        timeout(time: 24, unit: "HOURS") {
-                            input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: 'ollyver_ottoboni, kelwy_oliveira, anderson_morais'
-                        }
-                        withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
-                            sh('cp $config '+"$home"+'/.kube/config')
-                            sh 'kubectl rollout restart deployment/materialescolar-frontend -n sme-materialescolar'
-                            sh('rm -f '+"$home"+'/.kube/config')
+                        withCredentials([string(credentialsId: 'aprovadores-materialescolar', variable: 'aprovadores')]) {
+                            timeout(time: 24, unit: "HOURS") {
+                                input message: 'Deseja realizar o deploy?', ok: 'SIM', submitter: "${aprovadores}"
+                            }
                         }
                     }
-                    else{
-                        withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
-                            sh('cp $config '+"$home"+'/.kube/config')
-                            sh 'kubectl rollout restart deployment/materialescolar-frontend -n sme-materialescolar'
-                            sh('rm -f '+"$home"+'/.kube/config')
-                        }
+                      withCredentials([file(credentialsId: "${kubeconfig}", variable: 'config')]){
+                          sh('cp $config '+"$home"+'/.kube/config')
+                          sh 'kubectl rollout restart deployment/materialescolar-frontend -n sme-materialescolar'
+                          sh('rm -f '+"$home"+'/.kube/config')
                     }
                 }
             }           
