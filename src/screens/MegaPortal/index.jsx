@@ -4,6 +4,7 @@ import { PaginaComCabecalhoRodape } from "../../components/PaginaComCabecalhoRod
 import imgDesenhoCriancas from "assets/img/desenho-alunos-mobile.svg";
 import imgFamilia from "assets/img/landing-familia.png";
 import imgLoja from "assets/img/landing-loja.jpg";
+import { BannerConsultaCadastro } from 'components/BannerConsultaCadastro'
 import { CONSULTA_CADASTRO_URL } from "config";
 import "./style.scss";
 
@@ -11,6 +12,7 @@ export const MegaPortal = () => {
   return (
     <div className="mega-portal">
       <PaginaComCabecalhoRodape>
+        <BannerConsultaCadastro />
         <div className="w-100 material-escolar position-relative">
           <div className="container">
             <div className="conteudo">
