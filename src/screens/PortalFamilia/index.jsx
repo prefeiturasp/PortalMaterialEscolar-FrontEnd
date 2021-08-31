@@ -17,6 +17,7 @@ import Botao from "components/Botao";
 import { BUTTON_TYPE, BUTTON_STYLE } from "components/Botao/constants";
 import { getKits } from "services/kits.service";
 import { LoadingCircle } from "components/LoadingCircle";
+import { BannerConsultaCadastro } from 'components/BannerConsultaCadastro'
 import { Modal, Button } from "react-bootstrap";
 import {
   getEspecificacoes,
@@ -95,6 +96,7 @@ export const PortalFamilia = () => {
   return (
     <div>
       <PaginaComCabecalhoRodape>
+        <BannerConsultaCadastro />
         <div className="busca-mapa">
           <div className="title">
             Encontre a loja credenciada mais próxima de você
