@@ -82,6 +82,10 @@ div.btn-consultar {
   font-size: 16px !important;
 }
 
+li {
+  list-style-type: none;
+}
+
 .home-familia {
   @media screen and (max-width: 371px) {
     margin-top: 15em;
