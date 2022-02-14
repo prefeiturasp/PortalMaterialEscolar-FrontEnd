@@ -281,7 +281,7 @@ export const PortalFamilia = () => {
           </h2>
           <div className="justify-content-lg-end justify-content-center">
             <p>
-              Em caso de problemas como possíveis falhas na confecção das peças, 
+              Em caso de problemas como possíveis falhas nos itens, 
               entre em contato com a loja onde produto foi adquirido. Para situações 
               sem solução direta com o lojista, informe à Prefeitura nos Canais de 
               Atendimento do SP 156 ou recorra a qualquer órgão de defesa do consumidor.
