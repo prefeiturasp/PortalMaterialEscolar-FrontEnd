@@ -56,7 +56,7 @@ export const PortalFornecedor = () => {
                   critérios necessários para o credenciamento e faça a diferença
                   na educação de nossos estudantes.
                   <br />
-                  Além disso, você poderá comercializar os uniformes sem
+                  Além disso, você poderá comercializar os materiais sem
                   pagar nenhuma taxa para a empresa que gerencia as
                   transações financeiras!
                 </p>
