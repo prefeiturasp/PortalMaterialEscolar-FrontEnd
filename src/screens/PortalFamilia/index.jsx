@@ -291,7 +291,7 @@ export const PortalFamilia = () => {
               compra nas lojas credenciadas, entre em contato com a empresa Personal 
               Net responsável pelo Kit Escolar DuePay, aplicativo do meio de pagamento.
             </p>
-            <li>Central de Atendimento: 0880 003 8400</li>
+            <li>Central de Atendimento: 0800 003 8400</li>
             <li>Horário: de segunda à sexta das 7h30 às 19h</li>
             <li>E-mail: relacionamento@personalcard.com.br</li>
           </div>
