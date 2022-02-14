@@ -26,7 +26,7 @@ export const MegaPortal = () => {
                 <ol>
                   <li>O CPF do(a) responsável esteja registrado no cadastro do(a) estudante. É possível consultar a situação cadastral na página <a href="https://consulteseucadastro.sme.prefeitura.sp.gov.br">consulteseucadastro.sme.prefeitura.sp.gov.br</a> e em caso de ajustes, o(a) responsável deverá solicitar a atualização para escola, conforme o caso.</li>
                   <li>
-                    Instalar o aplicativo da <b>Kit Escolar DuePay</b> no celular ou tablet e criar a conta com mesmo CPF de responsável que consta no cadastro do(a) estudante.  <br/>
+                    Instalar o aplicativo <b>Kit Escolar DUEPAY</b> no celular ou tablet e criar a conta com mesmo CPF de responsável que consta no cadastro do(a) estudante.  <br/>
                     Após a liberação do crédito, o(a) responsável já pode realizar a compra do material escolar nas lojas credenciadas <a href="/familia">(consulte aqui as lojas mais próximas do endereço desejado)</a>. 
                   </li>
                 </ol>
