@@ -198,16 +198,14 @@ export const PortalFamilia = () => {
             <div className="row mt-5">
               <div className="col-12">
                 <h2 className="cor-azul mb-4">
-                  Como funciona o novo modelo de fornecimento de material
-                  escolar?
+                  Como funciona o fornecimento do material escolar?
                 </h2>
                 <div className="justify-content-lg-end justify-content-center">
-                  A Prefeitura disponibiliza o crédito para que as famílias
-                  realizem a compra diretamente nas lojas credenciadas. Isso
-                  torna a aquisição do material escolar mais rápida, atendendo
-                  critérios de qualidade e as preferências dos estudantes e
-                  famílias, respeitando a lista de itens necessários para cada
-                  etapa.
+                  A Prefeitura disponibiliza o crédito para que as famílias realizem 
+                  a compra diretamente nas lojas credenciadas. Isso torna a aquisição 
+                  do material escolar mais rápida, atendendo critérios de qualidade 
+                  e as preferências dos estudantes e famílias, conforme sugestão de 
+                  itens necessários para cada etapa.
                 </div>
               </div>
             </div>
@@ -282,11 +280,20 @@ export const PortalFamilia = () => {
             Problemas na compra do material escolar?
           </h2>
           <div className="justify-content-lg-end justify-content-center">
-            Em caso de problemas como possíveis falhas nos produtos,
-            entre em contato com a loja onde produto foi adquirido. Para
-            situações sem solução direta com o lojista, informe à Prefeitura nos
-            Canais de Atendimento do SP 156 ou recorra a qualquer órgão de
-            defesa do consumidor.
+            <p>
+              Em caso de problemas como possíveis falhas nos itens, 
+              entre em contato com a loja onde produto foi adquirido. Para situações 
+              sem solução direta com o lojista, informe à Prefeitura nos Canais de 
+              Atendimento do SP 156 ou recorra a qualquer órgão de defesa do consumidor.
+            </p>
+            <p>
+              Se tiver dificuldades para baixar ou usar o aplicativo para realizar a 
+              compra nas lojas credenciadas, entre em contato com a empresa Personal 
+              Net responsável pelo Kit Escolar DuePay, aplicativo do meio de pagamento.
+            </p>
+            <li>Central de Atendimento: 0800 003 8400</li>
+            <li>Horário: de segunda à sexta das 7h30 às 19h</li>
+            <li>E-mail: relacionamento@personalcard.com.br</li>
           </div>
           <div className="text-center pt-3 pb-3">
             <a href="https://sp156.prefeitura.sp.gov.br/portal/servicos/informacao?t=666&a=710&servico=3798">

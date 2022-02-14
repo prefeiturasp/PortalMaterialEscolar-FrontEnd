@@ -26,8 +26,7 @@ pipeline {
                 sh 'npm install'
                 sh 'npm install -g jshint'
                 sh 'jshint --verbose --reporter=checkstyle src > checkstyle-jshint.xml || exit 0'
-               // checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/checkstyle-jshint.xml', unHealthy: ''
-                
+                //checkstyle canComputeNew: false, defaultEncoding: '', healthy: '', pattern: '**/checkstyle-jshint.xml', unHealthy: ''
             }
         }        
 
@@ -47,15 +46,11 @@ pipeline {
           steps {
             script {
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/materialescolar-frontend"
-              //imagename2 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/sme-outra"
               dockerImage1 = docker.build(imagename1, "-f Dockerfile .")
-              //dockerImage2 = docker.build(imagename2, "-f Dockerfile_outro .")
               docker.withRegistry( 'https://registry.sme.prefeitura.sp.gov.br', registryCredential ) {
               dockerImage1.push()
-              //dockerImage2.push()
               }
               sh "docker rmi $imagename1"
-              //sh "docker rmi $imagename2"
             }
           }
         }

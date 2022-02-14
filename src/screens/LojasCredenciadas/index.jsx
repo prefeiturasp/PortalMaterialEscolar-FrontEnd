@@ -28,6 +28,18 @@ export const LojasCredenciadas = () => {
       });
   }, []);
 
+  const formataEndereco = (loja) => {
+    return (
+      [
+        loja.endereco,
+        loja.complemento,
+        loja.numero,
+        loja.bairro,
+        loja.cep
+      ].filter(Boolean).join(', ')
+    )
+  }
+
   return (
     <PaginaComCabecalhoRodape>
       <div className="lojas-credenciadas">
@@ -83,6 +95,10 @@ export const LojasCredenciadas = () => {
                           <div>
                             <span className="font-weight-bold">Telefone: </span>
                             {loja.telefone}
+                          </div>
+                          <div>
+                            <span className="font-weight-bold">Endereço completo: </span>
+                            {formataEndereco(loja)}
                           </div>
                         </div>
                         {loja.foto_fachada && (

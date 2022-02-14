@@ -17,16 +17,18 @@ export const MegaPortal = () => {
           <div className="container">
             <div className="conteudo">
               <div className="div-banner col-lg-8 col-sm-12 col-xl-5">
-                <h3>
-                Agora os responsáveis pelos estudantes já podem acessar o crédito diretamente no 
-                aplicativo e realizar a compra do material escolar.
-                </h3>
+                <h4>
+                  Agora os responsáveis pelos estudantes da Rede Municipal de São Paulo recebem o crédito para comprar o material escolar diretamente nas lojas credenciadas
+                </h4>
                 <p>
-                  Basta seguir os passos: <br/>
+                  Para isso, basta que: <br/>
                 </p>
                 <ol>
-                  <li>Os dados do(a) responsável estejam completos no cadastro do(a) estudante. Para isso, é possível consultar a situação cadastral na página <a href={CONSULTA_CADASTRO_URL} target="blank">consulteseucadastro.sme.prefeitura.sp.gov.br</a> e em caso de ajustes, o(a) responsável deverá solicitar a atualização para a DRE ou escola, conforme o caso.</li>
-                  <li>Aguarde o e-mail da BluPay com as informações e senha para instalar o aplicativo e realizar a compra do material escolar nas lojas credenciadas.</li>
+                  <li>O CPF do(a) responsável esteja registrado no cadastro do(a) estudante. É possível consultar a situação cadastral na página <a href="https://consulteseucadastro.sme.prefeitura.sp.gov.br">consulteseucadastro.sme.prefeitura.sp.gov.br</a> e em caso de ajustes, o(a) responsável deverá solicitar a atualização para escola, conforme o caso.</li>
+                  <li>
+                    Instalar o aplicativo <b>Kit Escolar DUEPAY</b> no celular ou tablet e criar a conta com mesmo CPF de responsável que consta no cadastro do(a) estudante.  <br/>
+                    Após a liberação do crédito, o(a) responsável já pode realizar a compra do material escolar nas lojas credenciadas <a href="/familia">(consulte aqui as lojas mais próximas do endereço desejado)</a>. 
+                  </li>
                 </ol>
               </div>
               <img

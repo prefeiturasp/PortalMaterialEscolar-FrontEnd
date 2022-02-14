@@ -55,6 +55,10 @@ export const PortalFornecedor = () => {
                   Leia o regulamento, veja se sua loja está de acordo com os
                   critérios necessários para o credenciamento e faça a diferença
                   na educação de nossos estudantes.
+                  <br />
+                  Além disso, você poderá comercializar os materiais sem
+                  pagar nenhuma taxa para a empresa que gerencia as
+                  transações financeiras!
                 </p>
                 <img
                   src={imgDesenhoFornecedor}
@@ -92,7 +96,7 @@ export const PortalFornecedor = () => {
                     Para ser credenciado, o comerciante deve:
                   </p>
                   <ul className="lista-home ml-0 pl-0 mb-2">
-                    <li>Ser pessoa jurídica;</li>
+                    <li>Ser pessoa jurídica com objeto social compatível ao fornecimento;</li>
                     <li>
                       Possuir toda a documentação válida conforme as condições
                       do
@@ -115,7 +119,10 @@ export const PortalFornecedor = () => {
                       Possuir stand de vendas ou loja física na cidade de São
                       Paulo;
                     </li>
-                    <li>Emitir Nota Fiscal Eletrônica;</li>
+                    <li>
+                      Emitir Nota Fiscal Eletrônica ou Cupom Fiscal Eletrônico
+                      no CPF do(a) responsável legal pelo(a) aluno(a);
+                    </li>
                     <li>
                       Comprometer-se em fornecer os itens com a qualidade
                       exigida nas especificações técnicas;
