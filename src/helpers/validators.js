@@ -7,6 +7,9 @@ export const composeValidators = (...validators) => (value) =>
 export const required = (value) =>
   value !== undefined ? undefined : "Campo obrigatório";
 
+export const requiredImagem = (value) =>
+  value && value.length > 0 ? undefined : "Campo obrigatório";
+
 export const semCaracteresEspeciais = (value) =>
   value && !/^[\w&.-]+$/i.test(value)
     ? `Não permite caracteres especiais`
