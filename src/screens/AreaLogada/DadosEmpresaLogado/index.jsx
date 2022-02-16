@@ -5,7 +5,7 @@ import arrayMutators from "final-form-arrays";
 import { Cadastro } from "../../CadastroFornecedor/components/Cadastro";
 import PaginaHeaderSidebar from "components/PaginaHeaderSidebar";
 import { getProponente, atualizaLojas } from "services/cadastro.service";
-import { formataEmpresa } from "screens/CadastroFornecedor/helpers";
+import { formataEmpresa, formatarPayloadCadastro } from "screens/CadastroFornecedor/helpers";
 import { toastError, toastSuccess } from "components/Toast/dialogs";
 import "./style.scss";
 import { LoadingCircle } from "components/LoadingCircle";
@@ -14,6 +14,7 @@ export const DadosEmpresaLogado = () => {
   const [empresa, setEmpresa] = useState(null);
 
   const onSubmit = (values) => {
+    values = formatarPayloadCadastro(values);
     let continuar = true;
     if (empresa.status === "CREDENCIADO") {
       continuar = window.confirm(

@@ -2,6 +2,14 @@ import { getNameFromLabel } from "./components/TabelaPrecos/helpers";
 
 export const formatarPayloadCadastro = (payload) => {
   payload.ofertas_de_materiais = [];
+  payload.lojas = payload.lojas.map((loja) => {
+    if (loja.comprovante_end && loja.comprovante_end.length) {
+      loja.comprovante_end = loja.comprovante_end[0].arquivo;
+    } else {
+      delete loja.comprovante_end;
+    }
+    return loja;
+  });
   return payload;
 };
 
