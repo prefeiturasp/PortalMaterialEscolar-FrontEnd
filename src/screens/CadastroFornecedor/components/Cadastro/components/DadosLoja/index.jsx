@@ -175,18 +175,20 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
           />
         </div>
         <div className="col-12">
-          <div class="link-comprovante">
-            <label class="form-label">Comprovante de endereço do ponto de venda</label>
-            <div>
-              <a 
-                class="btn btn-comprovante btn-primary" 
-                target="blank" 
-                href={`${empresa.lojas[index].comprovante_end}`}
-              >
-                Visualizar comprovante
-              </a>
+          {logado && empresa && (
+            <div class="link-comprovante">
+              <label class="form-label">Comprovante de endereço do ponto de venda</label>
+              <div>
+                <a 
+                  class="btn btn-comprovante btn-primary" 
+                  target="blank" 
+                  href={`${empresa.lojas[index].comprovante_end}`}
+                >
+                  Visualizar comprovante
+                </a>
+              </div>
             </div>
-          </div>
+          )}
           <Field
             component={FileUpload}
             name={`${loja}.comprovante_end`}
