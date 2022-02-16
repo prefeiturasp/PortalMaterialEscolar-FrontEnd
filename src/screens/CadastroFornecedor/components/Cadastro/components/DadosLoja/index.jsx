@@ -22,6 +22,7 @@ import { OnChange } from "react-final-form-listeners";
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 import formatString from "format-string-by-pattern";
+import "./style.scss";
 
 export const Loja = ({ loja, fields, index, empresa, logado }) => {
   const [apiCEPfora, setApiCEPfora] = useState(false);
@@ -174,9 +175,18 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
           />
         </div>
         <div className="col-12">
-          {logado && empresa && (
-            <a target="blank" href={`${empresa.lojas[index].comprovante_end}`}>Visualizar Arquivo</a>
-          )}
+          <div class="link-comprovante">
+            <label class="form-label">Comprovante de endereço do ponto de venda</label>
+            <div>
+              <a 
+                class="btn btn-comprovante btn-primary" 
+                target="blank" 
+                href={`${empresa.lojas[index].comprovante_end}`}
+              >
+                Visualizar comprovante
+              </a>
+            </div>
+          </div>
           <Field
             component={FileUpload}
             name={`${loja}.comprovante_end`}
