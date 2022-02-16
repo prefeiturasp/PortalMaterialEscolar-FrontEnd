@@ -8,21 +8,25 @@ import {
   BUTTON_TYPE,
 } from "components/Botao/constants";
 import { Field } from "react-final-form";
+import { FileUpload } from "components/Input/FileUpload";
 import {
   composeValidators,
   required,
   validaCEP,
   validaRangeCEP,
   validaTelefoneOuCelular,
+  requiredImagem
 } from "helpers/validators";
 import formatStringByPattern from "format-string-by-pattern";
 import { OnChange } from "react-final-form-listeners";
 import { toastError } from "components/Toast/dialogs";
 import { getEnderecoPorCEP } from "services/cep.service";
 import formatString from "format-string-by-pattern";
+import "./style.scss";
 
 export const Loja = ({ loja, fields, index, empresa, logado }) => {
   const [apiCEPfora, setApiCEPfora] = useState(false);
+  const [comprovanteUpado, setComprovanteUpado] = useState(false);
 
   return (
     <div key={loja}>
@@ -169,6 +173,46 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
             validate={composeValidators(required, validaTelefoneOuCelular)}
             disabled={!logado && empresa}
           />
+        </div>
+        <div className="col-12">
+          {logado && empresa && (
+            <div class="link-comprovante">
+              <label class="form-label">Comprovante de endereço do ponto de venda</label>
+              <div>
+                <a 
+                  class="btn btn-comprovante btn-primary" 
+                  target="blank" 
+                  href={`${empresa.lojas[index].comprovante_end}`}
+                >
+                  Visualizar comprovante
+                </a>
+              </div>
+            </div>
+          )}
+          <Field
+            component={FileUpload}
+            name={`${loja}.comprovante_end`}
+            id={`${index}`}
+            disabled={comprovanteUpado}
+            key={index}
+            accept="image/*"
+            acceptCustom="image/png, image/jpg, image/jpeg"
+            className="form-control-file"
+            label='Comprovante de endereço do ponto de venda'
+            multiple={false}
+            validate={!logado && requiredImagem}
+            required
+          />
+          <div className="campos-permitidos">
+            Formatos permitidos: .png, .jpg, .jpeg
+            <br />
+            Tamanho máximo: 5 MB
+          </div>
+          <OnChange name={`${loja}.comprovante_end`}>
+            {async (value, previous) => {
+              setComprovanteUpado(Array.isArray(value) && value.length > 0);
+            }}
+          </OnChange>
         </div>
         <div className="col-12">
           <Field
