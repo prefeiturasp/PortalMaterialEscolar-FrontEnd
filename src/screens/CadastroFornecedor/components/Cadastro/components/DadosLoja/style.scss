@@ -1,0 +1,16 @@
+.link-comprovante{
+	padding: 8px 0;
+	.btn.btn-comprovante{
+		border-radius: 3px;
+		color: #fff;
+    background-color: #007ad9;
+    border: 1px solid #007ad9;
+		font-size: 14px;
+		height: 32px;
+		width: 168.77px;
+	}
+	.btn.btn-comprovante:hover {
+		background-color:#276fbf;
+    border: 1px solid #276fbf;
+	}
+}

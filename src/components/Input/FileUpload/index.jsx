@@ -11,6 +11,7 @@ class CustomFileUploadPR extends FileUploadPR {
     const { files } = this.state;
     if (
       this.props.acceptCustom &&
+      files[0] &&
       !this.props.acceptCustom.includes(files[0].type)
     ) {
       toastError("Formato de arquivo inválido");
@@ -27,7 +28,7 @@ class CustomFileUploadPR extends FileUploadPR {
       onUploadChange(data);
     }
   }
-  async remove(index) {
+  async remove(_event, index) {
     this.clearInputElement();
     const currentFiles = this.state.files.filter((v, i) => i !== index);
     this.setState(
