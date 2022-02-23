@@ -1,18 +1,21 @@
 import React, { useState, useEffect } from "react";
-import { version } from "../../../package.json";
 import { MenuAcessibilidade } from "components/Menu/MenuAcessibilidade";
 import { MenuPrincipal } from "components/Menu/MenuPrincipal";
 import { Rodape } from "components/Rodape";
-import { getAPIVersion } from "services/home.service";
+import { getAPIVersion, getFrontVersion } from "services/home.service";
 
 export const PaginaComCabecalhoRodape = ({ children }) => {
   const [alterarFonte, setAlterarFonte] = useState("");
   const [alterarContraste, setAlterarConstraste] = useState("");
   const [apiVersion, setApiVersion] = useState(null);
+  const [frontVersion, setFrontVersion] = useState(null);
 
   useEffect(() => {
     getAPIVersion().then((response) => {
       setApiVersion(response.data);
+    });
+    getFrontVersion().then((response) => {
+      setFrontVersion(response.data);
     });
   }, []);
 
@@ -37,7 +40,7 @@ export const PaginaComCabecalhoRodape = ({ children }) => {
       />
       <MenuPrincipal />
       {children}
-      <Rodape versao={`${version} (API: ${apiVersion})`} />
+      <Rodape versao={`${frontVersion} (API: ${apiVersion})`} />
     </section>
   );
 };
