@@ -195,8 +195,8 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
             id={`${index}`}
             disabled={comprovanteUpado}
             key={index}
-            accept="image/*"
-            acceptCustom="image/png, image/jpg, image/jpeg"
+            accept="image/*, .pdf"
+            acceptCustom="application/pdf, image/png, image/jpg, image/jpeg"
             className="form-control-file"
             label='Comprovante de endereço do ponto de venda'
             multiple={false}
@@ -204,7 +204,7 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
             required
           />
           <div className="campos-permitidos">
-            Formatos permitidos: .png, .jpg, .jpeg
+            Formatos permitidos: .pdf, .png, .jpg, .jpeg
             <br />
             Tamanho máximo: 5 MB
           </div>
