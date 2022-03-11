@@ -175,7 +175,7 @@ export const Loja = ({ loja, fields, index, empresa, logado }) => {
           />
         </div>
         <div className="col-12">
-          {logado && empresa && (
+          {logado && empresa && empresa.lojas[index] && (
             <div class="link-comprovante">
               <label class="form-label">Comprovante de endereço do ponto de venda</label>
               <div>
