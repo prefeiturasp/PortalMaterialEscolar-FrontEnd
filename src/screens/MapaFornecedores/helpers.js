@@ -50,9 +50,9 @@ export const sortByDistance = (lista) => {
   });
 };
 
-export const sortByParam = (lista, param) => {
+export const sortByParam = (lista, param, limiteTamanho=10) => {
   return sortByDistance(lista)
-    .splice(0, 10)
+    .splice(0, limiteTamanho)
     .sort((a, b) => {
       if (param === "distancia" || param === "total_materiais") {
         if (parseFloat(a[param]) < parseFloat(b[param])) return -1;
