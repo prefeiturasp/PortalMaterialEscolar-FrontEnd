@@ -7,7 +7,7 @@ import { LoadingCircle } from "components/LoadingCircle";
 import { AutoComplete } from "components/Input/AutoComplete";
 import { required } from "helpers/validators";
 import StatefulMultiSelect from "@khanacademy/react-multi-select";
-import { getLojasCredenciadas } from "services/mapaFornecedores.service";
+import { getLojasCredenciadas, getLojasCredenciadasSemLatLong } from "services/mapaFornecedores.service";
 import {
   acrescentaTotalMateriais,
   encontrarUnidades,
@@ -40,12 +40,26 @@ export const MapaFornecedores = (props) => {
   const [tipoBusca, setTipoBusca] = useState(null);
   const [kit, setKit] = useState(null);
   const [kits, setKits] = useState(null);
+  const [buscarTodos, setBuscarTodos] = useState(null);
 
   const history = useHistory();
 
   useEffect(() => {
-    if (props.location && props.location.state) {
+    const queryString = window.location.search;
+    const urlParams = new URLSearchParams(queryString);
+    if(urlParams.has('buscarTodos')){
+      let lat = -23.5519563;
+      let long = -46.6326451;
+      setBuscarTodos(true);
+      getLojasCredenciadasSemLatLong().then((response) => {
+        setLatitude(lat);
+        setLongitude(long);
+        setLojas(sortByParam(response.data, "distancia", response.data.length));
+      });
+    }
+    else if (props.location && props.location.state) {
       const { latitude, longitude, endereco, materiaisSelecionados, kit, tipoBusca } = props.location.state;
+      console.log(props.location)
       getKits().then((response) => {
         if (response.status === HTTP_STATUS.OK) {
           setKits(response.data);
@@ -85,7 +99,7 @@ export const MapaFornecedores = (props) => {
   };
 
   const onSelectChanged = (form, value) => {
-    if (value !== "menor_preco_item") setLojas(sortByParam(lojas, value));
+    if (value !== "menor_preco_item") setLojas(sortByParam(lojas, value, lojas.length));
     if (["distancia", "nome_fantasia", "total_materiais"].includes(value))
       form.change("ordenar_por_item", null);
   };
@@ -283,18 +297,21 @@ export const MapaFornecedores = (props) => {
                   )}
                   {lojas && lojas.length > 0 && !consultarNovamente && (
                     <div className="text-dark col-lg-6 col-sm-12 lojas">
-                      Essas são as{" "}
-                      <span className="font-weight-bold">
-                        {lojas && lojas.length} lojas{" "}
-                      </span>
-                      credenciadas que vendem o{" "}
-                      {tipoBusca === "kits" &&
-                        kits &&
-                        `${kits.find((kit_) => kit_.uuid === kit).nome} `}
-                      {tipoBusca === "itens" &&
-                        `material escolar (${materiaisState.join(", ")}) `}
-                      mais próximas da{" "}
-                      <span className="font-weight-bold">{endereco}</span>.
+                      {!buscarTodos && <span>
+                        Essas são as{" "}
+                        <span className="font-weight-bold">
+                          {lojas && lojas.length} lojas{" "}
+                        </span>
+                        credenciadas que vendem o{" "}
+                      
+                        {tipoBusca === "kits" &&
+                          kits &&
+                          `${kits.find((kit_) => kit_.uuid === kit).nome} `}
+                        {tipoBusca === "itens" &&
+                          `material escolar (${materiaisState.join(", ")}) `}
+                        mais próximas da{" "}
+                        <span className="font-weight-bold">{endereco}</span>.
+                      </span>}
                       <div className="row pt-3">
                         <div className="col-sm-5 col-12">
                           <Field
@@ -389,7 +406,7 @@ export const MapaFornecedores = (props) => {
                                             </div>
                                           </div>
                                         </div>
-                                        <table className="tabela-precos">
+                                        {!buscarTodos && <table className="tabela-precos">
                                           <thead>
                                             <tr className="row">
                                               <th className="col-6">Item</th>
@@ -450,7 +467,7 @@ export const MapaFornecedores = (props) => {
                                               </td>
                                             </tr>}
                                           </tbody>
-                                        </table>
+                                        </table>}
                                       </Fragment>
                                     )}
                                   </div>
@@ -462,10 +479,11 @@ export const MapaFornecedores = (props) => {
                             <Paginacao
                               onChange={(pagina) => setPagina(pagina)}
                               total={lojas.length}
+                              showSizeChanger={false}
                             />
                           </div>
                         )}
-                        <div className="pt-3 pb-3 text-center">
+                        {!buscarTodos && <div className="pt-3 pb-3 text-center">
                           <button
                             size="lg"
                             disabled={!lojas}
@@ -478,7 +496,7 @@ export const MapaFornecedores = (props) => {
                           >
                             <strong>Consultar novamente</strong>
                           </button>
-                        </div>
+                        </div>}
                       </div>
                     </div>
                   )}
