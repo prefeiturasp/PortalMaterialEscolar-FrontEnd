@@ -45,6 +45,7 @@ export const validarFormulario = (values, kits) => {
             )
           ) * materialDoKit.unidades;
 
+        total = Math.round(total * 1e2) / 1e2
 
         if (total > parseFloat(kit.preco_maximo)) {
           erro = `Preço máximo do ${kit.nome}: R$ ${kit.preco_maximo.replace(
