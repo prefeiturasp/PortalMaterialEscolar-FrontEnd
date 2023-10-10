@@ -7,9 +7,11 @@ pipeline {
 
     }
   
-    agent {
-      node { label 'AGENT-NODES' }
-    }
+    agent { kubernetes { 
+              label 'builder'
+              defaultContainer 'builder'
+            }
+          }
 
     options {
       buildDiscarder(logRotator(numToKeepStr: '15', artifactNumToKeepStr: '15'))
@@ -46,6 +48,7 @@ pipeline {
         stage('Build') {
           when { anyOf { branch 'master'; branch 'main'; branch "story/*"; branch 'develop'; branch 'release'; branch 'homolog';  } } 
           steps {
+            checkout scm 
             script {
               imagename1 = "registry.sme.prefeitura.sp.gov.br/${env.branchname}/materialescolar-frontend"
               dockerImage1 = docker.build(imagename1, "-f Dockerfile .")
